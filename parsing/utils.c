@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/10/30 01:30:31 by danevans         ###   ########.fr       */
+/*   Updated: 2024/10/30 01:38:24 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char *file_open(char *read_file)
 		return (NULL);
 	}
 	line_read = get_next_line(fd);
+	//skip all whitespace until character found and then do a strcmp to check if char found is needed or not
 	if (line_read == NULL)
 	{
 		ft_error("READ failed\n");

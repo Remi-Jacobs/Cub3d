@@ -18,7 +18,7 @@ all: $(LIBFT) $(NAME)
 # Compile the main executable
 $(NAME): $(OBJ_FILES) $(LIBFT)
 	@echo "$(GREEN)Building $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(LIBFT)  # Check this line for spacing
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) $(LIBFT)
 	@echo "$(GREEN)Build successful!$(RESET)"
 
 # Rule to compile object files from SRC_DIR
