@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 11:52:22 by danevans          #+#    #+#             */
-/*   Updated: 2024/10/30 12:06:57 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:00:58 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define LIBFT_H
 
-# define BUFFER_SIZE 20
+# define BUFFER_SIZE 1
 
 # include <unistd.h>
 # include <stdlib.h>
