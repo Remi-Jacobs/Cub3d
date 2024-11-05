@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/01 20:54:35 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/01 21:06:23 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_iswhitespace(char *readfile)
 
 void	init_elements(t_parser *element)
 {
-	element.
+	// element->texture. = malloc (si)
 }
 
 int	saving_texture(char *readfile, t_parser *elements)
