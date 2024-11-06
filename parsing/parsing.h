@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/06 02:02:44 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/06 03:19:57 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_parser
 	t_color		*ceiling_color;
 	t_color		*floor_color;
 }	t_parser;
+
+char	*ft_iswhitespace(char *readfile);
 
 /*parsing.c*/
 t_parser	*parsing_func(char *read_file);
