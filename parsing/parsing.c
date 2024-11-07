@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 19:51:50 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:31:49 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	readfile_and_save_content(char *read_file, t_parser *element)
 	while ((line_read = get_next_line(fd)) != NULL)
 	{
 		trim_file = ft_skip_check_element_char(line_read);
-		if (trim_file[0] == '\n')
-			continue ;
 		if (trim_file == NULL)
 			break ;
+		if (trim_file[0] == '\n')
+			continue ;
 		if (validating_texture(trim_file, element))
 		{
 			if (!checking_texture(trim_file, element))
@@ -40,15 +40,15 @@ int	readfile_and_save_content(char *read_file, t_parser *element)
 		}
 		else if (trim_file[0] == '1')
 		{
-			printf("\nhere for wall map\n");
 			if (!validating_map(trim_file, element))
 				return (0);
 		}
-		else
-			break ;
+		// else
+		// 	break ;
 		// ft_free_trimmed_line_read(trim_file, line_read);	
 	}
-	ft_error("Invalid element recieved\n");
+	free(line_read);
+	ft_error("Invalid elementfghfghfgh recieved\n");
 	// ft_free_trimmed_line_read(trim_file, line_read);
 	return (1);
 }
@@ -86,5 +86,10 @@ int	main(int ac, char **argv)
 	parser = parsing_func(argv[1]);
 	if (parser == NULL)
 		return (0);
+	// printf("red = '%d' ", parser->ceiling_color->red);
+	// printf("green = '%d' ", parser->ceiling_color->green);
+	// printf("blue = '%d' ", parser->ceiling_color->blue);
+	free_parser_struct(parser);
+	printf("final arrivall success\n");
 	return (0);
 }

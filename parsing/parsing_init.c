@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils3.c                                   :+:      :+:    :+:   */
+/*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 19:25:05 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 20:42:39 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,16 @@ int	init_ceil_floor_color(t_parser *element)
 	return (1);
 }
 
-void	init_texture(t_parser *element)
+void	init_texture_maps(t_parser *element)
 {
+	int	i;
+
+	i = 0;
+	while (i < MAP_HEIGHT)
+	{
+		element->map[i]	= NULL;
+		i++;
+	}
 	element->texture->west = NULL;
 	element->texture->east = NULL;
 	element->texture->south = NULL;
@@ -63,7 +71,7 @@ t_parser	*init_elements(void)
 		free(element);
 		return (NULL);
 	}
-	init_texture(element);
+	init_texture_maps(element);
 	return (element);
 }
 
@@ -78,6 +86,7 @@ void	free_map_stored(t_parser *element)
 		{
 			if (element->map[i])
 				free (element->map[i]);
+			i++;
 		}
 		free(element->map);
 	}

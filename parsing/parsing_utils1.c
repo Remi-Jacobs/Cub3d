@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 19:46:51 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:32:42 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ char	*ft_trim_newline(char *read_file)
 	{
 		trim_str = malloc(sizeof(char) * len);
 		ft_strlcpy(trim_str, read_file, len);
-		// free(read_file);
 		return (trim_str);
 	}
 	return (read_file);
@@ -59,8 +58,10 @@ int	valid_extension_args_no(char *argv, int ac, char *str)
 char	*ft_skip_check_element_char(char *file)
 {
 	char	*trimmed_str;
+	char	*save_ptr;
 
-	trimmed_str = ft_strdup(file);
+	trimmed_str = file;
+	save_ptr = trimmed_str;	
 	while (*trimmed_str == ' ' || *trimmed_str == 9
 		|| (*trimmed_str >= 11 && *trimmed_str <= 13))
 		trimmed_str++;

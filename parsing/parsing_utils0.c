@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 19:24:00 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:47:18 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,30 @@ int	validating_texture(char *trim_file, t_parser *element)
 
 int	validating_ceiling_floor(char *trim_file, t_parser *element)
 {
+	char	*trim_newline;
+
 	if (ft_strncmp(trim_file, "C", 1) == 0)
 	{
-		saving_ceiling_and_floor(trim_file, element->ceiling_color);
-		return (1);
+		trim_file++;
+		trim_file = ft_iswhitespace(trim_file);
+		trim_newline = ft_trim_newline(trim_file);
+		if (saving_ceiling_and_floor(trim_newline, element->ceiling_color)){
+			free(trim_newline);
+			return (1);
+		}
 	}
 	else if (ft_strncmp(trim_file, "F", 1) == 0)
 	{
-		saving_ceiling_and_floor(trim_file, element->floor_color);
-		return (1);
+		trim_file++;
+		trim_file = ft_iswhitespace(trim_file);
+		trim_newline = ft_trim_newline(trim_file);
+		if (saving_ceiling_and_floor(trim_newline, element->floor_color)){
+			free(trim_newline);
+			return (1);
+		}
 	}
+	ft_error("Invalid color passed");
+	free(trim_newline);
 	return (0);
 }
 

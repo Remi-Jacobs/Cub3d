@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 19:50:04 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:20:04 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,16 @@ int	validating_map(char *readfile, t_parser *element)
 			&& new_str[i] != 'N' && new_str[i] != 'W'
 			&& new_str[i] != 'S' && new_str[i] != 'E')
 		{
+			free(new_str);
+			free(trim_line);
 			ft_error("Invalid map parsed");
 			return (0);
 		}
 		i++;
 	}
 	element->map[element->map_index++] = ft_strdup(new_str);
+	free(new_str);
+	free(trim_line);
 	return (1);
 }
 

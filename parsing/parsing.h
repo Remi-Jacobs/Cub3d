@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 19:47:44 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 21:15:30 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_parser
 /*parsing_init.c    file full and formatted */
 t_parser	*init_elements(void);
 int			init_ceil_floor_color(t_parser *element);
-void		init_texture(t_parser *element);
+void		init_texture_maps(t_parser *element);
 void		free_map_stored(t_parser *element);
 void		free_parser_struct(t_parser *element);
 
@@ -74,7 +74,7 @@ void		ft_close_error(char *str, int fd);
 
 /* parsing_utils2.c  */
 int			checking_texture(char *readfile, t_parser *element);
-int			saving_texture(char *readfile, char *texture);
+int			saving_texture(char *readfile, char **texture);
 int			num_range(int num, t_color *color);
 int			saving_ceiling_and_floor(char *readfile, t_color *color);
 int			color_check_pass(t_color *color, char *readfile);

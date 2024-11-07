@@ -43,8 +43,11 @@ clean:
 fclean: clean
 	@echo "$(RED)Removing $(NAME) and libft.a...$(RESET)"
 	@rm -f $(NAME)
-	@make -C $(FT_PRINT_DIR) fclean  # Clean up libft archive if it has a `fclean` target
+	@make -C $(FT_PRINT_DIR) fclean
 
 re: fclean all
+
+leak: re
+		valgrind --leak-check=full ./$(NAME) mapping.cub
 
 .PHONY: all clean fclean re
