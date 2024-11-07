@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/06 04:47:13 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:15:43 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,15 +57,15 @@ int	num_range(int num, t_color *color)
 {
 	if (num >= 0 && num <= 255)
 	{
-		if (color->red == 0)
+		if (color->red == -1)
 			color->red = num;
-		else if (color->green == 0)
+		else if (color->green == -1)
 			color->green = num;
-		else if (color->blue == 0)
+		else if (color->blue == -1)
 			color->blue = num;
 		return (1);
 	}
-	ft_error("color out of range");
+	ft_error("color out of range\n");
 	return (0);
 }
 
@@ -83,7 +83,6 @@ int	color_check_pass(t_color *color, char *readfile)
 
 int	saving_ceiling_and_floor(char *readfile, t_color *color)
 {
-	int		i;
 	int		num;
 	char	*num_str;
 	char	*trim_newline;
@@ -91,29 +90,22 @@ int	saving_ceiling_and_floor(char *readfile, t_color *color)
 	readfile++;
 	readfile = ft_iswhitespace(readfile);
 	trim_newline = ft_trim_newline(readfile);
-	while (trim_newline[i] != '\0')
+	while (*trim_newline != '\0')
 	{
-		i = 0;
-		num_str = trim_newline + i;
-		printf("first char = %c   && '%s'  && '%s'\n\n", trim_newline[i], num_str, trim_newline);
-		while (trim_newline[i] != ',' && trim_newline[i] != '\0')
-			i++;
-		printf("char = %c   && '%s'  && '%s'\n\n\n\n", trim_newline[i], num_str, trim_newline);
-		trim_newline[i]	= '\0';
+		num_str = trim_newline;
+		while (*trim_newline != ',' && *trim_newline != '\0')
+			trim_newline++;
+		if (*trim_newline == ',')
+		{
+			*trim_newline = '\0';
+			trim_newline++;
+		}
 		num = ft_atoi(num_str);
-		printf("num = %d\n", num);
 		if (!num_range(num, color))
 			break ;
-		i++;
-		trim_newline += i;
-		printf("after num_str '%s'  && '%s'\n", num_str, trim_newline);
 		trim_newline = ft_iswhitespace(trim_newline);
-		printf("last char = '%c'   && '%s'  && '%s'\n\n", trim_newline[i], num_str, trim_newline);
 	}
 	if (!color_check_pass(color, trim_newline))
 		return (0);
-	printf("green = %d\n", color->green);
-	printf("red = %d\n", color->red);
-	printf("blue = %d\n", color->blue);
 	return (1);
 }

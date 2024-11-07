@@ -3,113 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/06 04:20:51 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:51:50 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-
-int	init_ceil_floor_color(t_parser *element)
+int	readfile_and_save_content(char *read_file, t_parser *element)
 {
-	element->ceiling_color = malloc(sizeof(t_color));
-	element->floor_color = malloc(sizeof(t_color));
-	if (!element->ceiling_color || !element->floor_color)
-	{
-		ft_error("malloc failed to allocate \n");
+	int		fd;
+	char	*line_read;
+	char	*trim_file;
+
+	fd = ft_open_file(read_file);
+	if (fd == 0)
 		return (0);
-	}
-	element->ceiling_color->blue = 0;
-	element->ceiling_color->red = 0;
-	element->ceiling_color->green = 0;
-	element->floor_color->blue = 0;
-	element->floor_color->red = 0;
-	element->floor_color->green = 0;
-	return (1);
-}
-
-void	init_texture(t_parser *element)
-{
-	element->texture->west = NULL;
-	element->texture->east = NULL;
-	element->texture->south = NULL;
-	element->texture->north = NULL;
-}
-
-t_parser	*init_elements(void)
-{
-	t_parser	*element;
-
-	element = malloc(sizeof(t_parser));
-	if (!element)
+	while ((line_read = get_next_line(fd)) != NULL)
 	{
-		ft_error("malloc failed to allocate \n");
-		return (NULL);
-	}
-	element->texture = malloc(sizeof(t_texture));
-	if (!element->texture)
-	{
-		ft_error("malloc failed to allocate \n");
-		free(element);
-		return (NULL);
-	}
-	if (!init_ceil_floor_color(element))
-	{
-		free(element->texture);
-		free(element);
-		return (NULL);
-	}
-	init_texture(element);
-	return (element);
-}
-
-void	free_map_stored(t_parser *element)
-{
-	int	i;
-
-	i = 0;
-	if (element->map)
-	{
-		while (element->map[i])
+		trim_file = ft_skip_check_element_char(line_read);
+		if (trim_file[0] == '\n')
+			continue ;
+		if (trim_file == NULL)
+			break ;
+		if (validating_texture(trim_file, element))
 		{
-			if (element->map[i])
-				free (element->map[i]);
+			if (!checking_texture(trim_file, element))
+				return (0);
 		}
-		free(element->map);
-	}
-}
-
-void	free_parser_struct(t_parser *element)
-{
-	if (!element)
-		return ;
-	free_map_stored(element);
-	if (element->texture)
-	{
-		free(element->texture->east);
-		free(element->texture->west);
-		free(element->texture->north);
-		free(element->texture->south);
-		free(element->texture);
-	}
-	free(element->ceiling_color);
-	free(element->floor_color);
-	free(element);
-}
-
-char	*ft_iswhitespace(char *readfile)
-{
-	while (*readfile)
-	{
-		if (*readfile == ' ' || (*readfile >= 9 && *readfile <= 13))
-			readfile++;
+		else if (trim_file[0] == 'C' || trim_file[0] == 'F')
+		{
+			if (!validating_ceiling_floor(trim_file, element))
+				return (0);
+		}
+		else if (trim_file[0] == '1')
+		{
+			printf("\nhere for wall map\n");
+			if (!validating_map(trim_file, element))
+				return (0);
+		}
 		else
 			break ;
+		// ft_free_trimmed_line_read(trim_file, line_read);	
 	}
-	return ((char *)readfile);
+	ft_error("Invalid element recieved\n");
+	// ft_free_trimmed_line_read(trim_file, line_read);
+	return (1);
 }
 
 t_parser	*parsing_func(char *read_file)
@@ -119,13 +60,20 @@ t_parser	*parsing_func(char *read_file)
 	element = init_elements();
 	if (element == NULL)
 		return (NULL);
-	printf("successffully got here\n\n\n");
+	printf("1 .....successffully got here\n\n\n");
 	if (!readfile_and_save_content(read_file, element))
 	{
-		printf("and now here\n\n\n");
 		free_parser_struct(element);
 		return (NULL);
 	}
+	printf("2.....successffully got here\n\n\n");
+	if (!verify_map_walls(element))
+	{
+		printf("errror here\n\n\n");
+		free_parser_struct(element);
+		return (NULL);
+	}
+	printf("3 ...successffully got here\n\n\n");
 	return (element);
 }
 
