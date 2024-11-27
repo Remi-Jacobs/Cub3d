@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 21:31:49 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/08 01:45:03 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,3 @@ t_parser	*parsing_func(char *read_file)
 	return (element);
 }
 
-int	main(int ac, char **argv)
-{
-	t_parser	*parser;
-
-	if (!valid_extension_args_no(argv[1], ac, "cub"))
-		return (0);
-	parser = parsing_func(argv[1]);
-	if (parser == NULL)
-		return (0);
-	// printf("red = '%d' ", parser->ceiling_color->red);
-	// printf("green = '%d' ", parser->ceiling_color->green);
-	// printf("blue = '%d' ", parser->ceiling_color->blue);
-	free_parser_struct(parser);
-	printf("final arrivall success\n");
-	return (0);
-}

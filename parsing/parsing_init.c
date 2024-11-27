@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 20:42:39 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/08 03:34:54 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	init_texture_maps(t_parser *element)
 		element->map[i]	= NULL;
 		i++;
 	}
+	element->row = 15;
+	element->column = 20;
 	element->texture->west = NULL;
 	element->texture->east = NULL;
 	element->texture->south = NULL;

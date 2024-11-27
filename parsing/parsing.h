@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 21:15:30 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/08 04:04:08 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include "../comb_libft/ft_printf.h"
+# include "../mlx/mlx.h"
 
 # define MAP_HEIGHT 20
+# define TILE_SIZE 60
+# define TILE_SIZE_MINI 20
+# define IMAGE "./wall.xpm"
 
 typedef struct s_texture
 {
@@ -42,6 +48,13 @@ typedef struct s_parser
 	t_texture	*texture;
 	t_color		*ceiling_color;
 	t_color		*floor_color;
+	void		*mlx_ptr;
+	void		*win_ptr;
+	int			map_width;
+	int 		map_height;
+	int			row;
+	int			column;
+	void		*image;
 }	t_parser;
 
 
