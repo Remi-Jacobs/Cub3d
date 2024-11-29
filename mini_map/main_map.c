@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 03:23:44 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/08 03:25:10 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:08:44 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 int	main_3d_window(t_parser *element)
 {
-	
 	return (0);
 }

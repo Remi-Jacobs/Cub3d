@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 21:32:42 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:56:59 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,33 @@ char	*ft_trim_newline(char *read_file)
 		return (trim_str);
 	}
 	return (read_file);
+}
+
+int	valid_extension_file_check(char *argv, int ac, char *str)
+{
+	char	*file;
+	int		len;
+
+	if (ac == 2)
+	{
+		file = argv;
+		len = ft_strlen(file) - 4;
+		file += len;
+		if (*file == '.')
+		{
+			while (*file)
+			{
+				file++;
+				if ((!ft_strncmp(file, str, 3)) && (ft_strlen(file) == 3))
+					return (1);
+			}
+			
+		}
+		ft_error("invalid extension\n");
+		return (0);
+	}
+	ft_error("invalid number of args\n");
+	return (0);
 }
 
 int	valid_extension_args_no(char *argv, int ac, char *str)
@@ -58,10 +85,10 @@ int	valid_extension_args_no(char *argv, int ac, char *str)
 char	*ft_skip_check_element_char(char *file)
 {
 	char	*trimmed_str;
-	char	*save_ptr;
+	// char	*save_ptr;
 
 	trimmed_str = file;
-	save_ptr = trimmed_str;	
+	// save_ptr = trimmed_str;	
 	while (*trimmed_str == ' ' || *trimmed_str == 9
 		|| (*trimmed_str >= 11 && *trimmed_str <= 13))
 		trimmed_str++;

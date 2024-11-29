@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/08 04:04:08 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:05:24 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,34 @@ typedef struct s_color
 	int		blue;
 }	t_color;
 
+typedef struct s_player
+{
+	double		player_posX;
+	double		player_posY;
+	
+}	t_player;
+
+typedef struct s_map
+{
+	char		**map;
+	int			max_map_row;
+	int 		max_map_column;
+	
+}	t_map;
+
 typedef struct s_parser
 {
 	int			map_index;
-	char		**map;
+	t_map		*map_array;
 	t_texture	*texture;
 	t_color		*ceiling_color;
 	t_color		*floor_color;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	int			map_width;
-	int 		map_height;
-	int			row;
-	int			column;
 	void		*image;
 }	t_parser;
 
+int	valid_extension_file_check(char *argv, int ac, char *str);
 
 /*parsing_init.c    file full and formatted */
 t_parser	*init_elements(void);

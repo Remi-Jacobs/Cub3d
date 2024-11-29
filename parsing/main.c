@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/25 21:14:27 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:27:11 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int main(int ac, char **argv)
     t_parser *data;
 
     // Assuming valid_extension_args_no and parsing_func are defined elsewhere
-    if (!valid_extension_args_no(argv[1], ac, "cub"))
+    if (!valid_extension_file_check(argv[1], ac, "cub"))
         return (0);
     data = parsing_func(argv[1]);
     if (data == NULL)

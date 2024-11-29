@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/07 21:47:18 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/27 18:38:16 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,24 @@ int	validating_texture(char *trim_file, t_parser *element)
 int	validating_ceiling_floor(char *trim_file, t_parser *element)
 {
 	char	*trim_newline;
+	char	*trim_ptr;
 
-	if (ft_strncmp(trim_file, "C", 1) == 0)
+	trim_ptr = trim_file;
+	if (ft_strncmp(trim_ptr, "C", 1) == 0)
 	{
-		trim_file++;
-		trim_file = ft_iswhitespace(trim_file);
-		trim_newline = ft_trim_newline(trim_file);
+		trim_ptr++;
+		trim_ptr = ft_iswhitespace(trim_ptr);
+		trim_newline = ft_trim_newline(trim_ptr);
 		if (saving_ceiling_and_floor(trim_newline, element->ceiling_color)){
 			free(trim_newline);
 			return (1);
 		}
 	}
-	else if (ft_strncmp(trim_file, "F", 1) == 0)
+	else if (ft_strncmp(trim_ptr, "F", 1) == 0)
 	{
-		trim_file++;
-		trim_file = ft_iswhitespace(trim_file);
-		trim_newline = ft_trim_newline(trim_file);
+		trim_ptr++;
+		trim_ptr = ft_iswhitespace(trim_ptr);
+		trim_newline = ft_trim_newline(trim_ptr);
 		if (saving_ceiling_and_floor(trim_newline, element->floor_color)){
 			free(trim_newline);
 			return (1);

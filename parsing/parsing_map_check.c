@@ -6,11 +6,28 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/08 01:40:12 by danevans         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:05:09 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+static int	get_max_row_length(char **map, int column)
+{
+	int maxLength;
+	int rowLength;
+	int	i;
+
+	maxLength = 0;
+	while (i < column)
+	{
+		rowLength = ft_strlen(map[i]);
+		if (rowLength > maxLength)
+			maxLength = rowLength;
+		i++;
+	}
+	return (maxLength);
+}
 
 int	verify_map_walls_utils(t_parser *element)
 {
@@ -23,9 +40,33 @@ int	verify_map_walls_utils(t_parser *element)
 	while (i < column)
 	{
 		j = 0;
-		while (element->map[i][j + 1] != '\0')
+		while (element->map_array->map[i][j + 1] != '\0')
 			j++;
-		if (element->map[i][j] != '1' || element->map[i][0] != '1')
+		if (element->map_array->map[i][j] != '1' || element->map_array->map[i][0] != '1')
+			return (0);
+		i++;
+	}
+	element->map_array->max_map_column = column;
+	element->map_array->max_map_row =  get_max_row_length(element->map_array->map, column);
+	return (1);
+}
+
+static int	verify_map_walls_extra_space(char *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i] != '\0')
+	{
+		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
+			return (0);
+		i++;
+	}
+	i = 0;
+	while (map[i] != '\0')
+	{
+		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
 			return (0);
 		i++;
 	}
@@ -40,16 +81,22 @@ int	verify_map_walls(t_parser *element)
 
 	i = 0;
 	column = element->map_index - 1;
-	while (element->map[0][i] != '\0')
+	while (element->map_array->map[0][i] != '\0')
 	{
-		if (element->map[0][i] != '1')
+		if (element->map_array->map[0][i] != '1'
+			&& element->map_array->map[0][i] != ' ')
+			return (0);
+		if (verify_map_walls_extra_space(element->map_array->map[0][i]))
 			return (0);
 		i++;
 	}
 	i = 0;
-	while (element->map[column][i] != '\0')
+	while (element->map_array->map[column][i] != '\0')
 	{
-		if (element->map[column][i] != '1')
+		if (element->map_array->map[column][i] != '1'
+			&& element->map_array->map[column][i] != ' ')
+			return (0);
+		if (verify_map_walls_extra_space(element->map_array->map[column][i]))
 			return (0);
 		i++;
 	}
@@ -66,22 +113,20 @@ int	validating_map(char *readfile, t_parser *element)
 
 	i = 0;
 	trim_line = ft_trim_newline(readfile);
-	new_str = ft_skip_whitespace_map(trim_line);
-	while (new_str[i] != '\0')
+	// new_str = ft_skip_whitespace_map(trim_line);
+	while (trim_line[i] != '\0')
 	{
-		if (new_str[i] != '0' && new_str[i] != '1'
-			&& new_str[i] != 'N' && new_str[i] != 'W'
-			&& new_str[i] != 'S' && new_str[i] != 'E')
+		if (trim_line[i] != '0' && trim_line[i] != '1'
+			&& trim_line[i] != 'N' && trim_line[i] != 'W'
+			&& trim_line[i] != 'S' && trim_line[i] != 'E')
 		{
-			free(new_str);
 			free(trim_line);
 			ft_error("Invalid map parsed");
 			return (0);
 		}
 		i++;
 	}
-	element->map[element->map_index++] = ft_strdup(new_str);
-	free(new_str);
+	element->map_array->map[element->map_index++] = ft_strdup(trim_line);
 	free(trim_line);
 	return (1);
 }
