@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/27 17:27:11 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:11:11 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ void ft_render_screen(t_parser *data)
     void *tile_img;
 
     y = -1;
-    while (++y < data->row)
+    while (++y < data->map_array->max_map_row)
     {
         x = -1;
-        while (++x < data->column)
+        while (++x < data->map_array->max_map_column)
         {
             // Create an image filled with color (0x00FFFF)
             tile_img = create_color_image(data, 0xFFFF00);
@@ -109,10 +109,10 @@ void ft_render_screen2(t_parser *data)
     int minimap_y_offset = 375;
 
     y = -1;
-    while (++y < data->row)
+    while (++y < data->map_array->max_map_row)
     {
         x = -1;
-        while (++x < data->column)
+        while (++x < data->map_array->max_map_column)
         {
             // Create an image filled with color (0x00FFFF)
             tile_img = create_color_image(data, 0xFF0000);
@@ -131,32 +131,55 @@ void ft_render_screen2(t_parser *data)
     }
 }
 
+// int main(int ac, char **argv)
+// {
+//     t_parser *data;
+
+//     // Assuming valid_extension_args_no and parsing_func are defined elsewhere
+//     if (!valid_extension_file_check(argv[1], ac, "cub"))
+//         return (0);
+//     data = parsing_func(argv[1]);
+//     if (data == NULL)
+//         return (0);
+// 	for (int i = 0; i < data->map_index; i++){
+// 		printf("line = %s\n" , data->map_array->map[i]);
+// 	}
+// 	printf("len_min = %d and max = %d\n" , data->map_array->max_map_column, data->map_array->max_map_row);
+	
+//     // Initialize mlx and create the window
+//     // data->mlx_ptr = mlx_init();
+//     // if (!data->mlx_ptr)
+//     //     return (1);
+//     // data->win_ptr = mlx_new_window(data->mlx_ptr, data->map_array->max_map_column * TILE_SIZE, data->map_array->max_map_row * TILE_SIZE, "cub3D");
+//     // if (!data->win_ptr)
+//     //     return (1);
+
+//     // // // Render the screen with colored tiles using images
+//     // ft_render_screen(data);
+//     // ft_render_screen2(data);
+
+//     // // Enter the mlx loop to display the window
+//     // mlx_loop(data->mlx_ptr);
+
+//     return (0);
+// }
 int main(int ac, char **argv)
 {
-    t_parser *data;
+    t_game game;
+    // init
 
     // Assuming valid_extension_args_no and parsing_func are defined elsewhere
-    if (!valid_extension_file_check(argv[1], ac, "cub"))
-        return (0);
-    data = parsing_func(argv[1]);
-    if (data == NULL)
-        return (0);
+    // if (!valid_extension_file_check(argv[1], ac, "cub"))
+    //     return (0);
+    init_game(&game, argv[1]);
+    
+	
+    // hooks
+    mlx_hook(game.win, 2, 1L<<0, key_press, &game.player);
+    mlx_hook(game.win, 3, 1L<<1, key_release, &game.player);
+    // draw loop
+    mlx_loop_hook(game.mlx, draw_loop, &game);
 
-    // Initialize mlx and create the window
-    data->mlx_ptr = mlx_init();
-    if (!data->mlx_ptr)
-        return (1);
-    data->win_ptr = mlx_new_window(data->mlx_ptr, data->column * TILE_SIZE, data->row * TILE_SIZE, "cub3D");
-    if (!data->win_ptr)
-        return (1);
-
-    // // Render the screen with colored tiles using images
-    ft_render_screen(data);
-    ft_render_screen2(data);
-
-    // Enter the mlx loop to display the window
-    mlx_loop(data->mlx_ptr);
-
-    return (0);
+    mlx_loop(game.mlx);
+    return 0;
 }
-

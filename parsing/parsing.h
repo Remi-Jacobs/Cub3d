@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/29 16:05:24 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/02 16:11:25 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <X11/keysym.h>
 # include "../comb_libft/ft_printf.h"
 # include "../mlx/mlx.h"
+# include "../raycaster/includes/game.h"
 
 # define MAP_HEIGHT 20
 # define TILE_SIZE 60
@@ -41,12 +42,12 @@ typedef struct s_color
 	int		blue;
 }	t_color;
 
-typedef struct s_player
-{
-	double		player_posX;
-	double		player_posY;
+// typedef struct s_player
+// {
+// 	double		player_posX;
+// 	double		player_posY;
 	
-}	t_player;
+// }	t_player;
 
 typedef struct s_map
 {

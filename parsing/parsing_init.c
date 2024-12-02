@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/29 16:14:19 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:45:39 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ void	init_texture_maps(t_parser *element)
 	
 	i = 0;
 	map = malloc(sizeof(t_map));
-	map = malloc(sizeof(char *) * MAP_HEIGHT);
+	map->map = malloc(sizeof(char *) * MAP_HEIGHT);
 	while (i < MAP_HEIGHT)
 	{
 		map->map[i]	= NULL;
 		i++;
 	}
+	map->max_map_column = 0;
+	map->max_map_row = 0;
 	element->map_array = map;
 	element->texture->west = NULL;
 	element->texture->east = NULL;

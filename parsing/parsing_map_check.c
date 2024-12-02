@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/29 17:05:09 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:10:08 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static int	get_max_row_length(char **map, int column)
 	int rowLength;
 	int	i;
 
+	i = 0;
 	maxLength = 0;
 	while (i < column)
 	{
@@ -46,8 +47,9 @@ int	verify_map_walls_utils(t_parser *element)
 			return (0);
 		i++;
 	}
-	element->map_array->max_map_column = column;
+	element->map_array->max_map_column = column + 1;
 	element->map_array->max_map_row =  get_max_row_length(element->map_array->map, column);
+	printf("len_min = %d and max = %d\n" , element->map_array->max_map_column, element->map_array->max_map_row);
 	return (1);
 }
 
@@ -86,7 +88,7 @@ int	verify_map_walls(t_parser *element)
 		if (element->map_array->map[0][i] != '1'
 			&& element->map_array->map[0][i] != ' ')
 			return (0);
-		if (verify_map_walls_extra_space(element->map_array->map[0][i]))
+		if (!verify_map_walls_extra_space(element->map_array->map[0]))
 			return (0);
 		i++;
 	}
@@ -96,7 +98,7 @@ int	verify_map_walls(t_parser *element)
 		if (element->map_array->map[column][i] != '1'
 			&& element->map_array->map[column][i] != ' ')
 			return (0);
-		if (verify_map_walls_extra_space(element->map_array->map[column][i]))
+		if (!verify_map_walls_extra_space(element->map_array->map[column]))
 			return (0);
 		i++;
 	}
@@ -113,12 +115,13 @@ int	validating_map(char *readfile, t_parser *element)
 
 	i = 0;
 	trim_line = ft_trim_newline(readfile);
-	// new_str = ft_skip_whitespace_map(trim_line);
+	new_str = ft_skip_whitespace_map(trim_line);
 	while (trim_line[i] != '\0')
 	{
 		if (trim_line[i] != '0' && trim_line[i] != '1'
 			&& trim_line[i] != 'N' && trim_line[i] != 'W'
-			&& trim_line[i] != 'S' && trim_line[i] != 'E')
+			&& trim_line[i] != 'S' && trim_line[i] != 'E'
+			&& trim_line[i] != ' ')
 		{
 			free(trim_line);
 			ft_error("Invalid map parsed");

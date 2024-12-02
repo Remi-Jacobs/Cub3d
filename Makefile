@@ -60,19 +60,23 @@
 
 NAME = cub3d
 CC = cc
-CFLAGS = -I. -I./mlx -I./parsing
+CFLAGS = -I. -I./mlx -I./parsing -lm -lz
 INCLUDE = ./parsing/parsing.h
 
 # Adjust the MLXFLAGS to point to the correct path
 MLXFLAGS = -L./mlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
 MINILIBX = ./mlx/
+LDFLAGS = -lm
 
 SRC_DIR = ./parsing
 OBJ_DIR = obj
 FT_PRINT_DIR = ./comb_libft
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)  # Include main.c explicitly
-OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_FILES:.c=.o)))
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c) ./raycaster/src/player.c ./raycaster/src/mainn.c # Include main.c explicitly
+# SRC_FILES = $((foreach dir, $(SRC_DIRS), wildcard $(SRC_DIR)/*.c)) # Include main.c explicitly
+# OBJ_FILES = $(addprefix $(OBJ_DIR)/,$(notdir $(SRC_FILES:.c=.o)))
+OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
+ 
 LIBFT = $(FT_PRINT_DIR)/libftprintf.a
 
 GREEN = \033[0;32m
@@ -84,7 +88,7 @@ all: $(LIBFT) $(NAME) $(MINILIBX)
 # Compile the main executable
 $(NAME): $(OBJ_FILES) $(LIBFT)
 	@echo "$(GREEN)Building $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLXFLAGS) -o $(NAME)  # Correct order of linking
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLXFLAGS) $(LDFLAGS) -o $(NAME)  # Correct order of linking
 	@echo "$(GREEN)Build successful!$(RESET)"
 
 # Rule to compile object files from SRC_DIR

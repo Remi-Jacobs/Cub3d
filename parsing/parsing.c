@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/27 19:02:52 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:46:44 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	readfile_and_save_content(char *read_file, t_parser *element)
 		{
 			if (!validating_map(trim_file, element))
 			{	
-				ft_error("here hherehhere Invalid elemenT recieved\n");
+				ft_error("\n\nhere hherehhere Invalid elemenT recieved\n");
 				// free(line_read);
 				free(trim_file);
 				return (0);
