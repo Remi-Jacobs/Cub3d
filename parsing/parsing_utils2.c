@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/03 16:18:25 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:56:20 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,52 @@
 
 //should be ensuring the len also when checking the strncmp
 
+// int	checking_texture(char *readfile, t_parser *element)
+// {
+// 	if (ft_strncmp(readfile, "WE", 2) == 0)
+// 	{
+// 		if (saving_texture(readfile, &element->texture->west))
+// 			return (1);
+// 	}
+// 	else if (ft_strncmp(readfile, "EA", 2) == 0)
+// 	{
+// 		if (saving_texture(readfile, &element->texture->east))
+// 			return (1);
+// 	}
+// 	else if (ft_strncmp(readfile, "NO", 2) == 0)
+// 	{
+// 		if (saving_texture(readfile, &element->texture->north))
+// 			return (1);
+// 	}
+// 	else if (ft_strncmp(readfile, "SO", 2) == 0)
+// 	{
+// 		if (saving_texture(readfile, &element->texture->south))
+// 			return (1);
+// 	}
+// 	ft_error("\n\n\n\n SHOULD Invalid Texture\n\n\n\n\n");
+// 	return (0);
+// }
+
 int	checking_texture(char *readfile, t_parser *element)
 {
 	if (ft_strncmp(readfile, "WE", 2) == 0)
 	{
-		if (saving_texture(readfile, &element->texture->west))
+		if (saving_texture(readfile, &element->texture->west_data))
 			return (1);
 	}
 	else if (ft_strncmp(readfile, "EA", 2) == 0)
 	{
-		if (saving_texture(readfile, &element->texture->east))
+		if (saving_texture(readfile, &element->texture->east_data))
 			return (1);
 	}
 	else if (ft_strncmp(readfile, "NO", 2) == 0)
 	{
-		if (saving_texture(readfile, &element->texture->north))
+		if (saving_texture(readfile, &element->texture->north_data))
 			return (1);
 	}
 	else if (ft_strncmp(readfile, "SO", 2) == 0)
 	{
-		if (saving_texture(readfile, &element->texture->south))
+		if (saving_texture(readfile, &element->texture->south_data))
 			return (1);
 	}
 	ft_error("\n\n\n\n SHOULD Invalid Texture\n\n\n\n\n");
@@ -49,11 +75,13 @@ int	saving_texture(char *readfile, char **texture)
 	new_trim = ft_trim_newline(readfile);
 	// if (!ft_open_file(new_trim))
 	// 	return (0);
+	// mlx_xpm_file_to_image()
 	*texture = ft_strdup(new_trim);
 	printf("from parsing_utils2.c here --> %s\n", *texture);
 	free(new_trim);
 	return (1);
 }
+
 
 int	num_range(int num, t_color *color)
 {
@@ -76,6 +104,8 @@ int	num_range(int num, t_color *color)
 	return (0);
 }
 
+
+
 int	color_check_pass(t_color *color, char *readfile)
 {
 	if (color->green == -1 || color->blue == -1 || color->red == -1)
@@ -84,8 +114,8 @@ int	color_check_pass(t_color *color, char *readfile)
 		// free(readfile);
 		return (0);
 	}
-	// convertsion to hex and then concantenate it to get the color
-	// return it on out struct
+	color->converted_color = (color->red << 16) | \
+		(color->green << 8) | color->blue;
 	return (1);
 }
 

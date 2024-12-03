@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/02 16:11:11 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:49:27 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ void ft_render_screen2(t_parser *data)
     }
 }
 
+
+
 // int main(int ac, char **argv)
 // {
 //     t_parser *data;
@@ -169,8 +171,8 @@ int main(int ac, char **argv)
     // init
 
     // Assuming valid_extension_args_no and parsing_func are defined elsewhere
-    // if (!valid_extension_file_check(argv[1], ac, "cub"))
-    //     return (0);
+    if (!valid_extension_file_check(argv[1], ac, "cub"))
+        return (0);
     init_game(&game, argv[1]);
     
 	

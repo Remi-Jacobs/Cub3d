@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/03 16:18:46 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:25:44 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,31 @@
 # define TILE_SIZE_MINI 20
 # define IMAGE "./wall.xpm"
 
+// typedef struct s_texture
+// {
+// 	char	*east;
+// 	char	*west;
+// 	char	*north;
+// 	char	*south;
+// }	t_texture;
+
 typedef struct s_texture
 {
-	char	*east;
-	char	*west;
-	char	*north;
-	char	*south;
-}	t_texture;
+    void    *east_img;
+    void    *west_img;
+    void    *north_img;
+    void    *south_img;
+    int     width;
+    int     height;
+    char    *east_data;
+    char    *west_data;
+    char    *north_data;
+    char    *south_data;
+    int     bpp;
+    int     size_line;
+    int     endian;
+}   t_texture;
+
 
 typedef struct s_color
 {

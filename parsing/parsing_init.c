@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/02 14:45:39 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:55:06 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,14 @@ void	init_texture_maps(t_parser *element)
 	map->max_map_column = 0;
 	map->max_map_row = 0;
 	element->map_array = map;
-	element->texture->west = NULL;
-	element->texture->east = NULL;
-	element->texture->south = NULL;
-	element->texture->north = NULL;
+	// element->texture->west = NULL;
+	// element->texture->east = NULL;
+	// element->texture->south = NULL;
+	// element->texture->north = NULL;
+	element->texture->west_data = NULL;
+	element->texture->east_data = NULL;
+	element->texture->south_data = NULL;
+	element->texture->north_data = NULL;
 }
 
 t_parser	*init_elements(void)
@@ -104,10 +108,14 @@ void	free_parser_struct(t_parser *element)
 	free_map_stored(element);
 	if (element->texture)
 	{
-		free(element->texture->east);
-		free(element->texture->west);
-		free(element->texture->north);
-		free(element->texture->south);
+		// free(element->texture->east);
+		// free(element->texture->west);
+		// free(element->texture->north);
+		// free(element->texture->south);
+		free(element->texture->east_data);
+		free(element->texture->west_data);
+		free(element->texture->north_data);
+		free(element->texture->south_data);
 		free(element->texture);
 	}
 	free(element->ceiling_color);
