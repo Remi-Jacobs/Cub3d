@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/03 02:25:55 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:18:46 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_color
 	int		red;
 	int		green;
 	int		blue;
+	int		converted_color;
 }	t_color;
 
 // typedef struct s_player

@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/27 19:30:08 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:18:25 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	color_check_pass(t_color *color, char *readfile)
 		// free(readfile);
 		return (0);
 	}
+	// convertsion to hex and then concantenate it to get the color
+	// return it on out struct
 	return (1);
 }
 
