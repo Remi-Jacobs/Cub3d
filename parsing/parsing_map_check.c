@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/02 15:10:08 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 05:03:47 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,65 @@ static int	verify_map_walls_extra_space(char *map)
 	return (1);
 }
 
+int	evaluate_multiple_pos(char **map)
+{
+	int	flag;
+	int	i;
+	int	j;
+
+	i = 0;
+	flag = 0;
+	while(map[i] != NULL)
+	{
+		j = 0;
+		while (map[i][j] != '\0')
+		{ 
+			if (map[i][j] == 'N')
+				flag++;
+			else if (map[i][j] == 'S')
+				flag++;
+			else if (map[i][j] == 'W')
+				flag++;
+			else if (map[i][j] == 'E')
+				flag++;
+			j++;
+		}
+		i++;
+	}
+	if (flag == 1){
+		return (1);
+	}
+	return (0);
+}
+
+int	get_player_pos(t_map *map)
+{
+	int	flag;
+	int	i;
+	int	j;
+
+	i = 0;
+	flag = 0;
+	while(map->map[i] != NULL)
+	{
+		j = 0;
+		while (map->map[i][j] != '\0')
+		{ 
+			if (map->map[i][j] == 'N' || map->map[i][j] == 'E'
+				|| map->map[i][j] == 'S' || map->map[i][j] == 'W')
+			{
+				map->player_column = i;
+				map->player_row = j;
+				printf("row = %d &&  %d  && %d   &&   %d\n", map->player_row, i, map->player_column, j);
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	verify_map_walls(t_parser *element)
 {
 	int	i;
@@ -87,9 +146,15 @@ int	verify_map_walls(t_parser *element)
 	{
 		if (element->map_array->map[0][i] != '1'
 			&& element->map_array->map[0][i] != ' ')
+		{
+			ft_error("MAP not surrounded by wall\n");
 			return (0);
+		}
 		if (!verify_map_walls_extra_space(element->map_array->map[0]))
+		{
+			ft_error("MAP opt not surrounded by wall\n");
 			return (0);
+		}
 		i++;
 	}
 	i = 0;
@@ -97,15 +162,30 @@ int	verify_map_walls(t_parser *element)
 	{
 		if (element->map_array->map[column][i] != '1'
 			&& element->map_array->map[column][i] != ' ')
+			{
+				ft_error("MAP opt3 surrounded by wall\n");
+				return (0);
+			}
+		if (!verify_map_walls_extra_space(element->map_array->map[column])){
+			ft_error("MAP opt4 surrounded by wall\n");
 			return (0);
-		if (!verify_map_walls_extra_space(element->map_array->map[column]))
-			return (0);
+		}
 		i++;
 	}
 	if (!verify_map_walls_utils(element))
 		return (0);
+	if (!evaluate_multiple_pos(element->map_array->map)){
+		ft_error("multiple player position\n");
+		return (0);
+	}
+	if (!get_player_pos(element->map_array)){
+		ft_error("couldnt get player position\n");
+		return (0);
+	}
 	return (1);
 }
+
+
 
 int	validating_map(char *readfile, t_parser *element)
 {

@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/02 16:11:25 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/03 02:25:55 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_color
 typedef struct s_map
 {
 	char		**map;
+	int			player_row;
+	int			player_column;
 	int			max_map_row;
 	int 		max_map_column;
 	
