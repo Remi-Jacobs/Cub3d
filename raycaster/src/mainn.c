@@ -54,16 +54,28 @@ float fixed_dist(float x1, float y1, float x2, float y2, t_game *game)
     float delta_x = x2 - x1;
     float delta_y = y2 - y1;
     float angle = atan2(delta_y, delta_x) - game->player.angle;
-    float fix_dist = distance(delta_x, delta_y) * cos(angle);
-    return fix_dist;
+
+    // Correct for fish-eye effect
+    float raw_dist = distance(delta_x, delta_y);
+    return raw_dist * cos(angle);
 }
+
+
+// float fixed_dist(float x1, float y1, float x2, float y2, t_game *game)
+// {
+//     float delta_x = x2 - x1;
+//     float delta_y = y2 - y1;
+//     float angle = atan2(delta_y, delta_x) - game->player.angle;
+//     float fix_dist = distance(delta_x, delta_y) * cos(angle);
+//     return fix_dist;
+// }
 
 // touch function 
 bool touch(float px, float py, t_game *game)
 {
     int x = px / BLOCK;
     int y = py / BLOCK;
-    if(game->map[y][x] == '1')
+    if(game->map[y][x] == '1' || game->map[y][x] == ' ')
         return true;
     return false;
 }
@@ -86,8 +98,6 @@ void load_textures(t_game *game)
     game->element->texture->south_img = mlx_xpm_file_to_image(game->mlx, "./Mushroom.xpm", &game->element->texture->width, &game->element->texture->height);
     game->element->texture->south_data = mlx_get_data_addr(game->element->texture->south_img, &game->element->texture->bpp, &game->element->texture->size_line, &game->element->texture->endian);
 }
-
-
 
 // initialisation functions
 
@@ -114,260 +124,119 @@ int get_texture_pixel(void *texture_data, int x, int y, int size_line, int bpp)
     return color;
 }
 
-
-// raycasting functions
-// SO CLOSE for the 4 walls
-void draw_line(t_player *player, t_game *game, float start_x, int i)
+void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 {
-    float cos_angle = cos(start_x);
-    float sin_angle = sin(start_x);
+    float cos_angle = cos(ray_angle);
+    float sin_angle = sin(ray_angle);
+
     float ray_x = player->playerX;
     float ray_y = player->playerY;
 
-    int texture_direction = 0;  // 0 = east, 1 = west, 2 = north, 3 = south
-    int hit_vertical = 0;       // 1 = vertical hit, 0 = horizontal hit
+    int texture_direction = 0; // 0 = east, 1 = west, 2 = north, 3 = south
+    int hit_vertical = 0;      // 1 = vertical hit, 0 = horizontal hit
 
-    // Raycasting loop to find wall hit
+    float delta_dist_x = fabs(1 / cos_angle);
+    float delta_dist_y = fabs(1 / sin_angle);
+
+    float step_x = (cos_angle > 0) ? 1 : -1;
+    float step_y = (sin_angle > 0) ? 1 : -1;
+
+    float side_dist_x = (cos_angle > 0) ? 
+        (floor(ray_x / BLOCK) * BLOCK + BLOCK - ray_x) * delta_dist_x :
+        (ray_x - floor(ray_x / BLOCK) * BLOCK) * delta_dist_x;
+
+    float side_dist_y = (sin_angle > 0) ? 
+        (floor(ray_y / BLOCK) * BLOCK + BLOCK - ray_y) * delta_dist_y :
+        (ray_y - floor(ray_y / BLOCK) * BLOCK) * delta_dist_y;
+
     while (!touch(ray_x, ray_y, game))
     {
-        ray_x += cos_angle;
-        ray_y += sin_angle;
-    }
-
-    // Determine which wall side the ray intersects and adjust texture
-    if (fabs(cos_angle) > fabs(sin_angle))  // Vertical hit (East/West walls)
-    {
-        if (cos_angle > 0)
-            texture_direction = 0;  // East wall
-        else
-            texture_direction = 1;  // West wall
-        hit_vertical = 1;
-    }
-    else  // Horizontal hit (North/South walls)
-    {
-        if (sin_angle > 0)
-            texture_direction = 3;  // South wall
-        else
-            texture_direction = 2;  // North wall
-        hit_vertical = 0;
-    }
-
-    if (!DEBUG)
-    {
-        // Calculate distance to the wall and adjust the height of the wall slice
-        float dist = fixed_dist(player->playerX, player->playerY, ray_x, ray_y, game);
-        float height = (BLOCK / dist) * (WIDTH / 2);
-        int start_y = (HEIGHT - height) / 2;
-        int end = start_y + height;
-
-        // Draw ceiling
-        for (int y = 0; y < start_y; y++)
-            put_pixel(i, y, game->element->ceiling_color->converted_color, game);
-
-        // Draw wall with texture based on the direction of the wall
-        while (start_y < end)
+        if (side_dist_x < side_dist_y)
         {
-            // Calculate texture Y coordinate for the wall slice
-            int tex_y = (start_y - (HEIGHT - height) / 2) * game->element->texture->height / height;
-
-            int tex_x = 0;
-            if (hit_vertical)
-                tex_x = (int)(ray_y) % BLOCK;  // Horizontal texture for East/West walls
-            else
-                tex_x = (int)(ray_x) % BLOCK;  // Vertical texture for North/South walls
-
-            // Fetch texture color for the given coordinates
-            int tex_color = 0;
-            if (texture_direction == 0)  // East texture
-            {
-                tex_color = get_texture_pixel(game->element->texture->east_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-            }
-            else if (texture_direction == 1)  // West texture
-            {
-                tex_color = get_texture_pixel(game->element->texture->west_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-            }
-            else if (texture_direction == 2)  // North texture
-            {
-                // printf("North texture being applied\n"); // Debugging
-                tex_color = get_texture_pixel(game->element->texture->north_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-            }
-            else if (texture_direction == 3)  // South texture
-            {
-                // printf("South texture being applied\n"); // Debugging
-                tex_color = get_texture_pixel(game->element->texture->south_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-            }
-
-            put_pixel(i, start_y, tex_color, game);
-            start_y++;
+            side_dist_x += delta_dist_x;
+            ray_x += step_x;
+            ray_y += step_x * sin_angle / cos_angle;
+            hit_vertical = 1;
+            texture_direction = (cos_angle > 0) ? 0 : 1;
         }
-
-        // Draw floor
-        for (int y = end; y < HEIGHT; y++)
-            put_pixel(i, y, game->element->floor_color->converted_color, game);
+        else
+        {
+            side_dist_y += delta_dist_y;
+            ray_y += step_y;
+            ray_x += step_y * cos_angle / sin_angle;
+            hit_vertical = 0;
+            texture_direction = (sin_angle > 0) ? 3 : 2;
+        }
     }
+
+    float dist = fixed_dist(player->playerX, player->playerY, ray_x, ray_y, game);
+    dist = fabs(dist); // Ensure the distance is always positive
+
+    float height = (BLOCK / dist) * (WIDTH / 2);
+    int start_y = (HEIGHT - height) / 2;
+    int end = start_y + height;
+
+    if (start_y < 0) start_y = 0;
+    if (end >= HEIGHT) end = HEIGHT - 1;
+
+    for (int y = 0; y < start_y; y++)
+        put_pixel(screen_x, y, game->element->ceiling_color->converted_color, game);
+
+    while (start_y < end)
+    {
+        int tex_y = (start_y - (HEIGHT - height) / 2) * game->element->texture->height / height;
+        tex_y = tex_y < 0 ? 0 : tex_y;
+        tex_y = tex_y >= game->element->texture->height ? game->element->texture->height - 1 : tex_y;
+
+        int tex_x = hit_vertical ? ((int)ray_y % BLOCK) : ((int)ray_x % BLOCK);
+        tex_x = (tex_x * game->element->texture->width) / BLOCK;
+        tex_x = tex_x < 0 ? 0 : tex_x;
+        tex_x = tex_x >= game->element->texture->width ? game->element->texture->width - 1 : tex_x;
+
+        int tex_color = 0;
+        if (texture_direction == 0)
+            tex_color = get_texture_pixel(game->element->texture->east_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
+        else if (texture_direction == 1)
+            tex_color = get_texture_pixel(game->element->texture->west_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
+        else if (texture_direction == 2)
+            tex_color = get_texture_pixel(game->element->texture->north_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
+        else if (texture_direction == 3)
+            tex_color = get_texture_pixel(game->element->texture->south_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
+
+        put_pixel(screen_x, start_y, tex_color, game);
+        start_y++;
+    }
+
+    for (int y = end; y < HEIGHT; y++)
+        put_pixel(screen_x, y, game->element->floor_color->converted_color, game);
 }
 
-//This does just east and west walls but well
-// void draw_line(t_player *player, t_game *game, float start_x, int i)
-// {
-//     float cos_angle = cos(start_x);
-//     float sin_angle = sin(start_x);
-//     float ray_x = player->playerX;
-//     float ray_y = player->playerY;
 
-//     int texture_direction = 0; // 0 = east, 1 = west, 2 = north, 3 = south
-//     int hit_vertical = 0; // 1 = vertical hit, 0 = horizontal hit
-
-//     // Raycasting loop to find wall hit
-//     while (!touch(ray_x, ray_y, game))
-//     {
-//         ray_x += cos_angle;
-//         ray_y += sin_angle;
-//     }
-
-//     // Determine which wall side the ray intersects and adjust texture
-//     if (cos_angle > 0) 
-//     {
-//         texture_direction = 0;  // Ray hits east wall
-//         hit_vertical = 1;  // Vertical hit for East/West
-//     }
-//     else if (cos_angle < 0) 
-//     {
-//         texture_direction = 1;  // Ray hits west wall
-//         hit_vertical = 1;  // Vertical hit for East/West
-//     }
-//     else if (sin_angle > 0) 
-//     {
-//         texture_direction = 3;  // Ray hits south wall
-//         hit_vertical = 0;  // Horizontal hit for North/South
-//     }
-//     else if (sin_angle < 0) 
-//     {
-//         texture_direction = 2;  // Ray hits north wall
-//         hit_vertical = 0;  // Horizontal hit for North/South
-//     }
-
-//     if (!DEBUG)
-//     {
-//         // Calculate distance to the wall and adjust the height of the wall slice
-//         float dist = fixed_dist(player->playerX, player->playerY, ray_x, ray_y, game);
-//         float height = (BLOCK / dist) * (WIDTH / 2);
-//         int start_y = (HEIGHT - height) / 2;
-//         int end = start_y + height;
-
-//         // Draw ceiling
-//         for (int y = 0; y < start_y; y++)
-//             put_pixel(i, y, game->element->ceiling_color->converted_color, game);
-
-//         // Draw wall with texture based on the direction of the wall
-//         while (start_y < end)
-//         {
-//             // Calculate texture Y coordinate for the wall slice
-//             int tex_y = (start_y - (HEIGHT - height) / 2) * game->element->texture->height / height;
-
-//             int tex_x = 0;
-//             if (hit_vertical) 
-//                 tex_x = (int)(ray_y) % BLOCK; // Horizontal texture for East/West walls
-//             else 
-//                 tex_x = (int)(ray_x) % BLOCK; // Vertical texture for North/South walls
-
-//             // Fetch texture color for the given coordinates
-//             int tex_color = 0;
-//             if (texture_direction == 0)  // East texture
-//                 tex_color = get_texture_pixel(game->element->texture->east_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-//             else if (texture_direction == 1)  // West texture
-//                 tex_color = get_texture_pixel(game->element->texture->west_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-//             else if (texture_direction == 2)  // North texture
-//                 tex_color = get_texture_pixel(game->element->texture->north_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-//             else if (texture_direction == 3)  // South texture
-//                 tex_color = get_texture_pixel(game->element->texture->south_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
-
-//             put_pixel(i, start_y, tex_color, game);
-//             start_y++;
-//         }
-
-//         // Draw floor
-//         for (int y = end; y < HEIGHT; y++)
-//             put_pixel(i, y, game->element->floor_color->converted_color, game);
-//     }
-// }
-
-// void draw_line(t_player *player, t_game *game, float start_x, int i)
-// {
-//     float cos_angle = cos(start_x);
-//     float sin_angle = sin(start_x);
-//     float ray_x = player->playerX;
-//     float ray_y = player->playerY;
-
-//     while(!touch(ray_x, ray_y, game))
-//     {
-//         if(DEBUG)
-//             put_pixel(ray_x, ray_y, 0xFF0000, game);
-//         ray_x += cos_angle;
-//         ray_y += sin_angle;
-//     }
-//     if(!DEBUG)
-//     {
-//         float dist = fixed_dist(player->playerX, player->playerY, ray_x, ray_y, game);
-//         float height = (BLOCK / dist) * (WIDTH / 2);
-//         int start_y = (HEIGHT - height) / 2;
-//         int end = start_y + height;
-// 		for (int y = 0; y < start_y; y++)
-//         	put_pixel(i, y, game->element->ceiling_color->converted_color, game); 
-
-//         //this drawas the wall
-//         while(start_y < end)
-//         {
-//             put_pixel(i, start_y, 0xFFF00, game);
-//             start_y++;
-//         }
-
-//         //this draws the floor
-// 		for (int y = end; y < HEIGHT; y++)
-//         	put_pixel(i, y, game->element->floor_color->converted_color, game); // i used this to draw the floor
-//     }
-// }
 
 int draw_loop(t_game *game)
 {
     t_player *player = &game->player;
-    move_player(player);
+    move_player(player, game);
     clear_image(game);
-    if(DEBUG)
+
+    if (DEBUG)
     {
         draw_square(player->playerX, player->playerY, 10, 0x00FFFF, game);
         draw_map(game);
     }
+
     float fraction = PI / 3 / WIDTH;
     float start_x = player->angle - PI / 6;
     int i = 0;
-    while(i < WIDTH)
+
+    while (i < WIDTH)
     {
         draw_line(player, game, start_x, i);
         start_x += fraction;
         i++;
     }
+
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
     return 0;
 }
 
-// int main(int ac, char **argv)
-// {
-//     t_game game;
-//     // init
-
-//     // Assuming valid_extension_args_no and parsing_func are defined elsewhere
-//     // if (!valid_extension_file_check(argv[1], ac, "cub"))
-//     //     return (0);
-    // init_game(&game, argv[1]);
-    
-	
-//     // hooks
-//     mlx_hook(game.win, 2, 1L<<0, key_press, &game.player);
-//     mlx_hook(game.win, 3, 1L<<1, key_release, &game.player);
-//     // draw loop
-    // mlx_loop_hook(game.mlx, draw_loop, &game);
-
-//     mlx_loop(game.mlx);
-//     return 0;
-// }

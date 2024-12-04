@@ -7,7 +7,7 @@ EA ./path_to_the_east_texture.xpm
    
 	SO ./path_to_the_south_texture.xpm
 
-F 255	,255		,1		== FF 00 01	
+F 255	,255		,1
 C 225			,31,				10				
 111111111111111111111111
 1000000000110000000000001

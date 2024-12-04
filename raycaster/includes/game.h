@@ -64,7 +64,9 @@ int	init_player(t_player *player, t_map *map);
 void	init_game(t_game *game, char *argv);
 int 	key_release(int keycode, t_player *player);
 int 	key_press(int keycode, t_player *player);
-void	move_player(t_player *player);
+// void	move_player(t_player *player);
+void move_player(t_player *player, t_game *game);
+bool touch(float px, float py, t_game *game);
 int		draw_loop(t_game *game);
 
 # endif
