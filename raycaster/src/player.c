@@ -68,9 +68,6 @@ int key_release(int keycode, t_player *player)
     return 0;
 }
 
-
-
-
 void move_player(t_player *player, t_game *game)
 {
     int speed = 3;

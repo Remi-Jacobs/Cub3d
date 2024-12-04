@@ -29,6 +29,12 @@ typedef struct s_player
 {
     float x;
     float y;
+
+    float       player_dirX;
+    float       player_dirY;
+    float		player_planeX;
+    float		player_planeY;
+
 	float playerX;
 	float playerY;
     float angle;
@@ -57,10 +63,17 @@ typedef struct s_game
 	t_parser *element;
 
     char **map;
+
+	t_ray		ray;
+	int		win_height;
+	int		win_width;
+	int		**tex_pixels;
+
 } t_game;
 
+
 // void init_player(t_player *player);
-int	init_player(t_player *player, t_map *map);
+int		init_player(t_player *player, t_map *map);
 void	init_game(t_game *game, char *argv);
 int 	key_release(int keycode, t_player *player);
 int 	key_press(int keycode, t_player *player);

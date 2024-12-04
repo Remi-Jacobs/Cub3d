@@ -107,6 +107,7 @@ void init_game(t_game *game, char *argv)
     if (game->element == NULL)
         return;
     init_player(&game->player, game->element->map_array);
+    game->tex_pixels = NULL;
     game->map = game->element->map_array->map;
     game->mlx = mlx_init();
     game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Game");
@@ -203,7 +204,7 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
         else if (texture_direction == 3)
             tex_color = get_texture_pixel(game->element->texture->south_data, tex_x, tex_y, game->element->texture->size_line, game->element->texture->bpp);
 
-        put_pixel(screen_x, start_y, tex_color, game);
+        put_pixel(screen_x, start_y, 255, game);
         start_y++;
     }
 
