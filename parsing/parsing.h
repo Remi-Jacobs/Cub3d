@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/04 19:38:26 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/04 20:58:32 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@
 # include "../mlx/mlx.h"
 # include "../raycaster/includes/game.h"
 
+
 # define MAP_HEIGHT 50
 # define TILE_SIZE 60
 # define TILE_SIZE_MINI 20
 # define IMAGE "./wall.xpm"
 
-typedef struct s_ray t_ray;
+typedef struct s_game t_game;
 
 // typedef struct s_texture
 // {
@@ -70,26 +71,7 @@ typedef struct s_color
 	
 // }	t_player;
 
-typedef struct s_ray
-{
-	double	camera_x;
-	double	dir_x;
-	double	dir_y;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	double	sidedist_x;
-	double	sidedist_y;
-	double	deltadist_x;
-	double	deltadist_y;
-	double	wall_dist;
-	double	wall_x;
-	int		side;
-	int		line_height;
-	int		draw_start;
-	int		draw_end;
-}	t_ray;
+
 
 typedef struct s_map
 {
@@ -112,6 +94,10 @@ typedef struct s_parser
 	void		*win_ptr;
 	void		*image;
 }	t_parser;
+
+
+int	close_game(t_game *game);
+
 
 int	valid_extension_file_check(char *argv, int ac, char *str);
 

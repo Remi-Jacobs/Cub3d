@@ -34,7 +34,7 @@ int init_player(t_player *player, t_map *map)
     return (1);
 }
 
-int key_press(int keycode, t_player *player)
+int key_press(int keycode, t_player *player, t_game *game)
 {
     if (keycode == W)
         player->key_up = true;
@@ -48,6 +48,9 @@ int key_press(int keycode, t_player *player)
         player->left_rotate = true;
     if (keycode == RIGHT)
         player->right_rotate = true;
+	if (keycode == KEY_ESC)
+        close_game(game);
+	
     return (0);
 }
 
