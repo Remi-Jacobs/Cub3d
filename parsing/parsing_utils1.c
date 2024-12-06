@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/27 18:56:59 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:02:52 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	valid_extension_file_check(char *argv, int ac, char *str)
 				if ((!ft_strncmp(file, str, 3)) && (ft_strlen(file) == 3))
 					return (1);
 			}
-			
 		}
 		ft_error("invalid extension\n");
 		return (0);
@@ -85,10 +84,8 @@ int	valid_extension_args_no(char *argv, int ac, char *str)
 char	*ft_skip_check_element_char(char *file)
 {
 	char	*trimmed_str;
-	// char	*save_ptr;
 
 	trimmed_str = file;
-	// save_ptr = trimmed_str;	
 	while (*trimmed_str == ' ' || *trimmed_str == 9
 		|| (*trimmed_str >= 11 && *trimmed_str <= 13))
 		trimmed_str++;
@@ -107,8 +104,8 @@ void	ft_error(char *msg_error)
 		write (1, msg_error++, 1);
 }
 
-void	ft_close_error(char *str, int fd)
-{
-	ft_error(str);
-	close(fd);
-}
+// void	ft_close_error(char *str, int fd)
+// {
+// 	ft_error(str);
+// 	close(fd);
+// }

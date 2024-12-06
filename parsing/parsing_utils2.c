@@ -6,39 +6,13 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/03 18:56:20 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/05 21:25:33 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./parsing/parsing.h"
 
 //should be ensuring the len also when checking the strncmp
-
-// int	checking_texture(char *readfile, t_parser *element)
-// {
-// 	if (ft_strncmp(readfile, "WE", 2) == 0)
-// 	{
-// 		if (saving_texture(readfile, &element->texture->west))
-// 			return (1);
-// 	}
-// 	else if (ft_strncmp(readfile, "EA", 2) == 0)
-// 	{
-// 		if (saving_texture(readfile, &element->texture->east))
-// 			return (1);
-// 	}
-// 	else if (ft_strncmp(readfile, "NO", 2) == 0)
-// 	{
-// 		if (saving_texture(readfile, &element->texture->north))
-// 			return (1);
-// 	}
-// 	else if (ft_strncmp(readfile, "SO", 2) == 0)
-// 	{
-// 		if (saving_texture(readfile, &element->texture->south))
-// 			return (1);
-// 	}
-// 	ft_error("\n\n\n\n SHOULD Invalid Texture\n\n\n\n\n");
-// 	return (0);
-// }
 
 int	checking_texture(char *readfile, t_parser *element)
 {
@@ -73,15 +47,11 @@ int	saving_texture(char *readfile, char **texture)
 	readfile += 2;
 	readfile = ft_iswhitespace(readfile);
 	new_trim = ft_trim_newline(readfile);
-	// if (!ft_open_file(new_trim))
-	// 	return (0);
-	// mlx_xpm_file_to_image()
 	*texture = ft_strdup(new_trim);
 	printf("from parsing_utils2.c here --> %s\n", *texture);
 	free(new_trim);
 	return (1);
 }
-
 
 int	num_range(int num, t_color *color)
 {
@@ -104,14 +74,11 @@ int	num_range(int num, t_color *color)
 	return (0);
 }
 
-
-
 int	color_check_pass(t_color *color, char *readfile)
 {
 	if (color->green == -1 || color->blue == -1 || color->red == -1)
 	{
 		ft_error("Invalid color format\n");
-		// free(readfile);
 		return (0);
 	}
 	color->converted_color = (color->red << 16) | \
@@ -124,20 +91,15 @@ int	saving_ceiling_and_floor(char *readfile, t_color *color)
 	int		num;
 	int		flag;
 	char	*num_str;
-	
-	// char	*save_ptr;
+
 	flag = 0;
-	// save_ptr = readfile;
 	while (*readfile != '\0')
 	{
 		num_str = readfile;
 		while (*readfile != ',' && *readfile != '\0')
 			readfile++;
 		if (*readfile == ',')
-		{
-			*readfile = '\0';
-			readfile++;
-		}
+			*readfile++ = '\0';
 		num = ft_atoi(num_str);
 		if (!num_range(num, color))
 		{
@@ -147,10 +109,6 @@ int	saving_ceiling_and_floor(char *readfile, t_color *color)
 		readfile = ft_iswhitespace(readfile);
 	}
 	if (!color_check_pass(color, readfile) || flag)
-	{
-	// free(save_ptr);
 		return (0);
-	}
-	// free(save_ptr);
 	return (1);
 }

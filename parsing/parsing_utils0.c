@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/27 18:38:16 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/05 21:00:08 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,16 @@ int	validating_ceiling_floor(char *trim_file, t_parser *element)
 		trim_ptr++;
 		trim_ptr = ft_iswhitespace(trim_ptr);
 		trim_newline = ft_trim_newline(trim_ptr);
-		if (saving_ceiling_and_floor(trim_newline, element->ceiling_color)){
-			free(trim_newline);
-			return (1);
-		}
+		if (saving_ceiling_and_floor(trim_newline, element->ceiling_color))
+			return (free(trim_newline), 1);
 	}
 	else if (ft_strncmp(trim_ptr, "F", 1) == 0)
 	{
 		trim_ptr++;
 		trim_ptr = ft_iswhitespace(trim_ptr);
 		trim_newline = ft_trim_newline(trim_ptr);
-		if (saving_ceiling_and_floor(trim_newline, element->floor_color)){
-			free(trim_newline);
-			return (1);
-		}
+		if (saving_ceiling_and_floor(trim_newline, element->floor_color))
+			return (free(trim_newline), 1);
 	}
 	ft_error("Invalid color passed");
 	free(trim_newline);

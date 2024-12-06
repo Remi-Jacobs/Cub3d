@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/04 20:58:32 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/06 02:22:14 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define TILE_SIZE_MINI 20
 # define IMAGE "./wall.xpm"
 
-typedef struct s_game t_game;
+typedef struct s_game	t_game;
 
 // typedef struct s_texture
 // {
@@ -40,20 +40,20 @@ typedef struct s_game t_game;
 
 typedef struct s_texture
 {
-    void    *east_img;
-    void    *west_img;
-    void    *north_img;
-    void    *south_img;
-    int     width;
-    int     height;
-    char    *east_data;
-    char    *west_data;
-    char    *north_data;
-    char    *south_data;
-    int     bpp;
-    int     size_line;
-    int     endian;
-}   t_texture;
+	void	*east_img;
+	void	*west_img;
+	void	*north_img;
+	void	*south_img;
+	int		width;
+	int		height;
+	char	*east_data;
+	char	*west_data;
+	char	*north_data;
+	char	*south_data;
+	int		bpp;
+	int		size_line;
+	int		endian;
+}	t_texture;
 
 
 typedef struct s_color
@@ -68,7 +68,6 @@ typedef struct s_color
 // {
 // 	double		player_posX;
 // 	double		player_posY;
-	
 // }	t_player;
 
 
@@ -79,8 +78,7 @@ typedef struct s_map
 	int			player_row;
 	int			player_column;
 	int			max_map_row;
-	int 		max_map_column;
-	
+	int			max_map_column;
 }	t_map;
 
 typedef struct s_parser
@@ -111,8 +109,11 @@ void		free_parser_struct(t_parser *element);
 /*parsing_map_check.c    file full and formatted */
 int			verify_map_walls_utils(t_parser *element);
 int			verify_map_walls(t_parser *element);
+int			verify_map_walls_extra_space(char *map);
 int			validating_map(char *readfile, t_parser *element);
 char		*ft_skip_whitespace_map(char *readfile);
+int			evaluate_multiple_pos(char **map);
+int			get_player_pos(t_map *map);
 
 /* parsing_utils0.c  */
 int			ft_open_file(char *read_file);
@@ -126,7 +127,7 @@ char		*ft_trim_newline(char *read_file);
 int			valid_extension_args_no(char *argv, int ac, char *str);
 char		*ft_skip_check_element_char(char *file);
 void		ft_error(char *msg_error);
-void		ft_close_error(char *str, int fd);
+// void		ft_close_error(char *str, int fd);
 
 /* parsing_utils2.c  */
 int			checking_texture(char *readfile, t_parser *element);

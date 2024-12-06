@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/03 18:55:06 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/05 16:48:19 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_texture_maps(t_parser *element)
 {
 	int		i;
 	t_map	*map;
-	
+
 	i = 0;
 	map = malloc(sizeof(t_map));
 	map->map = malloc(sizeof(char *) * MAP_HEIGHT);
@@ -47,10 +47,6 @@ void	init_texture_maps(t_parser *element)
 	map->max_map_column = 0;
 	map->max_map_row = 0;
 	element->map_array = map;
-	// element->texture->west = NULL;
-	// element->texture->east = NULL;
-	// element->texture->south = NULL;
-	// element->texture->north = NULL;
 	element->texture->west_data = NULL;
 	element->texture->east_data = NULL;
 	element->texture->south_data = NULL;
@@ -108,10 +104,6 @@ void	free_parser_struct(t_parser *element)
 	free_map_stored(element);
 	if (element->texture)
 	{
-		// free(element->texture->east);
-		// free(element->texture->west);
-		// free(element->texture->north);
-		// free(element->texture->south);
 		free(element->texture->east_data);
 		free(element->texture->west_data);
 		free(element->texture->north_data);

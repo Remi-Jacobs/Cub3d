@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/04 22:05:23 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/05 16:43:39 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,40 @@
 #include "../mlx/mlx.h"
 
 // #define TILE_SIZE 32
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
+// #define WIN_WIDTH 800
+// #define WIN_HEIGHT 600
 
-#define MINIMAP_WIDTH 200
-#define MINIMAP_HEIGHT 150
+// #define MINIMAP_WIDTH 200
+// #define MINIMAP_HEIGHT 150
 
-void	ft_error_exit(t_parser *data, char *str)
-{
-	free_parser_struct(data);
-	printf("%s\n", str);
-}
+// void	ft_error_exit(t_parser *data, char *str)
+// {
+// 	free_parser_struct(data);
+// 	printf("%s\n", str);
+// }
 
 
 // Function to create an image filled with a color
-void *create_color_image(t_parser *data, int color)
-{
-    int *pixels;
-    void *img;
-    int width = TILE_SIZE;
-    int height = TILE_SIZE;
-    int bpp, size_line, endian;
+// void	*create_color_image(t_parser *data, int color)
+// {
+// 	int *pixels;
+// 	void *img;
+// 	int width = TILE_SIZE;
+// 	int height = TILE_SIZE;
+// 	int bpp, size_line, endian;
 
-    // Create the image with the specified width and height
-    img = mlx_new_image(data->mlx_ptr, width, height);
-    if (!img)
-        return NULL;
+// 	img = mlx_new_image(data->mlx_ptr, width, height);
+// 	if (!img)
+// 		return (NULL);
+// 	pixels = (int *)mlx_get_data_addr(img, &bpp, &size_line, &endian);
+// 	if (!pixels)
+// 		return (NULL);
+// 	int i = -1;
+// 	while (++i < width * height)
+// 		pixels[i] = color;
 
-    // Get the pixel data address along with some extra info (bits per pixel, size line, and endian)
-    pixels = (int *)mlx_get_data_addr(img, &bpp, &size_line, &endian);
-    if (!pixels)
-        return NULL;
-
-    // Set the color for every pixel in the image
-    for (int i = 0; i < width * height; i++)
-        pixels[i] = color;
-
-    return img;
-}
+// 	return (img);
+// }
 
 int	close_game_on_cross(t_game *game)
 {
@@ -75,26 +71,19 @@ int	close_game(t_game *game)
 	exit(0);
 }
 
-int main(int ac, char **argv)
+int	main(int ac, char **argv)
 {
-    t_game game;
-    // init
+	t_game	game;
 
-    // Assuming valid_extension_args_no and parsing_func are defined elsewhere
-    if (!valid_extension_file_check(argv[1], ac, "cub"))
-        return (0);
-    init_game(&game, argv[1]);
-    
-	
-    // hooks
-    mlx_hook(game.win, 2, 1L<<0, key_press, &game.player);
-    mlx_hook(game.win, 3, 1L<<1, key_release, &game.player);
-    // draw loop
-    mlx_loop_hook(game.mlx, draw_loop, &game);
+	if (!valid_extension_file_check(argv[1], ac, "cub"))
+		return (0);
+	init_game(&game, argv[1]);
+	mlx_hook(game.win, 2, 1L << 0, key_press, &game.player);
+	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
+	mlx_loop_hook(game.mlx, draw_loop, &game);
 	mlx_hook(game.win, 17, 0, close_game_on_cross, &game);
-	// mlx_key_hook(game.win, key_hook, &game);
-    mlx_loop(game.mlx);
-    return 0;
+	mlx_loop(game.mlx);
+	return (0);
 }
 
 

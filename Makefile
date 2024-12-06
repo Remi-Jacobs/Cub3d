@@ -60,7 +60,7 @@
 
 NAME = cub3d
 CC = cc
-CFLAGS = -I. -I./mlx -I./parsing -lm -lz
+CFLAGS = -I. -I./mlx -I./parsing -lm -lz 
 INCLUDE = ./parsing/parsing.h
 
 # Adjust the MLXFLAGS to point to the correct path
