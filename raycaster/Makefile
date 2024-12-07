@@ -4,7 +4,7 @@ OBJ = $(SRC:.c=.o)
 
 LFLAGS = -L./includes/mlx -lmlx -lXext -lX11 -lm -lz
 INCLUDES = includes/mlx/libmlx.a
-SRC = src/mainn.c src/player.c
+SRC = src/mainn.c src/player.cz
 
 all: $(NAME)
 

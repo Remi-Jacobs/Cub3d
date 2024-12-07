@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/06 02:35:58 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/07 04:18:53 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,9 @@ void	init_game(t_game *game, char *argv)
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 
-int	get_texture_pixel(t_texture *texture, int x, int y, char *texture_data)
+
+
+int	get_texture_pixel(t_texture *texture, int x, int y, void *texture_data)
 {
 	int				offset;
 	unsigned char	*data;
@@ -159,41 +161,211 @@ int	get_texture_pixel(t_texture *texture, int x, int y, char *texture_data)
 	return (color);
 }
 
+// void	init_ray(t_player *player, t_game *game, float ray_angle)
+// {
+// 	game->ray_dir_x = cos(ray_angle);
+// 	game->ray_dir_y = sin(ray_angle);
+// 	game->delta_dist_x = fabs(1 / game->ray_dir_x);
+// 	game->delta_dist_y = fabs(1 / game->ray_dir_y);
+// }
+
+// void	calculate_step_and_sidedist(t_player *player, t_game *game, t_map *map)
+// {
+// 	if (game->ray_dir_x < 0)
+// 	{
+// 		game->step_x = -1;
+// 		game->side_dist_x = (player->player_x / BLOCK - map->x) \
+// 		* game->delta_dist_x;
+// 	}
+// 	else
+// 	{
+// 		game->step_x = 1;
+// 		game->side_dist_x = (map->x + 1.0 - player->player_x / BLOCK) \
+// 		* game->delta_dist_x;
+// 	}
+// 	if (game->ray_dir_y < 0)
+// 	{
+// 		game->step_y = -1;
+// 		game->side_dist_y = (player->player_y / BLOCK - map->y) \
+// 		* game->delta_dist_y;
+// 	}
+// 	else
+// 	{
+// 		game->step_y = 1;
+// 		game->side_dist_y = (map->y + 1.0 - player->player_y / BLOCK) \
+// 		* game->delta_dist_y;
+// 	}
+// }
+
+// int	perform_dda(t_game *game, t_map *map)
+// {
+// 	int	hit;
+
+// 	hit = 0;
+// 	while (!hit)
+// 	{
+// 		if (game->side_dist_x < game->side_dist_y)
+// 		{
+// 			game->side_dist_x += game->delta_dist_x;
+// 			map->x += game->step_x;
+// 			game->side = 0;
+// 		}
+// 		else
+// 		{
+// 			game->side_dist_y += game->delta_dist_y;
+// 			map->y += game->step_y;
+// 			game->side = 1;
+// 		}
+// 		if (game->map[map->y][map->x] == '1')
+// 			hit = 1;
+// 	}
+// 	return (game->side);
+// }
+
+// float	calculate_wall_distance(t_player *player, t_game *game, \
+// t_map *map, int side)
+// {
+// 	float	perp_wall_dist;
+
+// 	if (side == 0)
+// 		perp_wall_dist = (map->x - player->player_x / BLOCK + \
+// 		(1 - game->step_x) / 2) / game->ray_dir_x;
+// 	else
+// 		perp_wall_dist = (map->y - player->player_y / BLOCK + \
+// 		(1 - game->step_y) / 2) / game->ray_dir_y;
+// 	return (perp_wall_dist);
+// }
+
+// void	draw_wall(t_game *game)
+// {
+// 	int	y;
+
+// 	y = game->draw_start - 1;
+// 	while (++y < game->draw_end)
+// 	{
+// 		game->tex_y = (int)(((y - HEIGHT / 2 + game->line_height / 2) \
+// 		* game->element->texture->height) / game->line_height);
+// 		if (game->tex_y < 0)
+// 			game->tex_y = 0;
+// 		if (game->tex_y >= game->element->texture->height)
+// 			game->tex_y = game->element->texture->height - 1;
+// 		if (game->side == 0 && game->ray_dir_x > 0)
+// 			game->color = get_texture_pixel(game->element->texture, \
+// 			game->tex_x, game->tex_y, game->element->texture->east_data);
+// 		else if (game->side == 0 && game->ray_dir_x < 0)
+// 			game->color = get_texture_pixel(game->element->texture, \
+// 			game->tex_x, game->tex_y, game->element->texture->west_data);
+// 		else if (game->side == 1 && game->ray_dir_y > 0)
+// 			game->color = get_texture_pixel(game->element->texture, \
+// 			game->tex_x, game->tex_y, game->element->texture->south_data);
+// 		else
+// 			game->color = get_texture_pixel(game->element->texture, \
+// 			game->tex_x, game->tex_y, game->element->texture->north_data);
+// 		put_pixel(game->screen_x, y, game);
+// 	}
+// }
+
+// void	draw_ceiling_floor(t_game *game)
+// {
+// 	int	y;
+
+// 	y = 0;
+// 	while (y < game->draw_start)
+// 	{
+// 		game->color = game->element->ceiling_color->converted_color;
+// 		put_pixel(game->screen_x, y, game);
+// 		y++;
+// 	}
+// 	y = game->draw_end;
+// 	while (y < HEIGHT)
+// 	{
+// 		game->color = game->element->floor_color->converted_color;
+// 		put_pixel(game->screen_x, y, game);
+// 		y++;
+// 	}
+// }
+
+// void	draw_ceiling_floor_wall(t_game *game)
+// {
+// 	game->is_ceiling = 1;
+// 	draw_ceiling_floor(game);
+// 	game->is_ceiling = 0;
+// 	draw_ceiling_floor(game);
+// 	draw_wall(game);
+// }
+
+// void	start_draw_line(t_game *game)
+// {
+// 	game->line_height = (int)(HEIGHT / game->perp_wall_dist);
+// 	game->draw_start = -game->line_height / 2 + HEIGHT / 2;
+// 	if (game->draw_start < 0)
+// 		game->draw_start = 0;
+// 	game->draw_end = game->line_height / 2 + HEIGHT / 2;
+// 	if (game->draw_end >= HEIGHT)
+// 		game->draw_end = HEIGHT - 1;
+// }
+
+// void	draw_line(t_player *player, t_game *game, float ray_angle)
+// {
+// 	t_map	map;
+// 	float	wall_x;
+
+// 	init_ray(player, game, ray_angle);
+// 	map.x = (int)(player->player_x / BLOCK);
+// 	map.y = (int)(player->player_y / BLOCK);
+// 	calculate_step_and_sidedist(player, game, &map);
+// 	game->side = perform_dda(game, &map);
+// 	game->perp_wall_dist = \
+// 	calculate_wall_distance(player, game, &map, game->side);
+// 	start_draw_line(game);
+// 	if (game->side == 0)
+// 		wall_x = player->player_y / BLOCK + \
+// 		game->perp_wall_dist * game->ray_dir_y;
+// 	else
+// 		wall_x = player->player_x / BLOCK + \
+// 		game->perp_wall_dist * game->ray_dir_x;
+// 	wall_x -= floor(wall_x);
+// 	game->tex_x = (int)(wall_x * game->element->texture->width);
+// 	if (game->side == 0 && game->ray_dir_x > 0)
+// 		game->tex_x = game->element->texture->width - game->tex_x - 1;
+// 	if (game->side == 1 && game->ray_dir_y < 0)
+// 		game->tex_x = game->element->texture->width - game->tex_x - 1;
+// 	draw_ceiling_floor_wall(game);
+// }
+
+
 void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 {
 	// Ray initialization
-	float ray_dir_x = cos(ray_angle);
-	float ray_dir_y = sin(ray_angle);
+	game->ray_dir_x = cos(ray_angle);
+	game->ray_dir_y = sin(ray_angle);
 
 	int map_x = (int)(player->player_x / BLOCK);
 	int map_y = (int)(player->player_y / BLOCK);
 
-	float delta_dist_x = fabs(1 / ray_dir_x);
-	float delta_dist_y = fabs(1 / ray_dir_y);
-
-	float side_dist_x, side_dist_y;
-	int step_x, step_y;
+	game->delta_dist_x = fabs(1 / game->ray_dir_x);
+	game->delta_dist_y = fabs(1 / game->ray_dir_y);
 
 	// Calculate step and initial side_dist
-	if (ray_dir_x < 0)
+	if (game->ray_dir_x < 0)
 	{
-		step_x = -1;
-		side_dist_x = (player->player_x / BLOCK - map_x) * delta_dist_x;
+		game->step_x = -1;
+		game->side_dist_x = (player->player_x / BLOCK - map_x) * game->delta_dist_x;
 	}
 	else
 	{
-		step_x = 1;
-		side_dist_x = (map_x + 1.0 - player->player_x / BLOCK) * delta_dist_x;
+		game->step_x = 1;
+		game->side_dist_x = (map_x + 1.0 - player->player_x / BLOCK) * game->delta_dist_x;
 	}
-	if (ray_dir_y < 0)
+	if (game->ray_dir_y < 0)
 	{
-		step_y = -1;
-		side_dist_y = (player->player_y / BLOCK - map_y) * delta_dist_y;
+		game->step_y = -1;
+		game->side_dist_y = (player->player_y / BLOCK - map_y) * game->delta_dist_y;
 	}
 	else
 	{
-		step_y = 1;
-		side_dist_y = (map_y + 1.0 - player->player_y / BLOCK) * delta_dist_y;
+		game->step_y = 1;
+		game->side_dist_y = (map_y + 1.0 - player->player_y / BLOCK) * game->delta_dist_y;
 	}
 
 	// Perform DDA
@@ -201,16 +373,16 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 	int side; // 0: vertical wall, 1: horizontal wall
 	while (!hit)
 	{
-		if (side_dist_x < side_dist_y)
+		if (game->side_dist_x < game->side_dist_y)
 		{
-			side_dist_x += delta_dist_x;
-			map_x += step_x;
+			game->side_dist_x += game->delta_dist_x;
+			map_x += game->step_x;
 			side = 0; // Vertical wall
 		}
 		else
 		{
-			side_dist_y += delta_dist_y;
-			map_y += step_y;
+			game->side_dist_y += game->delta_dist_y;
+			map_y += game->step_y;
 			side = 1; // Horizontal wall
 		}
 
@@ -222,9 +394,10 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 	// Calculate perpendicular distance to the wall
 	float perp_wall_dist;
 	if (side == 0)
-		perp_wall_dist = (map_x - player->player_x / BLOCK + (1 - step_x) / 2) / ray_dir_x;
+		perp_wall_dist = (map_x - player->player_x / BLOCK + (1 - game->step_x) / 2) / game->ray_dir_x;
 	else
-		perp_wall_dist = (map_y - player->player_y / BLOCK + (1 - step_y) / 2) / ray_dir_y;
+		perp_wall_dist = (map_y - player->player_y / BLOCK + (1 - game->step_y) / 2) / game->ray_dir_y;
+
 
 	// Correct for fish-eye effect
 	perp_wall_dist *= cos(ray_angle - player->angle);
@@ -241,15 +414,15 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 	// Calculate wall hit position for texture mapping
 	float wall_x;
 	if (side == 0)
-		wall_x = player->player_y / BLOCK + perp_wall_dist * ray_dir_y;
+		wall_x = player->player_y / BLOCK + perp_wall_dist * game->ray_dir_y;
 	else
-		wall_x = player->player_x / BLOCK + perp_wall_dist * ray_dir_x;
+		wall_x = player->player_x / BLOCK + perp_wall_dist * game->ray_dir_x;
 	wall_x -= floor(wall_x);
 
 	int tex_x = (int)(wall_x * game->element->texture->width);
-	if (side == 0 && ray_dir_x > 0)
+	if (side == 0 && game->ray_dir_x > 0)
 		tex_x = game->element->texture->width - tex_x - 1;
-	if (side == 1 && ray_dir_y < 0)
+	if (side == 1 && game->ray_dir_y < 0)
 		tex_x = game->element->texture->width - tex_x - 1;
 
 	// Draw the wall slice
@@ -260,11 +433,11 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 		tex_y = tex_y >= game->element->texture->height ? game->element->texture->height - 1 : tex_y;
 
 		// Fetch the texture color based on the side of the wall and ray direction
-		if (side == 0 && ray_dir_x > 0)
+		if (side == 0 && game->ray_dir_x> 0)
 			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->east_data);
-		else if (side == 0 && ray_dir_x < 0)
+		else if (side == 0 && game->ray_dir_x < 0)
 			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->west_data);
-		else if (side == 1 && ray_dir_y > 0)
+		else if (side == 1 && game->ray_dir_y > 0)
 			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->south_data);
 		else
 			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->north_data);
@@ -290,6 +463,35 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 		y++;
 	}
 }
+
+// int	draw_loop(t_game *game)
+// {
+// 	t_player	*player;
+// 	float		fraction;
+// 	float		start_x;
+// 	int			i;
+
+// 	player = &game->player;
+// 	move_player(player, game);
+// 	clear_image(game);
+// 	if (DEBUG)
+// 	{
+// 		game->color = 0x00FFFF;
+// 		draw_square(player->player_x, player->player_y, 10, game);
+// 		draw_map(game);
+// 	}
+// 	fraction = PI / 3 / WIDTH;
+// 	start_x = player->angle - PI / 6;
+// 	i = 0;
+// 	while (i < WIDTH)
+// 	{
+// 		game->screen_x = i;
+// 		draw_line(player, game, start_x);
+// 		start_x += fraction;
+// 		i++;
+// 	}
+// 	return (mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0), 0);
+// }
 
 int draw_loop(t_game *game)
 {
@@ -318,4 +520,3 @@ int draw_loop(t_game *game)
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return 0;
 }
-

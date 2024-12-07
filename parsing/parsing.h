@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/06 02:22:14 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/07 03:38:56 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct s_map
 	int			player_column;
 	int			max_map_row;
 	int			max_map_column;
+	int			x;
+	int			y;
 }	t_map;
 
 typedef struct s_parser
