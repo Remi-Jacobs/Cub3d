@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/07 04:18:53 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/07 20:21:47 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,25 +103,25 @@ bool	touch(float px, float py, t_game *game)
 void	load_textures(t_game *game)
 {
 	game->element->texture->east_img = mlx_xpm_file_to_image(game->mlx, \
-	"./Tower_Blue.xpm", &game->element->texture->width, \
+	"./chocolate.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->east_data = mlx_get_data_addr \
 	(game->element->texture->east_img, &game->element->texture->bpp, \
 	&game->element->texture->size_line, &game->element->texture->endian);
 	game->element->texture->west_img = mlx_xpm_file_to_image(game->mlx, \
-	"./Tower_Red.xpm", &game->element->texture->width, \
+	"./oak.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->west_data = mlx_get_data_addr \
 	(game->element->texture->west_img, &game->element->texture->bpp, \
 	&game->element->texture->size_line, &game->element->texture->endian);
 	game->element->texture->north_img = mlx_xpm_file_to_image(game->mlx, \
-	"./Gate_Closed.xpm", &game->element->texture->width, \
+	"./polished-concrete.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->north_data = mlx_get_data_addr \
 	(game->element->texture->north_img, &game->element->texture->bpp, \
 	&game->element->texture->size_line, &game->element->texture->endian);
 	game->element->texture->south_img = mlx_xpm_file_to_image(game->mlx, \
-	"./Mushroom.xpm", &game->element->texture->width, \
+	"./zinc.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->south_data = mlx_get_data_addr \
 	(game->element->texture->south_img, &game->element->texture->bpp, \
