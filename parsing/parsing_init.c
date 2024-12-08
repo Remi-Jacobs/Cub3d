@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/05 16:48:19 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:41:22 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,27 @@ int	init_ceil_floor_color(t_parser *element)
 void	init_texture_maps(t_parser *element)
 {
 	int		i;
-	t_map	*map;
 
 	i = 0;
-	map = malloc(sizeof(t_map));
-	map->map = malloc(sizeof(char *) * MAP_HEIGHT);
+	element->map_array = malloc(sizeof(t_map));
+	if (!element->map_array)
+	{
+		ft_error("malloc failed to allocate map_array\n");
+		return;
+	}
+	element->map_array->map = malloc(sizeof(char *) * MAP_HEIGHT);
+	if (!element->map_array->map)
+	{
+		ft_error("malloc failed to allocate map_array\n");
+		return;
+	}
 	while (i < MAP_HEIGHT)
 	{
-		map->map[i]	= NULL;
+		element->map_array->map[i]	= NULL;
 		i++;
 	}
-	map->max_map_column = 0;
-	map->max_map_row = 0;
-	element->map_array = map;
+	element->map_array->max_map_column = 0;
+	element->map_array->max_map_row = 0;
 	element->texture->west_data = NULL;
 	element->texture->east_data = NULL;
 	element->texture->south_data = NULL;
@@ -93,7 +101,8 @@ void	free_map_stored(t_parser *element)
 				free (element->map_array->map[i]);
 			i++;
 		}
-		free(element->map_array->map[i]);
+		free(element->map_array->map);
+		free(element->map_array);
 	}
 }
 
@@ -110,6 +119,7 @@ void	free_parser_struct(t_parser *element)
 		free(element->texture->south_data);
 		free(element->texture);
 	}
+	printf("finished cleaning\n");
 	free(element->ceiling_color);
 	free(element->floor_color);
 	free(element);

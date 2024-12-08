@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainn.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/07 20:21:47 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:47:49 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,34 @@ int	get_texture_pixel(t_texture *texture, int x, int y, void *texture_data)
 // 	draw_ceiling_floor_wall(game);
 // }
 
+// int	draw_loop(t_game *game)
+// {
+// 	t_player	*player;
+// 	float		fraction;
+// 	float		start_x;
+// 	int			i;
+
+// 	player = &game->player;
+// 	move_player(player, game);
+// 	clear_image(game);
+// 	if (DEBUG)
+// 	{
+// 		game->color = 0x00FFFF;
+// 		draw_square(player->player_x, player->player_y, 10, game);
+// 		draw_map(game);
+// 	}
+// 	fraction = PI / 3 / WIDTH;
+// 	start_x = player->angle - PI / 6;
+// 	i = 0;
+// 	while (i < WIDTH)
+// 	{
+// 		game->screen_x = i;
+// 		draw_line(player, game, start_x);
+// 		start_x += fraction;
+// 		i++;
+// 	}
+// 	return (mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0), 0);
+// }
 
 void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 {
@@ -464,34 +492,6 @@ void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x)
 	}
 }
 
-// int	draw_loop(t_game *game)
-// {
-// 	t_player	*player;
-// 	float		fraction;
-// 	float		start_x;
-// 	int			i;
-
-// 	player = &game->player;
-// 	move_player(player, game);
-// 	clear_image(game);
-// 	if (DEBUG)
-// 	{
-// 		game->color = 0x00FFFF;
-// 		draw_square(player->player_x, player->player_y, 10, game);
-// 		draw_map(game);
-// 	}
-// 	fraction = PI / 3 / WIDTH;
-// 	start_x = player->angle - PI / 6;
-// 	i = 0;
-// 	while (i < WIDTH)
-// 	{
-// 		game->screen_x = i;
-// 		draw_line(player, game, start_x);
-// 		start_x += fraction;
-// 		i++;
-// 	}
-// 	return (mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0), 0);
-// }
 
 int draw_loop(t_game *game)
 {

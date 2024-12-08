@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_check2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:48:15 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/05 20:49:39 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:38:41 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	verify_top_wall(t_parser *element)
 	int	i;
 
 	i = 0;
+	printf("here \n");
 	while (element->map_array->map[0][i] != '\0')
 	{
 		if (element->map_array->map[0][i] != '1' && \
@@ -139,12 +140,10 @@ int	verify_map_walls(t_parser *element)
 int	validating_map(char *readfile, t_parser *element)
 {
 	int		i;
-	char	*new_str;
 	char	*trim_line;
 
 	i = 0;
 	trim_line = ft_trim_newline(readfile);
-	new_str = ft_skip_whitespace_map(trim_line);
 	while (trim_line[i] != '\0')
 	{
 		if (trim_line[i] != '0' && trim_line[i] != '1'

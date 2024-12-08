@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/07 03:50:47 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/08 04:49:58 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,12 @@ int	main(int ac, char **argv)
 	if (!valid_extension_file_check(argv[1], ac, "cub"))
 		return (0);
 	init_game(&game, argv[1]);
-	mlx_hook(game.win, 2, 1L << 0, key_press, &game.player);
-	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
-	mlx_loop_hook(game.mlx, draw_loop, &game);
-	mlx_hook(game.win, 17, 0, close_game_on_cross, &game);
-	mlx_loop(game.mlx);
+	// mlx_hook(game.win, 2, 1L << 0, key_press, &game.player);
+	// mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
+	// mlx_loop_hook(game.mlx, draw_loop, &game);
+	// mlx_hook(game.win, 17, 0, close_game_on_cross, &game);
+	// mlx_loop(game.mlx);
+	free_parser_struct(game.element);
 	return (0);
 }
 

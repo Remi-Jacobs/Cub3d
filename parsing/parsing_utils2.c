@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/05 21:25:33 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/08 03:14:54 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	saving_texture(char *readfile, char **texture)
 	readfile = ft_iswhitespace(readfile);
 	new_trim = ft_trim_newline(readfile);
 	*texture = ft_strdup(new_trim);
-	printf("from parsing_utils2.c here --> %s\n", *texture);
 	free(new_trim);
 	return (1);
 }
