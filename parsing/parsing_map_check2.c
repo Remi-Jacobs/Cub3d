@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_check2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:48:15 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/09 16:12:38 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:55:16 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ static int	verify_top_wall(t_parser *element)
 	while (element->map_array->map[0][i] != '\0')
 	{
 		if (element->map_array->map[0][i] != '1' && \
-		element->map_array->map[0][i] != ' ')
+			element->map_array->map[0][i] != ' ')
 		{
 			ft_error("MAP not surrounded by wall at the top\n");
 			return (0);
 		}
-		if (!verify_map_walls_extra_space(element->map_array->map[0]))
-		{
-			ft_error("MAP contains extra space at the top\n");
-			return (0);
-		}
+		// if (!verify_map_walls_extra_space(element->map_array->map[0]))
+		// {
+		// 	ft_error("MAP contains extra space at the top\n");
+		// 	return (0);
+		// }
 		i++;
 	}
 	return (1);
@@ -50,16 +50,16 @@ static int	verify_bottom_wall(t_parser *element)
 	while (element->map_array->map[column][i] != '\0')
 	{
 		if (element->map_array->map[column][i] != '1' && \
-		element->map_array->map[column][i] != ' ')
+			element->map_array->map[column][i] != ' ')
 		{
 			ft_error("MAP not surrounded by wall at the bottom\n");
 			return (0);
 		}
-		if (!verify_map_walls_extra_space(element->map_array->map[column]))
-		{
-			ft_error("MAP contains extra space at the bottom\n");
-			return (0);
-		}
+		// if (!verify_map_walls_extra_space(element->map_array->map[column]))
+		// {
+		// 	ft_error("MAP contains extra space at the bottom\n");
+		// 	return (0);
+		// }
 		i++;
 	}
 	return (1);

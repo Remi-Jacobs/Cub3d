@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/08 02:35:03 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:31:53 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,8 @@ float	calculate_wall_distance(t_player *player, t_game *game, \
  void draw_wall(t_game *game);
  void draw_ceiling_floor(t_game *game);
  void draw_ceiling_floor_wall(t_game *game);
-//  void draw_line(t_player *player, t_game *game, float ray_angle);
-void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x);
+ void draw_line(t_player *player, t_game *game, float ray_angle);
+// void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x);
  int draw_loop(t_game *game);
 
 #endif

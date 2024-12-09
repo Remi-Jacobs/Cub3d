@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 14:00:21 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:51:03 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	verify_map_walls_utils(t_parser *element)
 		while (element->map_array->map[i][j + 1] != '\0')
 			j++;
 		if (element->map_array->map[i][j] != '1' || \
-		element->map_array->map[i][0] != '1')
+			element->map_array->map[i][0] != '1')
 		{
 			ft_error("MAP not surrounded west||east \n");
 			return (0);
@@ -57,27 +57,27 @@ int	verify_map_walls_utils(t_parser *element)
 	return (1);
 }
 
-int	verify_map_walls_extra_space(char *map)
-{
-	int	i;
-	int	j;
+// int	verify_map_walls_extra_space(char *map)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (map[i] != '\0')
-	{
-		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
-			return (0);
-		i++;
-	}
-	i = 0;
-	while (map[i] != '\0')
-	{
-		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
-			return (0);
-		i++;
-	}
-	return (1);
-}
+// 	i = 0;
+// 	while (map[i] != '\0')
+// 	{
+// 		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
+// 			return (0);
+// 		i++;
+// 	}
+// 	i = 0;
+// 	while (map[i] != '\0')
+// 	{
+// 		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 int	evaluate_multiple_pos(char **map)
 {

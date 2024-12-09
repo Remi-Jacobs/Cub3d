@@ -136,9 +136,9 @@ CFLAGS = -I. -I./mlx -I./parsing -lm -lz
 INCLUDE = ./parsing/parsing.h
 
 # Adjust the MLXFLAGS to point to the correct path
-# MLXFLAGS = -L./mlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLXFLAGS = -L./mlx -lmlx -L/usr/lib/X11 -lXext -lX11
 
-# MINILIBX = ./mlx/
+MINILIBX = ./mlx/
 LDFLAGS = -lm
 
 SRC_DIR = ./parsing
@@ -160,7 +160,7 @@ all: $(LIBFT) $(NAME) $(MINILIBX)
 # Compile the main executable
 $(NAME): $(OBJ_FILES) $(LIBFT)
 	@echo "$(GREEN)Building $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(LDFLAGS) -o $(NAME)  # Correct order of linking
+	@$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLXFLAGS) $(LDFLAGS) -o $(NAME)  # Correct order of linking
 	@echo "$(GREEN)Build successful!$(RESET)"
 
 # Rule to compile object files from SRC_DIR

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 13:50:47 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 21:28:39 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ char	*ft_trim_newline(char *read_file)
 		ft_strlcpy(trim_str, read_file, len);
 		return (trim_str);
 	}
-	return (read_file);
+	trim_str = ft_strdup(read_file);
+	return (trim_str);
 }
 
 int	valid_extension_file_check(char *argv, int ac, char *str)
