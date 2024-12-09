@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/08 03:43:23 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:50:47 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,11 @@ char	*ft_skip_check_element_char(char *file)
 		file++;
 	if (*file == 'N' || *file == 'S' || *file == 'W'
 		|| *file == 'E' || *file == 'F' || *file == 'C'
-		|| *file == '1')
+		|| *file == '1' ||  *file == '0')
 		return (file);
 	if (*file == '\n')
 		return (file);
+	ft_error("Invalid map found from check_element func\n");
 	return (NULL);
 }
 

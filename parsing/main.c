@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/08 04:49:58 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 12:50:34 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,27 @@
 // 	return (img);
 // }
 
-int	close_game_on_cross(t_game *game)
-{
-	close_game(game);
-	return (0);
-}
+// int	close_game_on_cross(t_game *game)
+// {
+// 	close_game(game);
+// 	return (0);
+// }
 
-int	close_game(t_game *game)
-{
-	// mlx_destroy_image(game->mlx, game->img_player);
-	// mlx_destroy_image(game->mlx, game->img_wall);
-	// mlx_destroy_image(game->mlx, game->img_collectible);
-	// mlx_destroy_image(game->mlx, game->img_exit);
-	// mlx_destroy_image(game->mlx, game->img_floor);
-	// mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	game->win = NULL;
-	game->mlx = NULL;
-	// free_map(game);
-	exit(0);
-}
+// int	close_game(t_game *game)
+// {
+// 	// mlx_destroy_image(game->mlx, game->img_player);
+// 	// mlx_destroy_image(game->mlx, game->img_wall);
+// 	// mlx_destroy_image(game->mlx, game->img_collectible);
+// 	// mlx_destroy_image(game->mlx, game->img_exit);
+// 	// mlx_destroy_image(game->mlx, game->img_floor);
+// 	// mlx_destroy_window(game->mlx, game->win);
+// 	mlx_destroy_display(game->mlx);
+// 	free(game->mlx);
+// 	game->win = NULL;
+// 	game->mlx = NULL;
+// 	// free_map(game);
+// 	exit(0);
+// }
 
 int	main(int ac, char **argv)
 {

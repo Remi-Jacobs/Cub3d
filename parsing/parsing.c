@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/08 05:05:39 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:34:35 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,60 +66,78 @@
 // 	return (0);
 // }
 
-int	process_line(char *trim_file, t_parser *element)
+int	process_line(char *trim_file, t_parser *element, int *has_started)
 {
-	int	result;
-
-	result = 1;
-	if (validating_texture(trim_file, element)){	
-		printf("ev here\n");
-		result = checking_texture(trim_file, element);
-	}
-	else if (trim_file[0] == 'C' || trim_file[0] == 'F'){		
-		printf("after got here\n");
-		result = validating_ceiling_floor(trim_file, element);
-	}
-	else if (trim_file[0] == '1'){
-		printf("ever ffff got here\n");
-		result = validating_map(trim_file, element);
-	}
-	printf("error just got here\n");
-	if (!result)
+	if (*has_started)
 	{
-		printf("error just got here\n");
-		// free(trim_file);
-		if (trim_file[0] == '1')
-			ft_error("Invalid map element received\n");
-		return (0);
+		if (trim_file[0] == '1' || trim_file[0] == '0')
+		{
+			if (!validating_map(trim_file, element))
+				return (0);
+		}
+		else
+		{
+			ft_error("Map out of order\n");
+			return (0);
+		}
+			
+	}
+	else
+	{
+		if (validating_texture(trim_file, element))
+		{
+			if (!checking_texture(trim_file, element))
+				return (0);
+		}
+		else if (trim_file[0] == 'C' || trim_file[0] == 'F')
+		{
+			if (!validating_ceiling_floor(trim_file, element))
+				return (0);
+		}
+		else if (trim_file[0] == '1' || trim_file[0] == '0')
+		{
+			*has_started = 1;
+			if (!validating_map(trim_file, element))
+				return (0);
+		}
 	}
 	return (1);
 }
 
-//i might need your gnl to put in here to see if the leaks can be avoided
 int	read_and_process_lines(int fd, t_parser *element)
 {
 	char	*line_read;
 	char	*trim_file;
+	int		has_started;
 	int		x;
 
 	x = 0;
+	has_started = 0;
 	line_read = get_next_line(fd);
 	while (line_read != NULL)
 	{
 		trim_file = ft_skip_check_element_char(line_read);
 		if (trim_file == NULL)
+		{
+			// free(line_read);
+			x = 0;
 			break;
+		}
 		if (trim_file[0] == '\n')
 		{
+			free(line_read);
 			line_read = get_next_line(fd);
 			continue ;
 		}
-		if (process_line(trim_file, element))
-			x = 1;
+		if (!process_line(trim_file, element, &has_started)){
+			free(line_read);
+			return (0);
+		}
+		x = 1;
+		free(line_read);
 		line_read = get_next_line(fd);
-		printf("\nhere is mad\n");
 	}
-	free(line_read);
+	// free(line_read);
 	return (x);
 }
 
@@ -138,6 +156,16 @@ int	readfile_and_save_content(char *read_file, t_parser *element)
 	return (0);
 }
 
+static int	verify_colors(t_color *color)
+{
+	if (color->green == -1 || color->blue == -1 || color->red == -1)
+	{
+		ft_error("Invalid color format\n");
+		return (0);
+	}
+	return (1);
+}
+
 t_parser	*parsing_func(char *read_file)
 {
 	t_parser	*element;
@@ -145,7 +173,7 @@ t_parser	*parsing_func(char *read_file)
 	element = init_elements();
 	if (element == NULL)
 		return (NULL);
-	printf("1 .....successffully got here\n\n\n");
+	printf("1 .....successffully after init \n\n\n");
 	if (!readfile_and_save_content(read_file, element))
 	{
 		free_parser_struct(element);
@@ -153,7 +181,8 @@ t_parser	*parsing_func(char *read_file)
 		return (NULL);
 	}
 	printf("2.....successffully got here\n\n\n");
-	if (!verify_map_walls(element))
+	if (!verify_map_walls(element) || !verify_colors(element->floor_color)
+		|| !verify_colors(element->ceiling_color))
 	{
 		printf("errror here\n\n\n");
 		free_parser_struct(element);

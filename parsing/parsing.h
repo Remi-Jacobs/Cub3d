@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/08 03:43:11 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:28:02 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ typedef struct s_parser
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*image;
+	int			floor_full;
+	int			ceiling_full;
+	int			texture_full;
+	
 }	t_parser;
 
 

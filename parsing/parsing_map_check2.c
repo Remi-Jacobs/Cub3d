@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_check2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:48:15 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/08 04:38:41 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:12:38 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ static int	verify_top_wall(t_parser *element)
 	int	i;
 
 	i = 0;
-	printf("here \n");
+	if (element->map_array->map[0] == NULL)
+	{
+		ft_error("MAP not found\n");
+		return (0);
+	}
 	while (element->map_array->map[0][i] != '\0')
 	{
 		if (element->map_array->map[0][i] != '1' && \
@@ -79,9 +83,9 @@ int	verify_map_walls(t_parser *element)
 		ft_error("Couldn't determine player position\n");
 		return (0);
 	}
-
 	return (1);
 }
+
 
 
 // int	verify_map_walls(t_parser *element)

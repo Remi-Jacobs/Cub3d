@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/05 20:53:12 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/09 14:00:21 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,15 @@ int	verify_map_walls_utils(t_parser *element)
 			j++;
 		if (element->map_array->map[i][j] != '1' || \
 		element->map_array->map[i][0] != '1')
+		{
+			ft_error("MAP not surrounded west||east \n");
 			return (0);
+		}
 		i++;
 	}
 	element->map_array->max_map_column = column + 1;
 	element->map_array->max_map_row = get_max_row_length \
 	(element->map_array->map, column);
-	printf("len_min = %d and max = %d\n", element->map_array->max_map_column, \
-	element->map_array->max_map_row);
 	return (1);
 }
 

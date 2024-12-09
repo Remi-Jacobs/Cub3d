@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/05 21:00:08 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/09 16:15:12 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ int	validating_texture(char *trim_file, t_parser *element)
 	if ((ft_strncmp(trim_file, "WE", 2) == 0)
 		|| (ft_strncmp(trim_file, "EA", 2) == 0)
 		|| (ft_strncmp(trim_file, "NO", 2) == 0)
-		|| (ft_strncmp(trim_file, "SO", 2) == 0))
+		|| (ft_strncmp(trim_file, "SO", 2) == 0)
+		&& (trim_file[2] == ' ' || (trim_file[2] >= 9
+		&& trim_file[2] <= 13 )))
 	{
 		return (1);
 	}
@@ -67,7 +69,7 @@ int	validating_ceiling_floor(char *trim_file, t_parser *element)
 		if (saving_ceiling_and_floor(trim_newline, element->floor_color))
 			return (free(trim_newline), 1);
 	}
-	ft_error("Invalid color passed");
+	ft_error("Invalid color passed\n");
 	free(trim_newline);
 	return (0);
 }

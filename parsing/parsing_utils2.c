@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/08 03:14:54 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:15:35 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,14 @@
 int	checking_texture(char *readfile, t_parser *element)
 {
 	if (ft_strncmp(readfile, "WE", 2) == 0)
-	{
-		if (saving_texture(readfile, &element->texture->west_data))
-			return (1);
-	}
+		saving_texture(readfile, &element->texture->west_data);
 	else if (ft_strncmp(readfile, "EA", 2) == 0)
-	{
-		if (saving_texture(readfile, &element->texture->east_data))
-			return (1);
-	}
+		saving_texture(readfile, &element->texture->east_data);
 	else if (ft_strncmp(readfile, "NO", 2) == 0)
-	{
-		if (saving_texture(readfile, &element->texture->north_data))
-			return (1);
-	}
+		saving_texture(readfile, &element->texture->north_data);
 	else if (ft_strncmp(readfile, "SO", 2) == 0)
-	{
-		if (saving_texture(readfile, &element->texture->south_data))
-			return (1);
-	}
-	ft_error("\n\n\n\n SHOULD Invalid Texture\n\n\n\n\n");
-	return (0);
+		saving_texture(readfile, &element->texture->south_data);
+	return (1);
 }
 
 int	saving_texture(char *readfile, char **texture)
@@ -47,7 +34,8 @@ int	saving_texture(char *readfile, char **texture)
 	readfile += 2;
 	readfile = ft_iswhitespace(readfile);
 	new_trim = ft_trim_newline(readfile);
-	*texture = ft_strdup(new_trim);
+	if (*texture == NULL)
+		*texture = ft_strdup(new_trim);
 	free(new_trim);
 	return (1);
 }
