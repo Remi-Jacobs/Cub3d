@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/09 21:31:29 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 00:43:07 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,28 +100,42 @@ bool	touch(float px, float py, t_game *game)
 	return (false);
 }
 
+void	ft_image_error(t_texture *texture)
+{
+	if (!texture->east_img)
+		ft_error("east error\n");
+	if (!texture->west_img)
+		ft_error("west error\n");
+	if (!texture->south_img)
+		ft_error("south error\n");
+	if (!texture->north_img)
+		ft_error("north error\n");
+}
+
+
 void	load_textures(t_game *game)
 {
 	game->element->texture->east_img = mlx_xpm_file_to_image(game->mlx, \
-	"./chocolate.xpm", &game->element->texture->width, \
+	"../chocolate.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
+	ft_image_error(game->element->texture);
 	game->element->texture->east_data = mlx_get_data_addr \
 	(game->element->texture->east_img, &game->element->texture->bpp, \
 	&game->element->texture->size_line, &game->element->texture->endian);
 	game->element->texture->west_img = mlx_xpm_file_to_image(game->mlx, \
-	"./oak.xpm", &game->element->texture->width, \
+	"../oak.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->west_data = mlx_get_data_addr \
 	(game->element->texture->west_img, &game->element->texture->bpp, \
 	&game->element->texture->size_line, &game->element->texture->endian);
 	game->element->texture->north_img = mlx_xpm_file_to_image(game->mlx, \
-	"./polished-concrete.xpm", &game->element->texture->width, \
+	"../polished-concrete.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->north_data = mlx_get_data_addr \
 	(game->element->texture->north_img, &game->element->texture->bpp, \
 	&game->element->texture->size_line, &game->element->texture->endian);
 	game->element->texture->south_img = mlx_xpm_file_to_image(game->mlx, \
-	"./zinc.xpm", &game->element->texture->width, \
+	"../zinc.xpm", &game->element->texture->width, \
 	&game->element->texture->height);
 	game->element->texture->south_data = mlx_get_data_addr \
 	(game->element->texture->south_img, &game->element->texture->bpp, \
@@ -139,14 +153,50 @@ void	init_game(t_game *game, char *argv)
 	game->tex_pixels = NULL;
 	game->map = game->element->map_array->map;
 	game->mlx = mlx_init();
+	if (!game->mlx)
+	{
+		perror("Error initializing MiniLibX");
+		exit(EXIT_FAILURE);
+	}
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "CUB3D");
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
 	game->data = mlx_get_data_addr(game->img, \
 	&game->bpp, &game->size_line, &game->endian);
+	printf("every gt here\n");
 	load_textures(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 }
 
+// void	load_textures(t_game *game)
+// {
+	// t_texture *tex;
+
+	// tex = game->element->texture;
+	// printf("texture = '%s'\n", tex->east_path);
+	// printf("texture = '%s'\n", tex->west_path);
+	// printf("texture = '%s'\n", tex->north_path);
+	// printf("texture = '%s'\n", tex->south_path);
+	// tex->east_img = mlx_xpm_file_to_image(game->mlx, tex->east_path,
+	// 	&tex->width, &tex->height);
+	// tex->west_img = mlx_xpm_file_to_image(game->mlx, tex->west_path,
+	// 	&tex->width, &tex->height);
+	// tex->north_img = mlx_xpm_file_to_image(game->mlx, tex->north_path,
+	// 	&tex->width, &tex->height);
+	// tex->south_img = mlx_xpm_file_to_image(game->mlx, tex->south_path,
+	// 	&tex->width, &tex->height);
+	// ft_image_error(game->element->texture);
+
+	
+	// tex->north_data = mlx_get_data_addr(tex->north_img, &tex->bpp,
+	// 	&tex->size_line, &tex->endian);
+	// tex->west_data = mlx_get_data_addr(tex->west_img, &tex->bpp,
+	// 	&tex->size_line, &tex->endian);
+	// tex->east_data = mlx_get_data_addr(tex->east_img, &tex->bpp,
+	// 	&tex->size_line, &tex->endian);
+	// tex->south_data = mlx_get_data_addr(tex->south_img, &tex->bpp,
+	// 	&tex->size_line, &tex->endian);
+		
+// }
 
 
 int	get_texture_pixel(t_texture *texture, int x, int y, void *texture_data)
@@ -235,104 +285,7 @@ t_map *map, int side)
 		(1 - game->step_y) / 2) / game->ray_dir_y;
 	return (perp_wall_dist);
 }
-
-void	draw_wall(t_game *game)
-{
-	int	y;
-
-	y = game->draw_start - 1;
-	while (++y < game->draw_end)
-	{
-		game->tex_y = (int)(((y - HEIGHT / 2 + game->line_height / 2) \
-		* game->element->texture->height) / game->line_height);
-		if (game->tex_y < 0)
-			game->tex_y = 0;
-		if (game->tex_y >= game->element->texture->height)
-			game->tex_y = game->element->texture->height - 1;
-		if (game->side == 0 && game->ray_dir_x > 0)
-			game->color = get_texture_pixel(game->element->texture, \
-			game->tex_x, game->tex_y, game->element->texture->east_data);
-		else if (game->side == 0 && game->ray_dir_x < 0)
-			game->color = get_texture_pixel(game->element->texture, \
-			game->tex_x, game->tex_y, game->element->texture->west_data);
-		else if (game->side == 1 && game->ray_dir_y > 0)
-			game->color = get_texture_pixel(game->element->texture, \
-			game->tex_x, game->tex_y, game->element->texture->south_data);
-		else
-			game->color = get_texture_pixel(game->element->texture, \
-			game->tex_x, game->tex_y, game->element->texture->north_data);
-		put_pixel(game->screen_x, y, game);
-	}
-}
-
-void	draw_ceiling_floor(t_game *game)
-{
-	int	y;
-
-	y = 0;
-	while (y < game->draw_start)
-	{
-		game->color = game->element->ceiling_color->converted_color;
-		put_pixel(game->screen_x, y, game);
-		y++;
-	}
-	y = game->draw_end;
-	while (y < HEIGHT)
-	{
-		game->color = game->element->floor_color->converted_color;
-		put_pixel(game->screen_x, y, game);
-		y++;
-	}
-}
-
-void	draw_ceiling_floor_wall(t_game *game)
-{
-	game->is_ceiling = 1;
-	draw_ceiling_floor(game);
-	game->is_ceiling = 0;
-	draw_ceiling_floor(game);
-	draw_wall(game);
-}
-
-void	start_draw_line(t_game *game)
-{
-	game->line_height = (int)(HEIGHT / game->perp_wall_dist);
-	game->draw_start = -game->line_height / 2 + HEIGHT / 2;
-	if (game->draw_start < 0)
-		game->draw_start = 0;
-	game->draw_end = game->line_height / 2 + HEIGHT / 2;
-	if (game->draw_end >= HEIGHT)
-		game->draw_end = HEIGHT - 1;
-}
-
-void	draw_line(t_player *player, t_game *game, float ray_angle)
-{
-	t_map	map;
-	float	wall_x;
-
-	init_ray(player, game, ray_angle);
-	map.x = (int)(player->player_x / BLOCK);
-	map.y = (int)(player->player_y / BLOCK);
-	calculate_step_and_sidedist(player, game, &map);
-	game->side = perform_dda(game, &map);
-	game->perp_wall_dist = \
-	calculate_wall_distance(player, game, &map, game->side);
-	start_draw_line(game);
-	if (game->side == 0)
-		wall_x = player->player_y / BLOCK + \
-		game->perp_wall_dist * game->ray_dir_y;
-	else
-		wall_x = player->player_x / BLOCK + \
-		game->perp_wall_dist * game->ray_dir_x;
-	wall_x -= floor(wall_x);
-	game->tex_x = (int)(wall_x * game->element->texture->width);
-	if (game->side == 0 && game->ray_dir_x > 0)
-		game->tex_x = game->element->texture->width - game->tex_x - 1;
-	if (game->side == 1 && game->ray_dir_y < 0)
-		game->tex_x = game->element->texture->width - game->tex_x - 1;
-	draw_ceiling_floor_wall(game);
-}
-
+ 
 int	draw_loop(t_game *game)
 {
 	t_player	*player;

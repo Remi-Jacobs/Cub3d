@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 15:28:02 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 00:23:54 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,36 +20,36 @@
 # include <X11/keysym.h>
 # include "../comb_libft/ft_printf.h"
 # include "../mlx/mlx.h"
-# include "../raycaster/includes/game.h"
+# include "./game.h"
 
 
 # define MAP_HEIGHT 50
 # define TILE_SIZE 60
 # define TILE_SIZE_MINI 20
-# define IMAGE "./wall.xpm"
 
 typedef struct s_game	t_game;
 
-// typedef struct s_texture
-// {
-// 	char	*east;
-// 	char	*west;
-// 	char	*north;
-// 	char	*south;
-// }	t_texture;
-
 typedef struct s_texture
 {
+	char	*east_path;
+	char	*west_path;
+	char	*north_path;
+	char	*south_path;
+
+	char	*east_data;
+	char	*west_data;
+	char	*north_data;
+	char	*south_data;
+
 	void	*east_img;
 	void	*west_img;
 	void	*north_img;
 	void	*south_img;
 	int		width;
 	int		height;
-	char	*east_data;
-	char	*west_data;
-	char	*north_data;
-	char	*south_data;
+	
+
+	
 	int		bpp;
 	int		size_line;
 	int		endian;

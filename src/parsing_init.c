@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 16:16:00 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 23:24:38 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../includes/parsing.h"
 
 int	init_ceil_floor_color(t_parser *element)
 {
@@ -59,6 +59,10 @@ void	init_texture_maps(t_parser *element)
 	element->texture->east_data = NULL;
 	element->texture->south_data = NULL;
 	element->texture->north_data = NULL;
+	element->texture->east_path = NULL;
+	element->texture->west_path = NULL;
+	element->texture->north_path = NULL;
+	element->texture->south_path = NULL;
 }
 
 t_parser	*init_elements(void)

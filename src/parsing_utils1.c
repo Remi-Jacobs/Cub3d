@@ -6,11 +6,11 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 21:28:39 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:36:26 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./parsing/parsing.h"
+#include "../includes/parsing.h"
 
 char	*ft_trim_newline(char *read_file)
 {

@@ -6,11 +6,11 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:48:15 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/09 21:55:16 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:16:12 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "../includes/parsing.h"
 
 static int	verify_top_wall(t_parser *element)
 {

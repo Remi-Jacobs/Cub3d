@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/09 21:31:53 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 23:35:19 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+
+
 # define BLOCK 64
 # define DEBUG 0
 
@@ -28,14 +30,16 @@
 # define KEY_ESC 65307
 # define PI 3.14159265359
 
-# include "../../mlx/mlx.h"
-# include "../../parsing/parsing.h"
+# include "../mlx/mlx.h"
+# include "./parsing.h"
+
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include <math.h>
 
 typedef struct s_parser	t_parser;
+typedef struct s_texture	t_texture;
 typedef struct s_map	t_map;
 // typedef struct s_texture t_texture;
 // typedef struct s_ray t_ray;
@@ -160,6 +164,7 @@ typedef struct s_game
 // 	int		endian;
 // }	t_texture;
 
+int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
 
 // void init_player(t_player *player);
 int		init_player(t_player *player, t_map *map);
@@ -175,9 +180,7 @@ void	put_pixel(int x, int y, t_game *game);
 void	clear_image(t_game *game);
 void	draw_square(int x, int y, int size, t_game *game);
 void	draw_map(t_game *game);
-void	load_textures(t_game *game);
 void	init_game(t_game *game, char *argv);
-// int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
 void	init_ray(t_player *player, t_game *game, float ray_angle);
 void calculate_step_and_sidedist(t_player *player, t_game *game, t_map *map);
 int	perform_dda(t_game *game, t_map *map);
@@ -190,4 +193,7 @@ float	calculate_wall_distance(t_player *player, t_game *game, \
 // void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x);
  int draw_loop(t_game *game);
 
+
+
+void	load_textures(t_game *game);
 #endif

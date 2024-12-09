@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:05 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/07 04:03:37 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/09 22:17:37 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/game.h"
+// #include "../includes/games.h"
 
 // void	load_textures(t_game *game)
 // {

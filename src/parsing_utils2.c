@@ -3,29 +3,57 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 16:15:35 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 00:39:34 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./parsing/parsing.h"
+#include "../includes/parsing.h"
 
 //should be ensuring the len also when checking the strncmp
+
+// int	checking_texture(char *readfile, t_parser *element)
+// {
+// 	if (ft_strncmp(readfile, "WE", 2) == 0)
+// 		saving_texture(readfile, &element->texture->west_path);
+// 	else if (ft_strncmp(readfile, "EA", 2) == 0)
+// 		saving_texture(readfile, &element->texture->east_path);
+// 	else if (ft_strncmp(readfile, "NO", 2) == 0)
+// 		saving_texture(readfile, &element->texture->north_path);
+// 	else if (ft_strncmp(readfile, "SO", 2) == 0)
+// 		saving_texture(readfile, &element->texture->south_path);
+// 	return (1);
+// }
+
 
 int	checking_texture(char *readfile, t_parser *element)
 {
 	if (ft_strncmp(readfile, "WE", 2) == 0)
-		saving_texture(readfile, &element->texture->west_data);
+	{
+		if (saving_texture(readfile, &element->texture->west_data))
+			return (1);
+	}
 	else if (ft_strncmp(readfile, "EA", 2) == 0)
-		saving_texture(readfile, &element->texture->east_data);
+	{
+		if (saving_texture(readfile, &element->texture->east_data))
+			return (1);
+	}
 	else if (ft_strncmp(readfile, "NO", 2) == 0)
-		saving_texture(readfile, &element->texture->north_data);
+	{
+		if (saving_texture(readfile, &element->texture->north_data))
+			return (1);
+	}
 	else if (ft_strncmp(readfile, "SO", 2) == 0)
-		saving_texture(readfile, &element->texture->south_data);
-	return (1);
+	{
+		if (saving_texture(readfile, &element->texture->south_data))
+			return (1);
+	}
+	ft_error("\n\n\n\n SHOULD Invalid Texture\n\n\n\n\n");
+	return (0);
 }
+
 
 int	saving_texture(char *readfile, char **texture)
 {

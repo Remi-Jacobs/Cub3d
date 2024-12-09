@@ -6,19 +6,11 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 20:54:04 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/09 22:37:59 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "../mlx/mlx.h"
-
-#define TILE_SIZE 32
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
-
-#define MINIMAP_WIDTH 200
-#define MINIMAP_HEIGHT 150
+#include "../includes/parsing.h"
 
 void	ft_error_exit(t_parser *data, char *str)
 {
