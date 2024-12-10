@@ -6,16 +6,17 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 00:23:54 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 01:33:03 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
+#include <fcntl.h> 
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include "../comb_libft/ft_printf.h"

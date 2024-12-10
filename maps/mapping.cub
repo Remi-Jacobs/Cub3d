@@ -1,11 +1,11 @@
-EA ../textures/east.xpm
+EA ./textures/chocolate.xpm
 
-					WE 									../textures/west.xpm
-								NO ../textures/north.xpm
+					WE 									./textures/oak.xpm
+								NO ./textures/zinc.xpm
 
 
    
-	SO ../textures/south.xpm
+	SO ./textures/zinc.xpm
 
 F 255	,255		,1
 C 225			,31,				10				

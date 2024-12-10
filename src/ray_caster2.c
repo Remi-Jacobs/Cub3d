@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:17 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/09 22:39:52 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 03:00:56 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ void	draw_line(t_player *player, t_game *game, float ray_angle)
 	map.y = (int)(player->player_y / BLOCK);
 	calculate_step_and_sidedist(player, game, &map);
 	game->side = perform_dda(game, &map);
-	game->perp_wall_dist = \
-	calculate_wall_distance(player, game, &map, game->side);
+	game->perp_wall_dist = calculate_wall_distance(player, game, &map, game->side);
 	start_draw_line(game);
 	if (game->side == 0)
 		wall_x = player->player_y / BLOCK + \
@@ -108,3 +107,4 @@ void	draw_line(t_player *player, t_game *game, float ray_angle)
 		game->tex_x = game->element->texture->width - game->tex_x - 1;
 	draw_ceiling_floor_wall(game);
 }
+

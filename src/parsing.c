@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 22:16:33 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 02:14:23 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,19 @@ static int	verify_colors(t_color *color)
 	return (1);
 }
 
+static int	verify_texture(t_texture *tex)
+{
+	if (access(tex->east_path, F_OK) == -1
+		|| access(tex->west_path, F_OK) == -1 
+		|| access(tex->south_path, F_OK) == -1
+		|| access(tex->north_path, F_OK) == -1)
+	{
+		ft_error("can't access texture\n");
+		return (0);
+	}
+	return (1);
+}
+
 t_parser	*parsing_func(char *read_file)
 {
 	t_parser	*element;
@@ -182,7 +195,7 @@ t_parser	*parsing_func(char *read_file)
 	}
 	printf("2.....successffully got here\n\n\n");
 	if (!verify_map_walls(element) || !verify_colors(element->floor_color)
-		|| !verify_colors(element->ceiling_color))
+		|| !verify_colors(element->ceiling_color) || !verify_texture(element->texture))
 	{
 		printf("errror here\n\n\n");
 		free_parser_struct(element);

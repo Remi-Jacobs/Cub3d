@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/09 23:35:19 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 03:00:22 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,11 @@
 # include "../mlx/mlx.h"
 # include "./parsing.h"
 
-# include <stdio.h>
-# include <stdlib.h>
+#include <fcntl.h> 
+#include <float.h>
+#include <unistd.h>
+#include <stdio.h> 
+#include <stdlib.h>
 # include <stdbool.h>
 # include <math.h>
 
@@ -195,5 +198,5 @@ float	calculate_wall_distance(t_player *player, t_game *game, \
 
 
 
-void	load_textures(t_game *game);
+int			load_textures(t_game *game);
 #endif
