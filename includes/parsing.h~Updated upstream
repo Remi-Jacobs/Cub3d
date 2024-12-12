@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/12 18:42:04 by ojacobs          ###   ########.fr       */
+<<<<<<< Updated upstream:includes/parsing.h
+/*   Updated: 2024/12/10 14:39:00 by danevans         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/12 13:24:13 by ojacobs          ###   ########.fr       */
+>>>>>>> Stashed changes:parsing/parsing.h
 /*                                                                            */
 /* ************************************************************************** */
 

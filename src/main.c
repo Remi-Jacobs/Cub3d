@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/12 12:16:37 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:18:24 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	main(int ac, char **argv)
 	init_game(&game, argv[1]);
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
-	mlx_loop_hook(game.mlx, draw_loop, &game);
+	mlx_loop_hook(game.mlx, draw_loops, &game);
 	mlx_hook(game.win, 17, 0, close_game_on_cross, &game);
 	mlx_loop(game.mlx);
 	free_game_struct(&game);

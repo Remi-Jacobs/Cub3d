@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/11 12:19:18 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:30:10 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_game
 	int			color;
 	int			bpp;
 	int			size_line;
+	int		tmp_size_line;
 	int			endian;
 	
 	t_player	player;
@@ -160,7 +161,7 @@ typedef struct s_game
     int is_ceiling; 
 }	t_game;
 
-int draw_looper(t_game *game);
+int draw_loops(t_game *game);
 /*	ray_caster.c	*/
 int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
 void	init_ray(t_player *player, t_game *game, float ray_angle);

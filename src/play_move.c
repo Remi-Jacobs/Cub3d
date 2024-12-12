@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_move.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:30:12 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/11 11:56:51 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:38:08 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ bool	touch(float px, float py, t_game *game)
 		printf("Collision at: map_x=%d, map_y=%d\n", map_x, map_y);
 		return (true);
 	}
+
 	return (false);
 }
 

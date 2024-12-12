@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 15:27:02 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:16:44 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_texture_maps(t_parser *element)
 	int		i;
 
 	i = 0;
-	element->map_array = malloc(sizeof(t_map));
+	element->map_array = malloc(sizeof(t_map *));
 	if (!element->map_array)
 	{
 		ft_error("malloc failed to allocate map_array\n");

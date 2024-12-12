@@ -266,7 +266,7 @@ re: fclean all
 
 # Valgrind memory leak check
 leak: re
-	valgrind --leak-check=full ./$(NAME) mapping.cub
+	valgrind --leak-check=full ./$(NAME) maps/mapping.cub
 
 # Phony targets
 .PHONY: all clean fclean re leak
