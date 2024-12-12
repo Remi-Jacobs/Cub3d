@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 15:13:58 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 23:24:38 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:27:02 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	init_texture_maps(t_parser *element)
 		element->map_array->map[i]	= NULL;
 		i++;
 	}
+	element->map_array->map[MAP_HEIGHT] = NULL;
 	element->map_array->max_map_column = 0;
 	element->map_array->max_map_row = 0;
 	element->texture->west_data = NULL;
@@ -102,12 +103,16 @@ void	free_map_stored(t_parser *element)
 		while (element->map_array->map[i])
 		{
 			if (element->map_array->map[i])
+			{
 				free (element->map_array->map[i]);
+				element->map_array->map[i] = NULL;
+			}
 			i++;
 		}
 		free(element->map_array->map);
-		free(element->map_array);
+		element->map_array->map = NULL;
 	}
+	free(element->map_array);
 }
 
 void	free_parser_struct(t_parser *element)
@@ -117,13 +122,12 @@ void	free_parser_struct(t_parser *element)
 	free_map_stored(element);
 	if (element->texture)
 	{
-		free(element->texture->east_data);
-		free(element->texture->west_data);
-		free(element->texture->north_data);
-		free(element->texture->south_data);
-		free(element->texture);
+		free(element->texture->east_path);
+		free(element->texture->west_path);
+		free(element->texture->north_path);
+		free(element->texture->south_path);
 	}
-	printf("finished cleaning\n");
+	free(element->texture);
 	free(element->ceiling_color);
 	free(element->floor_color);
 	free(element);

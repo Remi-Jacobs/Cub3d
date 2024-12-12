@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:17 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/10 03:00:56 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/12 12:17:18 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	draw_wall(t_game *game)
 	y = game->draw_start - 1;
 	while (++y < game->draw_end)
 	{
-		game->tex_y = (int)(((y - HEIGHT / 2 + game->line_height / 2) \
-		* game->element->texture->height) / game->line_height);
+		// game->tex_y = (int)(((y - HEIGHT / 2 + game->line_height / 2) * game->element->texture->height) / game->line_height);
+		// // game->tex_y = (int)(((y - game->draw_start) * game->element->texture->height) 
+        // //            / game->line_height);
+		game->tex_y = (int)(((y - game->draw_start) * game->element->texture->height) / game->line_height);
 		if (game->tex_y < 0)
 			game->tex_y = 0;
 		if (game->tex_y >= game->element->texture->height)

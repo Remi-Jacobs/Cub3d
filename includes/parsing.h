@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 01:33:03 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:39:00 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct s_parser
 
 int	close_game(t_game *game);
 
+void	free_game_struct(t_game *game);
 
 int	valid_extension_file_check(char *argv, int ac, char *str);
 

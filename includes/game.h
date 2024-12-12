@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/10 03:00:22 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/11 12:19:18 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 
 # define BLOCK 64
-# define DEBUG 0
+# define DEBUG 1
 
 # define W 119
 # define A 97
@@ -76,6 +76,13 @@ typedef struct s_player
 	float	player_x;
 	float	player_y;
 	float	angle;
+	
+	//need to init
+	int		speed;
+	float	cos_angle;
+	float	sin_angle;
+
+	
 	bool	key_up;
 	bool	key_down;
 	bool	key_left;
@@ -119,16 +126,19 @@ typedef struct s_game
 	void		*win;
 	void		*img;
 	char		*data;
+	
 	int			color;
 	int			bpp;
 	int			size_line;
 	int			endian;
+	
 	t_player	player;
 	t_parser	*element;
 	char		**map;
+	int			**tex_pixels;
+	
 	int			win_height;
 	int			win_width;
-	int			**tex_pixels;
 
 	// Add raycasting-related variables
 	float ray_dir_x;
@@ -150,53 +160,49 @@ typedef struct s_game
     int is_ceiling; 
 }	t_game;
 
-// typedef struct s_texture
-// {
-// 	void	*east_img;
-// 	void	*west_img;
-// 	void	*north_img;
-// 	void	*south_img;
-// 	int		width;
-// 	int		height;
-// 	char	*east_data;
-// 	char	*west_data;
-// 	char	*north_data;
-// 	char	*south_data;
-// 	int		bpp;
-// 	int		size_line;
-// 	int		endian;
-// }	t_texture;
-
+int draw_looper(t_game *game);
+/*	ray_caster.c	*/
 int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
-
-// void init_player(t_player *player);
-int		init_player(t_player *player, t_map *map);
-void	init_game(t_game *game, char *argv);
-int		key_release(int keycode, t_player *player);
-// int 	key_press(int keycode, t_player *player);
-int		key_press(int keycode, t_player *player, t_game *game);
-// void	move_player(t_player *player);
-void	move_player(t_player *player, t_game *game);
-bool	touch(float px, float py, t_game *game);
-int		draw_loop(t_game *game);
-void	put_pixel(int x, int y, t_game *game);
-void	clear_image(t_game *game);
-void	draw_square(int x, int y, int size, t_game *game);
-void	draw_map(t_game *game);
-void	init_game(t_game *game, char *argv);
 void	init_ray(t_player *player, t_game *game, float ray_angle);
-void calculate_step_and_sidedist(t_player *player, t_game *game, t_map *map);
-int	perform_dda(t_game *game, t_map *map);
-float	calculate_wall_distance(t_player *player, t_game *game, \
- t_map *map, int side);
- void draw_wall(t_game *game);
- void draw_ceiling_floor(t_game *game);
- void draw_ceiling_floor_wall(t_game *game);
- void draw_line(t_player *player, t_game *game, float ray_angle);
+void	calculate_step_and_sidedist(t_player *player, t_game *game, t_map *map);
+int		perform_dda(t_game *game, t_map *map);
+float	calculate_wall_distance(t_player *player, t_game *game,
+		t_map *map, int side);
+
+/*	play_move.c	*/
+// void	move_in_direction(t_player *player, t_game *game, int direction);
+void	move_player(t_player *player, t_game *game);
+void	rotate_player(t_player *player);
+int		init_player(t_player *player, t_map *map);
+int		set_player_angle(t_map *map, t_player *player);
+
+/*	key_mapping.c	*/
+int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_player *player);
+int		close_game_on_cross(t_game *game);
+int		close_game(t_game *game);
+void	free_game_struct(t_game *game);
+
+/*	mainc.c	*/
+int		init_game(t_game *game, char *argv);
+
+/*	ray_caster2.c	*/
+void	draw_line(t_player *player, t_game *game, float ray_angle);
+void	start_draw_line(t_game *game);
+void	draw_ceiling_floor_wall(t_game *game);
+void	draw_ceiling_floor(t_game *game);
+void	draw_wall(t_game *game);
+
+/*	mainnnc.c	*/
+int		draw_loop(t_game *game);
+int		load_textures(t_game *game);
+void	clear_image(t_game *game);
+void	draw_map(t_game *game);
+void	draw_square(int x, int y, int size, t_game *game);
+void	put_pixel(int x, int y, t_game *game);
+bool	touch(float px, float py, t_game *game);
+
+
 // void draw_line(t_player *player, t_game *game, float ray_angle, int screen_x);
- int draw_loop(t_game *game);
-
-
-
-int			load_textures(t_game *game);
+ 
 #endif

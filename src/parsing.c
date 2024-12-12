@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 02:14:23 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/11 11:21:42 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	process_line(char *trim_file, t_parser *element, int *has_started)
 			ft_error("Map out of order\n");
 			return (0);
 		}
-			
 	}
 	else
 	{
@@ -201,6 +200,7 @@ t_parser	*parsing_func(char *read_file)
 		free_parser_struct(element);
 		return (NULL);
 	}
-	printf("3 ...successffully got here\n\n\n");
+	if (element->map_array)
+	printf("3 ...successffully got here and returing\n\n");
 	return (element);
 }
