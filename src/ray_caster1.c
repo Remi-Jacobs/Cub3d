@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:06 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 19:19:42 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:46:38 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/game.h"
 
-int	get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data)
+int	gtex_pixel(t_img_info *texture, int x, int y, void *texture_data)
 {
 	int				offset;
 	unsigned char	*data;
@@ -80,13 +80,16 @@ void	cal_step_and_sidedist(t_player *player, t_game *game)
 
 void	performing_dda(t_player *player, t_game *game, int *side)
 {
-	int	hit;
+	int	row;
+	int	column;
 
-	hit = 0;
-	while (!hit)
+	game->hit = 0;
+	row = game->element->map_array->max_map_row;
+	column = game->element->map_array->max_map_column;
+	while (!game->hit)
 	{
-        if (player->map_x < 0 || player->map_x >= game->element->map_array->max_map_row || 
-            player->map_y < 0 || player->map_y >= game->element->map_array->max_map_column)
+		if (player->map_x < 0 || player->map_x >= row
+			|| player->map_y < 0 || player->map_y >= column)
 			return ;
 		if (game->side_dist_x < game->side_dist_y)
 		{
@@ -100,13 +103,7 @@ void	performing_dda(t_player *player, t_game *game, int *side)
 			player->map_y += game->step_y;
 			*side = 1;
 		}
-		if (player->map_x >= 0 && player->map_x < game->element->map_array->max_map_row 
-			&& player->map_y >= 0 && player->map_y < game->element->map_array->max_map_column)
-		{
-			if (game->map[player->map_y][player->map_x] == '1'
-				|| game->map[player->map_y][player->map_x] == ' ')
-				hit = 1;
-		}
+		game->hit = check_hit(player, game);
 	}
 }
 
@@ -116,10 +113,10 @@ float	cal_wall_dist(t_player *player, t_game *game, float ray_angle, int side)
 
 	if (side == 0)
 		game->perp_wall_dist = (player->map_x - player->player_x / BLOCK
-			+ (1 - game->step_x) / 2) / game->ray_dir_x;
+				+ (1 - game->step_x) / 2) / game->ray_dir_x;
 	else
 		game->perp_wall_dist = (player->map_y - player->player_y / BLOCK
-			+ (1 - game->step_y) / 2) / game->ray_dir_y;
+				+ (1 - game->step_y) / 2) / game->ray_dir_y;
 	game->perp_wall_dist *= cos(ray_angle - player->angle);
 	game->line_height = (int)(HEIGHT / game->perp_wall_dist);
 	game->draw_start = -game->line_height / 2 + HEIGHT / 2;
@@ -129,9 +126,11 @@ float	cal_wall_dist(t_player *player, t_game *game, float ray_angle, int side)
 	if (game->draw_end >= HEIGHT)
 		game->draw_end = HEIGHT - 1;
 	if (side == 0)
-		wall_x = player->player_y / BLOCK + game->perp_wall_dist * game->ray_dir_y;
+		wall_x = player->player_y / BLOCK + game->perp_wall_dist
+			* game->ray_dir_y;
 	else
-		wall_x = player->player_x / BLOCK + game->perp_wall_dist * game->ray_dir_x;
+		wall_x = player->player_x / BLOCK + game->perp_wall_dist
+			* game->ray_dir_x;
 	wall_x -= floor(wall_x);
 	return (wall_x);
 }

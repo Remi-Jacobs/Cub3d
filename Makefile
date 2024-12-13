@@ -45,4 +45,7 @@ re: fclean all
 leak: re
 	valgrind --leak-check=full ./$(NAME) maps/mapping.cub
 
+val: re
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) maps/mapping.cub
+
 .PHONY: all clean fclean re leak

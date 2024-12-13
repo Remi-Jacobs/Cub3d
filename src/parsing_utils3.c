@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils3.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:26:06 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 18:49:30 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 23:32:59 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	process_line(char *trim_file, t_parser *element, int *has_started)
 {
 	if (*has_started)
 		return (process_map(trim_file, element));
-
 	if (validating_texture(trim_file, element))
 	{
 		if (!checking_texture(trim_file, element))
@@ -70,10 +69,12 @@ int	read_and_process_lines(int fd, t_parser *element)
 	element->line_read = get_next_line(fd);
 	while (element->line_read != NULL)
 	{
+		printf("(1)line_read = '%s'\n", element->line_read);
 		trim_file = ft_skip_check_element_char(element->line_read);
-		printf("line = %s\n", trim_file);
+		printf("(2)line_read = '%s'\n", element->line_read);
+		printf("***(3) trim_read after = '%s'\n", trim_file);
 		if (empty_file(trim_file, &element->x))
-			break ;
+			return (free(element->line_read), 0);
 		if (trim_file[0] == '\n')
 		{
 			free(element->line_read);
@@ -87,4 +88,21 @@ int	read_and_process_lines(int fd, t_parser *element)
 		element->line_read = get_next_line(fd);
 	}
 	return (element->x);
+}
+
+int	check_hit(t_player *player, t_game *game)
+{
+	int	row;
+	int	column;
+
+	row = game->element->map_array->max_map_row;
+	column = game->element->map_array->max_map_column;
+	if (player->map_x >= 0 && player->map_x < row
+		&& player->map_y >= 0 && player->map_y < column)
+	{
+		if (game->map[player->map_y][player->map_x] == '1'
+			|| game->map[player->map_y][player->map_x] == ' ')
+			return (1);
+	}
+	return (0);
 }

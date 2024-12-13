@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 19:14:18 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 22:37:13 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	init_game(t_game *game, char *argv)
 	game->element = parsing_func(argv);
 	if (game->element == NULL)
 		return (ft_error("Error from parsing\n"), 0);
-	printf ("End of parsing\n");
 	if (!init_player(&game->player, game->element->map_array))
 	{
 		ft_error("Error from init_player\n");
@@ -82,12 +81,15 @@ int	main(int ac, char **argv)
 
 	if (!valid_extension_file_check(argv[1], ac, "cub"))
 		return (0);
-	init_game(&game, argv[1]);
+	if (!init_game(&game, argv[1]))
+	{
+		// close_game_on_cross(&game);
+		return (0);
+	}
 	mlx_hook(game.win, 2, 1L << 0, key_press, &game);
 	mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
 	mlx_loop_hook(game.mlx, draw_loops, &game);
 	mlx_hook(game.win, 17, 0, close_game_on_cross, &game);
 	mlx_loop(game.mlx);
-	free_game_struct(&game);
 	return (0);
 }

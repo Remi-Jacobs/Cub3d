@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 16:47:55 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 22:48:28 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,13 @@ void	free_parser_struct(t_parser *element)
 	if (!element)
 		return ;
 	free_map_stored(element);
-	free(element->ceiling_color);
-	free(element->floor_color);
+	free_img_struct(element->texture);
+	if (element->ceiling_color)
+		free(element->ceiling_color);
+	if (element->floor_color)
+		free(element->floor_color);
 	free(element);
+	element = NULL;
 }
 
 int	readfile_and_save_content(char *read_file, t_parser *element)
@@ -67,19 +71,17 @@ t_parser	*parsing_func(char *read_file)
 	element = init_elements();
 	if (element == NULL)
 		return (NULL);
-	printf("1 .....successffully after init \n\n\n");
 	if (!readfile_and_save_content(read_file, element))
 	{
+		ft_error("Error from readfile parsing func\n");
 		free_parser_struct(element);
-		printf("\nbad here\n\n\n");
 		return (NULL);
 	}
-	printf("2.....successffully got here\n\n\n");
 	if (!verify_map_walls(element) || !verify_colors(element->floor_color)
 		|| !verify_colors(element->ceiling_color)
 		|| !verify_texture(element->texture))
 	{
-		printf("errror here\n\n\n");
+		ft_error("Error from verifying_wall/color/ceiling/texture parsing func\n");
 		free_parser_struct(element);
 		return (NULL);
 	}

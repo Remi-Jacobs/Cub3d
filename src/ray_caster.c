@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 17:58:29 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 20:50:23 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,20 @@ void	draw_map_walls(t_game *game, int side, int screen_x)
 	while (y < game->draw_end)
 	{
 		game->tex_y = (int)(((y - HEIGHT / 2 + game->line_height / 2)
-				* game->element->texture->height) / game->line_height);
-		if (game->tex_y < 0)
-			game->tex_y = 0;
-		if (game->tex_y >= game->element->texture->height)
-			game->tex_y = game->element->texture->height -1;
+					* game->element->texture->height) / game->line_height);
+		assign_game_tex(game);
 		if (side == 0 && game->ray_dir_x > 0)
-			game->color = get_texture_pixel(game->element->texture->east,
-					game->tex_x, game->tex_y, game->element->texture->east->data);
+			game->color = gtex_pixel(game->element->texture->east, game->tex_x,
+					game->tex_y, game->element->texture->east->data);
 		else if (side == 0 && game->ray_dir_x < 0)
-			game->color = get_texture_pixel(game->element->texture->west,
-				game->tex_x, game->tex_y, game->element->texture->west->data);
+			game->color = gtex_pixel(game->element->texture->west, game->tex_x,
+					game->tex_y, game->element->texture->west->data);
 		else if (side == 1 && game->ray_dir_y > 0)
-			game->color = get_texture_pixel(game->element->texture->south, game->tex_x,
-				game->tex_y, game->element->texture->south->data);
+			game->color = gtex_pixel(game->element->texture->south, game->tex_x,
+					game->tex_y, game->element->texture->south->data);
 		else
-			game->color = get_texture_pixel(game->element->texture->north, game->tex_x,
-				game->tex_y, game->element->texture->north->data);
+			game->color = gtex_pixel(game->element->texture->north, game->tex_x,
+					game->tex_y, game->element->texture->north->data);
 		put_pixel(screen_x, y, game);
 		y++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 18:52:51 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 22:27:01 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define TILE_SIZE 64
 
 typedef struct s_game	t_game;
+typedef struct s_player	t_player;
 
 typedef struct s_img_info
 {
@@ -90,6 +91,8 @@ typedef struct s_parser
 	int			x;
 }	t_parser;
 
+void	free_img_struct(t_texture *tex);
+
 int			close_game(t_game *game);
 void		free_game_struct(t_game *game);
 int			valid_extension_file_check(char *argv, int ac, char *str);
@@ -132,6 +135,7 @@ int			color_check_pass(t_color *color, char *readfile);
 
 /* parsing_utils3.c  */
 int			read_and_process_lines(int fd, t_parser *element);
+int			check_hit(t_player *player, t_game *game);
 
 /*parsing.c*/
 int			readfile_and_save_content(char *read_file, t_parser *element);

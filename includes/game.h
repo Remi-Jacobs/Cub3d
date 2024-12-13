@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 18:55:23 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 21:10:06 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ typedef struct s_game
 	int			win_width;
 
 	// Add raycasting-related variables
+
+	int		hit;
 	float ray_dir_x;
     float ray_dir_y;
     float delta_dist_x;
@@ -118,10 +120,10 @@ typedef struct s_game
     int is_ceiling; 
 }	t_game;
 
-int draw_loops(t_game *game);
-
+void	assign_game_tex(t_game *game);
+int		draw_loops(t_game *game);
 /*	ray_caster.c	*/
-int		get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data);
+int		gtex_pixel(t_img_info *texture, int x, int y, void *texture_data);
 int		load_textures(t_game *game);
 void	cal_step_and_sidedist(t_player *player, t_game *game);
 void	performing_dda(t_player *player, t_game *game, int *side);

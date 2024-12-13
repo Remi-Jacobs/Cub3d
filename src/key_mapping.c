@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_mapping.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:14:16 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 16:53:22 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 22:16:51 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,16 @@ int	key_release(int keycode, t_player *player)
 	return (0);
 }
 
+void	free_game_struct(t_game *game)
+{
+	close_game(game);
+	if (game->element)
+	{
+		free_parser_struct(game->element);
+		game->element = NULL;
+	}
+}
+
 int	close_game_on_cross(t_game *game)
 {
 	free_game_struct(game);
@@ -56,21 +66,25 @@ int	close_game_on_cross(t_game *game)
 
 int	close_game(t_game *game)
 {
-	mlx_destroy_image(game->mlx, game->element->texture->east->img);
-	mlx_destroy_image(game->mlx, game->element->texture->west->img);
-	mlx_destroy_image(game->mlx, game->element->texture->south->img);
-	mlx_destroy_image(game->mlx, game->element->texture->north->img);
-	mlx_destroy_image(game->mlx, game->img);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
+	if (game->element->texture->east->img)
+		mlx_destroy_image(game->mlx, game->element->texture->east->img);
+	if (game->element->texture->west->img)
+		mlx_destroy_image(game->mlx, game->element->texture->west->img);
+	if (game->element->texture->south->img)
+		mlx_destroy_image(game->mlx, game->element->texture->south->img);
+	if (game->element->texture->north->img)
+		mlx_destroy_image(game->mlx, game->element->texture->north->img);
+	if (game->img)
+		mlx_destroy_image(game->mlx, game->img);
+	if (game->win)
+		mlx_destroy_window(game->mlx, game->win);
+	if (game->mlx)
+	{
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		game->mlx = NULL;
+	}
 	game->win = NULL;
-	game->mlx = NULL;
 	return (0);
 }
 
-void	free_game_struct(t_game *game)
-{
-	free_parser_struct(game->element);
-	close_game(game);
-}
