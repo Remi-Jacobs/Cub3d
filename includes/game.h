@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 13:16:13 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:56:36 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,17 @@ typedef struct s_parser	t_parser;
 typedef struct s_texture	t_texture;
 typedef struct s_map	t_map;
 typedef struct s_img_info t_img_info;
+
+
 typedef struct s_player
 {
 	float	x;
 	float	y;
+
+	//int value to 0
+	int		map_x;
+	int		map_y;
+	
 	float	player_x;
 	float	player_y;
 	float	angle;
@@ -108,18 +115,21 @@ typedef struct s_game
     int is_ceiling; 
 }	t_game;
 
-int	get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data);
-
-
 int draw_loops(t_game *game);
-/*	ray_caster.c	*/
-// int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
-void	init_ray(t_player *player, t_game *game, float ray_angle);
-void	calculate_step_and_sidedist(t_player *player, t_game *game, t_map *map);
-int		perform_dda(t_game *game, t_map *map);
-float	calculate_wall_distance(t_player *player, t_game *game,
-		t_map *map, int side);
 
+/*	ray_caster.c	*/
+int		get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data);
+int		load_textures(t_game *game);
+void	cal_step_and_sidedist(t_player *player, t_game *game);
+void	performing_dda(t_player *player, t_game *game, int *side);
+float	cal_wall_dist(t_player *player, t_game *game, float ray_angle, int side);
+
+/*	ray_caster_utils.c	*/
+void	put_pixel(int x, int y, t_game *game);
+void	clear_image(t_game *game);
+void	init_all(t_game *game);
+int		are_dimensions_equal(int h1, int h2, int h3, int h4);
+int		ft_image_error(t_texture *texture);
 /*	play_move.c	*/
 // void	move_in_direction(t_player *player, t_game *game, int direction);
 void	move_player(t_player *player, t_game *game);

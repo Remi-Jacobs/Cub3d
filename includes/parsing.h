@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 13:02:53 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:55:11 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,38 +43,12 @@ typedef struct	s_img_info
 
 typedef struct s_texture
 {
-
+	int			width;
+	int			height;
 	t_img_info	*east;
 	t_img_info	*west;
 	t_img_info	*north;
 	t_img_info	*south;
-	
-	// char	*east_path;
-	// char	*west_path;
-	// char	*north_path;
-	// char	*south_path;
-
-	// char	*east_data;
-	// char	*west_data;
-	// char	*north_data;
-	// char	*south_data;
-
-	// void	*east_img;
-	// void	*west_img;
-	// void	*north_img;
-	// void	*south_img;
-	// int		width;
-	// int		height;
-	
-
-	
-	// int		bpp;
-	// int		size_line;
-	// int		w_size_line;
-	// int		e_size_line;
-	// int		s_size_line;
-	// int		n_size_line;
-	// int		endian;
 }	t_texture;
 
 
@@ -110,15 +84,11 @@ typedef struct s_parser
 	int			floor_full;
 	int			ceiling_full;
 	int			texture_full;
-	
 }	t_parser;
 
-
-int	close_game(t_game *game);
-
+int		close_game(t_game *game);
 void	free_game_struct(t_game *game);
-
-int	valid_extension_file_check(char *argv, int ac, char *str);
+int		valid_extension_file_check(char *argv, int ac, char *str);
 
 /*parsing_init.c    file full and formatted */
 t_parser	*init_elements(void);
