@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_caster.c                                       :+:      :+:    :+:   */
+/*   ray_caster1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:06 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 16:44:43 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:19:42 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,28 @@ int	get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data)
 
 int	load_textures(t_game *game)
 {
-	t_texture *tex;
+	t_texture	*tex;
 
 	tex = game->element->texture;
 	tex->east->img = mlx_xpm_file_to_image(game->mlx, tex->east->path,
-		&tex->east->width, &tex->east->height);
+			&tex->east->width, &tex->east->height);
 	tex->west->img = mlx_xpm_file_to_image(game->mlx, tex->west->path,
-		&tex->west->width, &tex->west->height);
+			&tex->west->width, &tex->west->height);
 	tex->north->img = mlx_xpm_file_to_image(game->mlx, tex->north->path,
-		&tex->north->width, &tex->north->height);
+			&tex->north->width, &tex->north->height);
 	tex->south->img = mlx_xpm_file_to_image(game->mlx, tex->south->path,
-		&tex->south->width, &tex->south->height);
+			&tex->south->width, &tex->south->height);
 	if (!ft_image_error(game->element->texture))
 		return (0);
 	tex->north->data = mlx_get_data_addr(tex->north->img, &tex->north->bpp,
-		&tex->north->size_line, &tex->north->endian);
+			&tex->north->size_line, &tex->north->endian);
 	tex->west->data = mlx_get_data_addr(tex->west->img, &tex->west->bpp,
-		&tex->west->size_line, &tex->west->endian);
+			&tex->west->size_line, &tex->west->endian);
 	tex->east->data = mlx_get_data_addr(tex->east->img, &tex->east->bpp,
-		&tex->east->size_line, &tex->east->endian);
+			&tex->east->size_line, &tex->east->endian);
 	tex->south->data = mlx_get_data_addr(tex->south->img, &tex->south->bpp,
-		&tex->south->size_line, &tex->south->endian);
-	return(1);
+			&tex->south->size_line, &tex->south->endian);
+	return (1);
 }
 
 void	cal_step_and_sidedist(t_player *player, t_game *game)
@@ -87,7 +87,7 @@ void	performing_dda(t_player *player, t_game *game, int *side)
 	{
         if (player->map_x < 0 || player->map_x >= game->element->map_array->max_map_row || 
             player->map_y < 0 || player->map_y >= game->element->map_array->max_map_column)
-				return;
+			return ;
 		if (game->side_dist_x < game->side_dist_y)
 		{
 			game->side_dist_x += game->delta_dist_x;
@@ -105,7 +105,7 @@ void	performing_dda(t_player *player, t_game *game, int *side)
 		{
 			if (game->map[player->map_y][player->map_x] == '1'
 				|| game->map[player->map_y][player->map_x] == ' ')
-					hit = 1;
+				hit = 1;
 		}
 	}
 }
@@ -121,7 +121,6 @@ float	cal_wall_dist(t_player *player, t_game *game, float ray_angle, int side)
 		game->perp_wall_dist = (player->map_y - player->player_y / BLOCK
 			+ (1 - game->step_y) / 2) / game->ray_dir_y;
 	game->perp_wall_dist *= cos(ray_angle - player->angle);
-	
 	game->line_height = (int)(HEIGHT / game->perp_wall_dist);
 	game->draw_start = -game->line_height / 2 + HEIGHT / 2;
 	if (game->draw_start < 0)

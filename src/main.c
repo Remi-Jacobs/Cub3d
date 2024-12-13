@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 17:00:21 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:14:18 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,32 @@ void	init_game_utils(t_game *game)
 			&game->size_line, &game->endian);
 }
 
+int	init_player(t_player *player, t_map *map)
+{
+	player->player_x = map->player_row * BLOCK + BLOCK / 2;
+	player->player_y = map->player_column * BLOCK + BLOCK / 2;
+	if (map->map[map->player_column][map->player_row] == '1'
+		||map->map[map->player_column][map->player_row] == ' ')
+	{
+		ft_error("ERROR: Player starting pos inside wall or out of bounds\n");
+		return (0);
+	}
+	if (!set_player_angle(map, player))
+		return (0);
+	player->key_up = false;
+	player->key_down = false;
+	player->key_right = false;
+	player->key_left = false;
+	player->left_rotate = false;
+	player->right_rotate = false;
+	return (1);
+}
+
 int	init_game(t_game *game, char *argv)
 {
 	game->element = parsing_func(argv);
 	if (game->element == NULL)
-	{
-		ft_error("Error from parsing\n");
-		return (0);
-	}
+		return (ft_error("Error from parsing\n"), 0);
 	printf ("End of parsing\n");
 	if (!init_player(&game->player, game->element->map_array))
 	{
@@ -46,13 +64,13 @@ int	init_game(t_game *game, char *argv)
 	if (!game->mlx)
 	{
 		ft_error("Error initializing mlx");
-		return(0);
+		return (0);
 	}
 	init_game_utils(game);
 	if (!load_textures(game))
 	{
 		ft_error("Error loading texture\n");
-		return(0) ;
+		return (0);
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
 	return (1);

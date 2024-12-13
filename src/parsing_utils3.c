@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:26:06 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 16:37:07 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:49:30 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,39 +61,30 @@ static int	empty_file(char *trim_file, int *x)
 	return (0);
 }
 
-static int	first_arg_is_newline(char *trim_file, int fd, char	*line_read)
-{
-	if (trim_file[0] == '\n')
-	{
-		free(line_read);
-		line_read = get_next_line(fd);
-		return (1);
-	}
-	return (0);
-}
-
 int	read_and_process_lines(int fd, t_parser *element)
 {
-	char	*line_read;
 	char	*trim_file;
-	int		has_started;
-	int		x;
 
-	x = 0;
-	has_started = 0;
-	line_read = get_next_line(fd);
-	while (line_read != NULL)
+	element->x = 0;
+	element->has_started = 0;
+	element->line_read = get_next_line(fd);
+	while (element->line_read != NULL)
 	{
-		trim_file = ft_skip_check_element_char(line_read);
-		if (empty_file(trim_file, &x))
+		trim_file = ft_skip_check_element_char(element->line_read);
+		printf("line = %s\n", trim_file);
+		if (empty_file(trim_file, &element->x))
 			break ;
-		if (first_arg_is_newline(trim_file, fd, line_read))
+		if (trim_file[0] == '\n')
+		{
+			free(element->line_read);
+			element->line_read = get_next_line(fd);
 			continue ;
-		if (!process_line(trim_file, element, & has_started))
-			return (free(line_read), 0);
-		x = 1;
-		free(line_read);
-		line_read = get_next_line(fd);
+		}
+		if (!process_line(trim_file, element, & element->has_started))
+			return (free(element->line_read), 0);
+		element->x = 1;
+		free(element->line_read);
+		element->line_read = get_next_line(fd);
 	}
-	return (x);
+	return (element->x);
 }

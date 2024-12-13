@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:30:12 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 18:02:24 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 19:15:06 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,60 +45,35 @@ bool	touch(float px, float py, t_game *game)
 		printf("Collision at: map_x=%d, map_y=%d\n", map_x, map_y);
 		return (true);
 	}
-
 	return (false);
-}
-
-int	init_player(t_player *player, t_map *map)
-{
-	player->player_x = map->player_row * BLOCK + BLOCK / 2;
-	player->player_y = map->player_column * BLOCK + BLOCK / 2;
-	if (map->map[map->player_column][map->player_row] == '1'
-		||map->map[map->player_column][map->player_row] == ' ')
-	{
-		ft_error("ERROR: Player starting pos inside wall or out of bounds\n");
-		return (0);
-	}
-	if (!set_player_angle(map, player))
-		return (0);
-	player->key_up = false;
-	player->key_down = false;
-	player->key_right = false;
-	player->key_left = false;
-	player->left_rotate = false;
-	player->right_rotate = false;
-	return (1);
 }
 
 void	move_in_direction(t_player *player, t_game *game, int direction)
 {
-	float	new_x;
-	float	new_y;
-
 	if (direction == 1)
 	{
-		new_x = player->player_x + player->cos_angle * player->speed;
-		new_y = player->player_y + player->sin_angle * player->speed;
+		player->new_x = player->player_x + player->cos_angle * player->speed;
+		player->new_y = player->player_y + player->sin_angle * player->speed;
 	}
 	else if (direction == -1)
 	{
-		new_x = player->player_x - player->cos_angle * player->speed;
-		new_y = player->player_y - player->sin_angle * player->speed;
+		player->new_x = player->player_x - player->cos_angle * player->speed;
+		player->new_y = player->player_y - player->sin_angle * player->speed;
 	}
 	else if (direction == 2)
 	{
-		new_x = player->player_x + player->sin_angle * player->speed;
-		new_y = player->player_y - player->cos_angle * player->speed;
+		player->new_x = player->player_x + player->sin_angle * player->speed;
+		player->new_y = player->player_y - player->cos_angle * player->speed;
 	}
 	else if (direction == -2)
 	{
-		new_x = player->player_x - player->sin_angle * player->speed;
-		new_y = player->player_y + player->cos_angle * player->speed;
+		player->new_x = player->player_x - player->sin_angle * player->speed;
+		player->new_y = player->player_y + player->cos_angle * player->speed;
 	}
-	if (!touch(new_x, player->player_y, game))
-		player->player_x = new_x;
-	if (!touch(player->player_x, new_y, game))
-		player->player_y = new_y;
+	if (!touch(player->new_x, player->player_y, game))
+		player->player_x = player->new_x;
+	if (!touch(player->player_x, player->new_y, game))
+		player->player_y = player->new_y;
 }
 
 void	rotate_player(t_player *player)

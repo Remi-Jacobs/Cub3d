@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:17 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 16:56:47 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:16:55 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	init_all(t_game *game)
 	game->tex_y = 0;
 	game->screen_x = 0;
 	game->perp_wall_dist = 0;
-	game->is_ceiling = 0; 
+	game->is_ceiling = 0;
 }
 
 int	are_dimensions_equal(int h1, int h2, int h3, int h4)
@@ -87,6 +87,6 @@ int	ft_image_error(t_texture *texture)
 		return (0);
 	}
 	texture->width = texture->east->width;
-	texture->height = texture->east->height; 
+	texture->height = texture->east->height;
 	return (1);
 }

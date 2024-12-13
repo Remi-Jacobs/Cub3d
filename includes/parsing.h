@@ -6,17 +6,17 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 17:24:17 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 18:52:51 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <fcntl.h> 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+# include <fcntl.h> 
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include "../comb_libft/ft_printf.h"
@@ -27,9 +27,9 @@
 # define MAP_HEIGHT 50
 # define TILE_SIZE 64
 
-typedef struct	s_game	t_game;
+typedef struct s_game	t_game;
 
-typedef struct	s_img_info
+typedef struct s_img_info
 {
 	int		endian;
 	int		size_line;
@@ -39,7 +39,7 @@ typedef struct	s_img_info
 	void	*img;
 	char	*path;
 	char	*data;
-} t_img_info;
+}		t_img_info;
 
 typedef struct s_texture
 {
@@ -84,11 +84,15 @@ typedef struct s_parser
 	int			floor_full;
 	int			ceiling_full;
 	int			texture_full;
+	char		*line_read;
+	char		*trim_file;
+	int			has_started;
+	int			x;
 }	t_parser;
 
-int		close_game(t_game *game);
-void	free_game_struct(t_game *game);
-int		valid_extension_file_check(char *argv, int ac, char *str);
+int			close_game(t_game *game);
+void		free_game_struct(t_game *game);
+int			valid_extension_file_check(char *argv, int ac, char *str);
 
 /*parsing_init.c    file full and formatted */
 t_parser	*init_elements(void);
@@ -127,7 +131,7 @@ int			saving_ceiling_and_floor(char *readfile, t_color *color);
 int			color_check_pass(t_color *color, char *readfile);
 
 /* parsing_utils3.c  */
-int	read_and_process_lines(int fd, t_parser *element);
+int			read_and_process_lines(int fd, t_parser *element);
 
 /*parsing.c*/
 int			readfile_and_save_content(char *read_file, t_parser *element);
