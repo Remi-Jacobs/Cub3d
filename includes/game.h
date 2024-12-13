@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/12 19:30:10 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 13:16:13 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,7 @@
 typedef struct s_parser	t_parser;
 typedef struct s_texture	t_texture;
 typedef struct s_map	t_map;
-// typedef struct s_texture t_texture;
-// typedef struct s_ray t_ray;
-
-// typedef struct s_ray
-// {
-// 	double	camera_x;
-// 	double	dir_x;
-// 	double	dir_y;
-// 	int		map_x;
-// 	int		map_y;
-// 	int		step_x;
-// 	int		step_y;
-// 	double	sidedist_x;
-// 	double	sidedist_y;
-// 	double	deltadist_x;
-// 	double	deltadist_y;
-// 	double	wall_dist;
-// 	double	wall_x;
-// 	int		side;
-// 	int		line_height;
-// 	int		draw_start;
-// 	int		draw_end;
-// }	t_ray;
-
-
+typedef struct s_img_info t_img_info;
 typedef struct s_player
 {
 	float	x;
@@ -90,35 +66,6 @@ typedef struct s_player
 	bool	left_rotate;
 	bool	right_rotate;
 }	t_player;
-
-
-// typedef struct s_game
-// {
-//     float ray_dir_x;
-//     float ray_dir_y;
-//     float delta_dist_x;
-//     float delta_dist_y;
-//     float side_dist_x;
-//     float side_dist_y;
-//     int step_x;
-//     int step_y;
-//     int side; // 0 for vertical wall, 1 for horizontal wall
-//     float perp_wall_dist;
-//     int line_height;
-//     int draw_start;
-//     int draw_end;
-//     int tex_x;
-//     int tex_y;
-//     int screen_x;
-//     int color;
-//     int is_ceiling;
-//     t_parser *element;
-//     char **map;
-//     void *mlx;
-//     void *win;
-//     void *img;
-// 	t_player	player;
-// } t_game;
 
 typedef struct s_game
 {
@@ -161,9 +108,12 @@ typedef struct s_game
     int is_ceiling; 
 }	t_game;
 
+int	get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data);
+
+
 int draw_loops(t_game *game);
 /*	ray_caster.c	*/
-int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
+// int		get_texture_pixel(t_texture *texture, int x, int y, void *texture_data);
 void	init_ray(t_player *player, t_game *game, float ray_angle);
 void	calculate_step_and_sidedist(t_player *player, t_game *game, t_map *map);
 int		perform_dda(t_game *game, t_map *map);

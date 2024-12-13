@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/12 18:42:04 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 13:02:53 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,56 @@
 
 
 # define MAP_HEIGHT 50
-# define TILE_SIZE 60
-# define TILE_SIZE_MINI 20
+# define TILE_SIZE 64
 
-typedef struct s_game	t_game;
+typedef struct	s_game	t_game;
+
+typedef struct	s_img_info
+{
+	int		endian;
+	int		size_line;
+	int		bpp;
+	int		width;
+	int		height;
+	void	*img;
+	char	*path;
+	char	*data;
+} t_img_info;
 
 typedef struct s_texture
 {
-	char	*east_path;
-	char	*west_path;
-	char	*north_path;
-	char	*south_path;
 
-	char	*east_data;
-	char	*west_data;
-	char	*north_data;
-	char	*south_data;
+	t_img_info	*east;
+	t_img_info	*west;
+	t_img_info	*north;
+	t_img_info	*south;
+	
+	// char	*east_path;
+	// char	*west_path;
+	// char	*north_path;
+	// char	*south_path;
 
-	void	*east_img;
-	void	*west_img;
-	void	*north_img;
-	void	*south_img;
-	int		width;
-	int		height;
+	// char	*east_data;
+	// char	*west_data;
+	// char	*north_data;
+	// char	*south_data;
+
+	// void	*east_img;
+	// void	*west_img;
+	// void	*north_img;
+	// void	*south_img;
+	// int		width;
+	// int		height;
 	
 
 	
-	int		bpp;
-	int		size_line;
-	int		w_size_line;
-	int		e_size_line;
-	int		s_size_line;
-	int		n_size_line;
-	int		endian;
+	// int		bpp;
+	// int		size_line;
+	// int		w_size_line;
+	// int		e_size_line;
+	// int		s_size_line;
+	// int		n_size_line;
+	// int		endian;
 }	t_texture;
 
 
@@ -68,14 +85,6 @@ typedef struct s_color
 	int		blue;
 	int		converted_color;
 }	t_color;
-
-// typedef struct s_player
-// {
-// 	double		player_posX;
-// 	double		player_posY;
-// }	t_player;
-
-
 
 typedef struct s_map
 {

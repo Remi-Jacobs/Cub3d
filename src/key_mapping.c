@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:14:16 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 19:29:20 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:03:24 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	close_game_on_cross(t_game *game)
 
 int	close_game(t_game *game)
 {
-	mlx_destroy_image(game->mlx, game->element->texture->east_img);
-	mlx_destroy_image(game->mlx, game->element->texture->west_img);
-	mlx_destroy_image(game->mlx, game->element->texture->south_img);
-	mlx_destroy_image(game->mlx, game->element->texture->north_img);
+	mlx_destroy_image(game->mlx, game->element->texture->east->img);
+	mlx_destroy_image(game->mlx, game->element->texture->west->img);
+	mlx_destroy_image(game->mlx, game->element->texture->south->img);
+	mlx_destroy_image(game->mlx, game->element->texture->north->img);
 	mlx_destroy_image(game->mlx, game->img);
 	mlx_destroy_window(game->mlx, game->win);
 	mlx_destroy_display(game->mlx);

@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 14:28:23 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:44:12 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	checking_texture(char *readfile, t_parser *element)
 {
 	if (ft_strncmp(readfile, "WE", 2) == 0)
-		saving_texture(readfile, &element->texture->west_path);
+		saving_texture(readfile, &element->texture->west->path);
 	else if (ft_strncmp(readfile, "EA", 2) == 0)
-		saving_texture(readfile, &element->texture->east_path);
+		saving_texture(readfile, &element->texture->east->path);
 	else if (ft_strncmp(readfile, "NO", 2) == 0)
-		saving_texture(readfile, &element->texture->north_path);
+		saving_texture(readfile, &element->texture->north->path);
 	else if (ft_strncmp(readfile, "SO", 2) == 0)
-		saving_texture(readfile, &element->texture->south_path);
+		saving_texture(readfile, &element->texture->south->path);
 	return (1);
 }
 

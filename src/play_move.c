@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_move.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:30:12 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/12 18:38:08 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 11:57:10 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,14 @@ bool	touch(float px, float py, t_game *game)
 
 int	init_player(t_player *player, t_map *map)
 {
-	player->player_x = map->player_row * BLOCK + BLOCK / 2;
-	player->player_y = map->player_column * BLOCK + BLOCK / 2;
+    player->player_x = map->player_row * BLOCK + BLOCK / 2;
+    player->player_y = map->player_column * BLOCK + BLOCK / 2;
+    if (map->map[map->player_column][map->player_row] == '1'
+		||map->map[map->player_column][map->player_row] == ' ')
+    {
+        ft_error("ERROR: Player starting position inside wall or out of bounds\n");
+        return (0);
+    }
 	if (!set_player_angle(map, player))
 		return (0);
 	player->key_up = false;
@@ -90,16 +96,9 @@ void	move_in_direction(t_player *player, t_game *game, int direction)
 		new_y = player->player_y + player->cos_angle * player->speed;
 	}
 	if (!touch(new_x, player->player_y, game))
-	{
 		player->player_x = new_x;
-		player->player_y = new_y;
-		
-	}
 	if (!touch(player->player_x, new_y, game))
-	{
 		player->player_y = new_y;
-		player->player_x = new_x;
-	}
 }
 
 void	rotate_player(t_player *player)
@@ -119,10 +118,10 @@ void	rotate_player(t_player *player)
 
 void	move_player(t_player *player, t_game *game)
 {
-	player->speed = 3;
+	player->speed = 5;
 	player->sin_angle = sin(player->angle);
 	player->cos_angle = cos(player->angle);
-	rotate_player(player);
+    rotate_player(player);
 	if (player->key_up)
 		move_in_direction(player, game, 1);
 	if (player->key_down)

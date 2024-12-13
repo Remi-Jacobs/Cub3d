@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/11 11:21:42 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:04:58 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,10 +167,10 @@ static int	verify_colors(t_color *color)
 
 static int	verify_texture(t_texture *tex)
 {
-	if (access(tex->east_path, F_OK) == -1
-		|| access(tex->west_path, F_OK) == -1 
-		|| access(tex->south_path, F_OK) == -1
-		|| access(tex->north_path, F_OK) == -1)
+	if (access(tex->east->path, F_OK) == -1
+		|| access(tex->west->path, F_OK) == -1 
+		|| access(tex->south->path, F_OK) == -1
+		|| access(tex->north->path, F_OK) == -1)
 	{
 		ft_error("can't access texture\n");
 		return (0);

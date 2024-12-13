@@ -6,13 +6,13 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:06 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/12 12:15:58 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:06:08 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/game.h"
 
-int	get_texture_pixel(t_texture *texture, int x, int y, void *texture_data)
+int	get_texture_pixel(t_img_info *texture, int x, int y, void *texture_data)
 {
 	int				offset;
 	unsigned char	*data;

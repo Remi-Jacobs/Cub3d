@@ -6,7 +6,7 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 22:16:06 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:31:07 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,35 @@ static int	get_max_row_length(char **map, int column)
 	return (max_length);
 }
 
+static int pad_row_len(char **map, int column)
+{
+	int 	i;
+	int		len;
+	size_t	map_len;
+	char	*padded_row;
+
+	len = get_max_row_length(map, column);
+	i = 0;
+	while (map[i] != NULL)
+	{
+		map_len = ft_strlen(map[i]);
+		if (len != map_len)
+		{
+			padded_row = malloc(len + 1);
+			if (!padded_row)
+				return (-1);
+			ft_memcpy(padded_row, map[i], map_len);
+			ft_memset(padded_row + map_len, ' ', len - map_len);
+			padded_row[len] = '\0';
+			free(map[i]);
+			map[i] = padded_row;
+		}
+		i++;
+	}
+	return (0);
+}
+
+
 int	verify_map_walls_utils(t_parser *element)
 {
 	int	i;
@@ -52,8 +81,8 @@ int	verify_map_walls_utils(t_parser *element)
 		i++;
 	}
 	element->map_array->max_map_column = column + 1;
-	element->map_array->max_map_row = get_max_row_length \
-	(element->map_array->map, column);
+	element->map_array->max_map_row = get_max_row_length(element->map_array->map, column);
+	pad_row_len(element->map_array->map, column);
 	return (1);
 }
 

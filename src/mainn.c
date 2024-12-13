@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mainn.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/12 20:34:46 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 13:07:42 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void clear_image(t_game *game)
 
 int	ft_image_error(t_texture *texture)
 {
-	if (!texture->east_img || !texture->west_img
-		|| !texture->north_img || !texture->south_img)
+	if (!texture->east->img || !texture->west->img
+		|| !texture->north->img || !texture->south->img)
 	{
 		ft_error("Error mlx_image failed\n");
 		return (0);
@@ -56,70 +56,28 @@ int	load_textures(t_game *game)
 	t_texture *tex;
 
 	tex = game->element->texture;
-	tex->east_img = mlx_xpm_file_to_image(game->mlx, tex->east_path,
-		&tex->width, &tex->height);
-	tex->west_img = mlx_xpm_file_to_image(game->mlx, tex->west_path,
-		&tex->width, &tex->height);
-	tex->north_img = mlx_xpm_file_to_image(game->mlx, tex->north_path,
-		&tex->width, &tex->height);
-	tex->south_img = mlx_xpm_file_to_image(game->mlx, tex->south_path,
-		&tex->width, &tex->height);
+	tex->east->img = mlx_xpm_file_to_image(game->mlx, tex->east->path,
+		&tex->east->width, &tex->east->height);
+	tex->west->img = mlx_xpm_file_to_image(game->mlx, tex->west->path,
+		&tex->west->width, &tex->west->height);
+	tex->north->img = mlx_xpm_file_to_image(game->mlx, tex->north->path,
+		&tex->north->width, &tex->north->height);
+	tex->south->img = mlx_xpm_file_to_image(game->mlx, tex->south->path,
+		&tex->south->width, &tex->south->height);
 	if (!ft_image_error(game->element->texture))
 		return (0);
-	tex->north_data = mlx_get_data_addr(tex->north_img, &tex->bpp,
-		&tex->size_line, &tex->endian);
-	tex->west_data = mlx_get_data_addr(tex->west_img, &tex->bpp,
-		&tex->size_line, &tex->endian);
-	tex->east_data = mlx_get_data_addr(tex->east_img, &tex->bpp,
-		&tex->size_line, &tex->endian);
-	tex->south_data = mlx_get_data_addr(tex->south_img, &tex->bpp,
-		&tex->size_line, &tex->endian);
+	tex->north->data = mlx_get_data_addr(tex->north->img, &tex->north->bpp,
+		&tex->north->size_line, &tex->north->endian);
+	tex->west->data = mlx_get_data_addr(tex->west->img, &tex->west->bpp,
+		&tex->west->size_line, &tex->west->endian);
+	tex->east->data = mlx_get_data_addr(tex->east->img, &tex->east->bpp,
+		&tex->east->size_line, &tex->east->endian);
+	tex->south->data = mlx_get_data_addr(tex->south->img, &tex->south->bpp,
+		&tex->south->size_line, &tex->south->endian);
 	return(1);
 }
 
-//2d map
-void	draw_square(int x, int y, int size, t_game *game)
-{
-	int	i;
-
-	i = -1;
-	while (++i < size)
-		put_pixel(x + i, y, game);
-	i = -1;
-	while (++i < size)
-		put_pixel(x, y + i, game);
-	i = -1;
-	while (++i < size)
-		put_pixel(x + size, y + i, game);
-	i = -1;
-	while (++i < size)
-		put_pixel(x + i, y + size, game);
-}
-//2d map
-void	draw_map(t_game *game)
-{
-	char	**map;
-	int		y;
-	int		x;
-
-	map = game->map;
-	y = 0;
-	game->color = 0xFF0000;
-	while (map[y])
-	{
-		x = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '1')
-				draw_square(x * BLOCK, y * BLOCK, BLOCK, game);
-			x++;
-		}
-		y++;
-	}
-}
-
-
- void draw_lines(t_player *player, t_game *game, float ray_angle, int screen_x)
+void draw_lines(t_player *player, t_game *game, float ray_angle, int screen_x)
 {
 	// Ray initialization
 	game->ray_dir_x = cos(ray_angle);
@@ -158,6 +116,14 @@ void	draw_map(t_game *game)
 	int side; // 0: vertical wall, 1: horizontal wall
 	while (!hit)
 	{
+        if (map_x < 0 || map_x >= game->element->map_array->max_map_row || 
+            map_y < 0 || map_y >= game->element->map_array->max_map_column)
+        {
+            printf("Ray out of bounds: map_x=%d, map_y=%d\n", map_x, map_y);
+            printf("Max map: map_x=%d, map_y=%d\n", game->element->map_array->max_map_row, game->element->map_array->max_map_column);
+
+            return;
+        }
 		if (game->side_dist_x < game->side_dist_y)
 		{
 			game->side_dist_x += game->delta_dist_x;
@@ -170,10 +136,12 @@ void	draw_map(t_game *game)
 			map_y += game->step_y;
 			side = 1; // Horizontal wall
 		}
-
-		// Check for wall hit
-		if (game->map[map_y][map_x] == '1' || game->map[map_y][map_x] == ' ')
-			hit = 1;
+		if (map_x >= 0 && map_x < game->element->map_array->max_map_row &&
+            map_y >= 0 && map_y < game->element->map_array->max_map_column)
+        {
+            if (game->map[map_y][map_x] == '1' || game->map[map_y][map_x] == ' ')
+                hit = 1;
+        }
 	}
 
 	// Calculate perpendicular distance to the wall
@@ -204,28 +172,28 @@ void	draw_map(t_game *game)
 		wall_x = player->player_x / BLOCK + perp_wall_dist * game->ray_dir_x;
 	wall_x -= floor(wall_x);
 
-	int tex_x = (int)(wall_x * game->element->texture->width);
+	int tex_x = (int)(wall_x * game->element->texture->east->width);
 	if (side == 0 && game->ray_dir_x > 0)
-		tex_x = game->element->texture->width - tex_x - 1;
+		tex_x = game->element->texture->east->width - tex_x - 1;
 	if (side == 1 && game->ray_dir_y < 0)
-		tex_x = game->element->texture->width - tex_x - 1;
+		tex_x = game->element->texture->east->width - tex_x - 1;
 
 	// Draw the wall slice
 	for (int y = draw_start; y < draw_end; y++)
 	{
-		int tex_y = (int)(((y - HEIGHT / 2 + line_height / 2) * game->element->texture->height) / line_height);
+		int tex_y = (int)(((y - HEIGHT / 2 + line_height / 2) * game->element->texture->east->height) / line_height);
 		tex_y = tex_y < 0 ? 0 : tex_y;
-		tex_y = tex_y >= game->element->texture->height ? game->element->texture->height - 1 : tex_y;
+		tex_y = tex_y >= game->element->texture->east->height ? game->element->texture->east->height - 1 : tex_y;
 
 		// Fetch the texture color based on the side of the wall and ray direction
 		if (side == 0 && game->ray_dir_x> 0)
-			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->east_data);
+			game->color = get_texture_pixel(game->element->texture->east, tex_x, tex_y, game->element->texture->east->data);
 		else if (side == 0 && game->ray_dir_x < 0)
-			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->west_data);
+			game->color = get_texture_pixel(game->element->texture->west, tex_x, tex_y, game->element->texture->west->data);
 		else if (side == 1 && game->ray_dir_y > 0)
-			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->south_data);
+			game->color = get_texture_pixel(game->element->texture->south, tex_x, tex_y, game->element->texture->south->data);
 		else
-			game->color = get_texture_pixel(game->element->texture, tex_x, tex_y, game->element->texture->north_data);
+			game->color = get_texture_pixel(game->element->texture->north, tex_x, tex_y, game->element->texture->north->data);
 
 		put_pixel(screen_x, y, game);
 	}
@@ -247,6 +215,29 @@ void	draw_map(t_game *game)
 		put_pixel(screen_x, y, game);
 		y++;
 	}
+}
+
+
+int draw_loops(t_game *game)
+{
+	t_player *player = &game->player;
+	move_player(player, game);
+	clear_image(game);
+
+	float fraction = PI / 3 / WIDTH;
+	float start_x = player->angle - PI / 6;
+	int i = 0;
+
+	while (i < WIDTH)
+	{
+
+		draw_lines(player, game, start_x, i);
+		start_x += fraction;
+		i++;
+	}
+
+	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
+	return 0;
 }
 
 // int	draw_loop(t_game *game)
@@ -278,32 +269,3 @@ void	draw_map(t_game *game)
 // 	}
 // 	return (mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0), 0);
 // }
-
-int draw_loops(t_game *game)
-{
-	t_player *player = &game->player;
-	move_player(player, game);
-	clear_image(game);
-
-	if (DEBUG)
-	{
-		game->color = 0x00FFFF;
-		draw_square(player->player_x, player->player_y, 10, game);
-		draw_map(game);
-	}
-
-	float fraction = PI / 3 / WIDTH;
-	float start_x = player->angle - PI / 6;
-	int i = 0;
-
-	while (i < WIDTH)
-	{
-
-		draw_lines(player, game, start_x, i);
-		start_x += fraction;
-		i++;
-	}
-
-	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	return 0;
-}
