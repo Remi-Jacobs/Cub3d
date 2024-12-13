@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mainn.c                                            :+:      :+:    :+:   */
+/*   ray_caster.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:59:39 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 16:50:00 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:58:29 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	drawing_ceiling_floor(t_game *game, int screen_x)
 	}
 }
 
-
 void	draw_map_walls(t_game *game, int side, int screen_x)
 {
 	int	y;
@@ -51,14 +50,14 @@ void	draw_map_walls(t_game *game, int side, int screen_x)
 	while (y < game->draw_end)
 	{
 		game->tex_y = (int)(((y - HEIGHT / 2 + game->line_height / 2)
-			* game->element->texture->east->height) / game->line_height);
+				* game->element->texture->height) / game->line_height);
 		if (game->tex_y < 0)
-			game->tex_y  = 0;
+			game->tex_y = 0;
 		if (game->tex_y >= game->element->texture->height)
-			game->tex_y =  game->element->texture->height -1;
-		if (side == 0 && game->ray_dir_x> 0)
-			game->color = get_texture_pixel(game->element->texture->east, game->tex_x,
-				game->tex_y, game->element->texture->east->data);
+			game->tex_y = game->element->texture->height -1;
+		if (side == 0 && game->ray_dir_x > 0)
+			game->color = get_texture_pixel(game->element->texture->east,
+					game->tex_x, game->tex_y, game->element->texture->east->data);
 		else if (side == 0 && game->ray_dir_x < 0)
 			game->color = get_texture_pixel(game->element->texture->west,
 				game->tex_x, game->tex_y, game->element->texture->west->data);
@@ -68,15 +67,17 @@ void	draw_map_walls(t_game *game, int side, int screen_x)
 		else
 			game->color = get_texture_pixel(game->element->texture->north, game->tex_x,
 				game->tex_y, game->element->texture->north->data);
-		put_pixel(screen_x, y, game);	
+		put_pixel(screen_x, y, game);
 		y++;
 	}
 }
 
-void draw_lines(t_player *player, t_game *game, float ray_angle, int screen_x)
+void	draw_lines(t_player *player, t_game *game,
+float ray_angle, int screen_x)
 {
 	int		side;
 	float	wall_x;
+
 	init_ray_pos(player, game, ray_angle);
 	cal_step_and_sidedist(player, game);
 	performing_dda(player, game, &side);
@@ -90,7 +91,7 @@ void draw_lines(t_player *player, t_game *game, float ray_angle, int screen_x)
 	drawing_ceiling_floor(game, screen_x);
 }
 
-int draw_loops(t_game *game)
+int	draw_loops(t_game *game)
 {
 	int			i;
 	float		start_x;
@@ -103,7 +104,7 @@ int draw_loops(t_game *game)
 	move_player(player, game);
 	clear_image(game);
 	fraction = PI / 3 / WIDTH;
-	start_x	= player->angle - PI / 6;
+	start_x = player->angle - PI / 6;
 	while (i < WIDTH)
 	{
 		draw_lines(player, game, start_x, i);
@@ -111,5 +112,5 @@ int draw_loops(t_game *game)
 		i++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	return 0;
+	return (0);
 }

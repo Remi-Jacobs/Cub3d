@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 11:52:22 by danevans          #+#    #+#             */
-/*   Updated: 2024/11/01 12:00:58 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:09:41 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+char		*ft_strrrchr(char *s, int c);
 int			ft_isalpha(int i);
 int			ft_isalnum(int i);
 int			ft_isdigit(int i);

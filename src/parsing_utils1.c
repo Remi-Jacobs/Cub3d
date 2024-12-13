@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 20:13:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/09 22:36:26 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:36:29 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_skip_check_element_char(char *file)
 		file++;
 	if (*file == 'N' || *file == 'S' || *file == 'W'
 		|| *file == 'E' || *file == 'F' || *file == 'C'
-		|| *file == '1' ||  *file == '0')
+		|| *file == '1' || *file == '0')
 		return (file);
 	if (*file == '\n')
 		return (file);

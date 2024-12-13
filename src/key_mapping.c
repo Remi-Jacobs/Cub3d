@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_mapping.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 13:14:16 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 13:03:24 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:53:22 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,4 @@ void	free_game_struct(t_game *game)
 {
 	free_parser_struct(game->element);
 	close_game(game);
-	// free(game);
 }

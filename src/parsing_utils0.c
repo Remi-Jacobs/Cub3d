@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/10 01:33:46 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:35:41 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	validating_texture(char *trim_file, t_parser *element)
 		|| (ft_strncmp(trim_file, "NO", 2) == 0)
 		|| (ft_strncmp(trim_file, "SO", 2) == 0)
 		&& (trim_file[2] == ' ' || (trim_file[2] >= 9
-		&& trim_file[2] <= 13 )))
+				&& trim_file[2] <= 13)))
 	{
 		return (1);
 	}

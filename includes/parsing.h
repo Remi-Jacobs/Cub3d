@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 16:55:11 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 17:24:17 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ t_parser	*init_elements(void);
 int			init_ceil_floor_color(t_parser *element);
 void		init_texture_maps(t_parser *element);
 void		free_map_stored(t_parser *element);
-void		free_parser_struct(t_parser *element);
 
 /*parsing_map_check.c    file full and formatted */
 int			verify_map_walls_utils(t_parser *element);
@@ -127,7 +126,11 @@ int			num_range(int num, t_color *color);
 int			saving_ceiling_and_floor(char *readfile, t_color *color);
 int			color_check_pass(t_color *color, char *readfile);
 
+/* parsing_utils3.c  */
+int	read_and_process_lines(int fd, t_parser *element);
+
 /*parsing.c*/
 int			readfile_and_save_content(char *read_file, t_parser *element);
 t_parser	*parsing_func(char *read_file);
+void		free_parser_struct(t_parser *element);
 #endif

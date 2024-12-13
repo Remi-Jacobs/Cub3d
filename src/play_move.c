@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   play_move.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:30:12 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 11:57:10 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 18:02:24 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	touch(float px, float py, t_game *game)
 	map_x = (int)(px / BLOCK);
 	map_y = (int)(py / BLOCK);
 	if (map_x < 0 || map_x >= game->element->map_array->max_map_row
-			|| map_y < 0 ||map_y >= game->element->map_array->max_map_column)
+		|| map_y < 0 || map_y >= game->element->map_array->max_map_column)
 		return (true);
 	if (game->map[map_y][map_x] == '1' || game->map[map_y][map_x] == ' ')
 	{
@@ -51,14 +51,14 @@ bool	touch(float px, float py, t_game *game)
 
 int	init_player(t_player *player, t_map *map)
 {
-    player->player_x = map->player_row * BLOCK + BLOCK / 2;
-    player->player_y = map->player_column * BLOCK + BLOCK / 2;
-    if (map->map[map->player_column][map->player_row] == '1'
+	player->player_x = map->player_row * BLOCK + BLOCK / 2;
+	player->player_y = map->player_column * BLOCK + BLOCK / 2;
+	if (map->map[map->player_column][map->player_row] == '1'
 		||map->map[map->player_column][map->player_row] == ' ')
-    {
-        ft_error("ERROR: Player starting position inside wall or out of bounds\n");
-        return (0);
-    }
+	{
+		ft_error("ERROR: Player starting pos inside wall or out of bounds\n");
+		return (0);
+	}
 	if (!set_player_angle(map, player))
 		return (0);
 	player->key_up = false;
@@ -121,7 +121,7 @@ void	move_player(t_player *player, t_game *game)
 	player->speed = 5;
 	player->sin_angle = sin(player->angle);
 	player->cos_angle = cos(player->angle);
-    rotate_player(player);
+	rotate_player(player);
 	if (player->key_up)
 		move_in_direction(player, game, 1);
 	if (player->key_down)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 11:31:07 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:51:44 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	get_max_row_length(char **map, int column)
 	return (max_length);
 }
 
-static int pad_row_len(char **map, int column)
+static int	pad_row_len(char **map, int column)
 {
-	int 	i;
+	int		i;
 	int		len;
 	size_t	map_len;
 	char	*padded_row;
@@ -58,7 +58,6 @@ static int pad_row_len(char **map, int column)
 	return (0);
 }
 
-
 int	verify_map_walls_utils(t_parser *element)
 {
 	int	i;
@@ -81,32 +80,11 @@ int	verify_map_walls_utils(t_parser *element)
 		i++;
 	}
 	element->map_array->max_map_column = column + 1;
-	element->map_array->max_map_row = get_max_row_length(element->map_array->map, column);
+	element->map_array->max_map_row
+		= get_max_row_length(element->map_array->map, column);
 	pad_row_len(element->map_array->map, column);
 	return (1);
 }
-
-// int	verify_map_walls_extra_space(char *map)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (map[i] != '\0')
-// 	{
-// 		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
-// 			return (0);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (map[i] != '\0')
-// 	{
-// 		if (map[i] == ' ' && (map[i + 1] == ' ' || map[i - 1] == ' '))
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
 
 int	evaluate_multiple_pos(char **map)
 {

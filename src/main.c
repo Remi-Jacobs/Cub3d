@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/12 15:18:24 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 17:00:21 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,38 +18,14 @@ void	ft_error_exit(t_parser *data, char *str)
 	printf("%s\n", str);
 }
 
-
-// Function to create an image filled with a color
-void	*create_color_image(t_parser *data, int color)
-{
-	int *pixels;
-	void *img;
-	int width = TILE_SIZE;
-	int height = TILE_SIZE;
-	int bpp, size_line, endian;
-
-	img = mlx_new_image(data->mlx_ptr, width, height);
-	if (!img)
-		return (NULL);
-	pixels = (int *)mlx_get_data_addr(img, &bpp, &size_line, &endian);
-	if (!pixels)
-		return (NULL);
-	int i = -1;
-	while (++i < width * height)
-		pixels[i] = color;
-
-	return (img);
-}
-
-
-
 void	init_game_utils(t_game *game)
 {
 	game->tex_pixels = NULL;
 	game->map = game->element->map_array->map;
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "CUB3D");
 	game->img = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	game->data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
+	game->data = mlx_get_data_addr(game->img, &game->bpp,
+			&game->size_line, &game->endian);
 }
 
 int	init_game(t_game *game, char *argv)
@@ -60,6 +36,7 @@ int	init_game(t_game *game, char *argv)
 		ft_error("Error from parsing\n");
 		return (0);
 	}
+	printf ("End of parsing\n");
 	if (!init_player(&game->player, game->element->map_array))
 	{
 		ft_error("Error from init_player\n");
@@ -76,9 +53,9 @@ int	init_game(t_game *game, char *argv)
 	{
 		ft_error("Error loading texture\n");
 		return(0) ;
-	}	
+	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-	return(1);
+	return (1);
 }
 
 int	main(int ac, char **argv)
@@ -96,5 +73,3 @@ int	main(int ac, char **argv)
 	free_game_struct(&game);
 	return (0);
 }
-
-
