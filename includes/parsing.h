@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/14 01:37:46 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:18:44 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include "./game.h"
 
 # define MAP_HEIGHT 50
-# define TILE_SIZE 64
 
 typedef struct s_game	t_game;
 typedef struct s_player	t_player;
@@ -39,7 +38,7 @@ typedef struct s_img_info
 	void	*img;
 	char	*path;
 	char	*data;
-}		t_img_info;
+}	t_img_info;
 
 typedef struct s_texture
 {

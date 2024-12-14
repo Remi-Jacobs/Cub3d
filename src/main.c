@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 01:44:02 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/14 01:32:22 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 02:06:15 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/parsing.h"
-
-void	ft_error_exit(t_parser *data, char *str)
-{
-	free_parser_struct(data);
-	printf("%s\n", str);
-}
 
 void	init_game_utils(t_game *game)
 {
@@ -35,7 +29,7 @@ int	init_player(t_player *player, t_map *map)
 	if (map->map[map->player_column][map->player_row] == '1'
 		||map->map[map->player_column][map->player_row] == ' ')
 	{
-		ft_error("ERROR: Player starting pos inside wall or out of bounds\n");
+		ft_error("ERROR: Player pos inside wall or out of bounds\n");
 		return (0);
 	}
 	if (!set_player_angle(map, player))

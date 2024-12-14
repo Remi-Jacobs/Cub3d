@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:27:17 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 19:16:55 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 02:21:31 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	init_all(t_game *game)
 	game->tex_y = 0;
 	game->screen_x = 0;
 	game->perp_wall_dist = 0;
-	game->is_ceiling = 0;
 }
 
 int	are_dimensions_equal(int h1, int h2, int h3, int h4)
