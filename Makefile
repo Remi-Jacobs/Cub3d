@@ -7,7 +7,11 @@ MINILIBX = ./mlx/
 SRC_DIR = ./src
 OBJ_DIR = ./obj
 FT_PRINT_DIR = ./comb_libft
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
+SRC_FILES = $(SRC_DIR)/key_mapping.c $(SRC_DIR)/main.c $(SRC_DIR)/parsing_init.c \
+			$(SRC_DIR)/parsing_map_check.c $(SRC_DIR)/parsing_map_check2.c \
+			$(SRC_DIR)/parsing_utils0.c $(SRC_DIR)/parsing_utils1.c $(SRC_DIR)/parsing_utils2.c \
+			$(SRC_DIR)/parsing_utils3.c $(SRC_DIR)/parsing.c $(SRC_DIR)/play_move.c \
+			$(SRC_DIR)/ray_caster_utils.c $(SRC_DIR)/ray_caster_utils2.c $(SRC_DIR)/ray_caster.c $(SRC_DIR)/ray_caster1.c
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC_FILES:.c=.o)))
 LIBFT = $(FT_PRINT_DIR)/libftprintf.a
 GREEN = \033[0;32m

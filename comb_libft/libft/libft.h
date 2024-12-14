@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 11:52:22 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/14 01:23:19 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:21:10 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdlib.h>
 
 char		*ft_strrrchr(char *s, int c);
+char		*ft_strndup(const char *src, size_t n);
 int			ft_isalpha(int i);
 int			ft_isalnum(int i);
 int			ft_isdigit(int i);

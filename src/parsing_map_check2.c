@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 20:48:15 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 16:52:36 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 15:33:58 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	verify_map_walls(t_parser *element)
 		return (0);
 	if (!evaluate_multiple_pos(element->map_array->map))
 	{
-		ft_error("Multiple player positions found\n");
+		ft_error("Invalid number of players found\n");
 		return (0);
 	}
 	if (!get_player_pos(element->map_array))
