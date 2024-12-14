@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:45:41 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 16:35:41 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/13 23:59:51 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ void	ft_free_trimmed_line_read(char *trim_line, char *line_read)
 		free (trim_line);
 }
 
-int	validating_texture(char *trim_file, t_parser *element)
+int	validating_texture(char *trim_file)
 {
-	if ((ft_strncmp(trim_file, "WE", 2) == 0)
-		|| (ft_strncmp(trim_file, "EA", 2) == 0)
-		|| (ft_strncmp(trim_file, "NO", 2) == 0)
-		|| (ft_strncmp(trim_file, "SO", 2) == 0)
-		&& (trim_file[2] == ' ' || (trim_file[2] >= 9
-				&& trim_file[2] <= 13)))
+	if (((ft_strncmp(trim_file, "WE", 2) == 0)
+			|| (ft_strncmp(trim_file, "EA", 2) == 0)
+			|| (ft_strncmp(trim_file, "NO", 2) == 0)
+			|| (ft_strncmp(trim_file, "SO", 2) == 0))
+		&& (trim_file[2] == ' ' || (trim_file[2] >= 9 && trim_file[2] <= 13)))
 	{
 		return (1);
 	}
@@ -52,6 +51,7 @@ int	validating_ceiling_floor(char *trim_file, t_parser *element)
 	char	*trim_newline;
 	char	*trim_ptr;
 
+	trim_newline = NULL;
 	trim_ptr = trim_file;
 	if (ft_strncmp(trim_ptr, "C", 1) == 0)
 	{

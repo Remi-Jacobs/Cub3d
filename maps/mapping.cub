@@ -1,4 +1,4 @@
-	TA ./textures/east.xpm
+	EA ./textures/east.xpm
 SO ./textures/south.xpm
 
 					WE 									./textures/west.xpm

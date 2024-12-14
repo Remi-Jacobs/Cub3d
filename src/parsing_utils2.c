@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 12:44:12 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/14 00:02:12 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	num_range(int num, t_color *color)
 	return (0);
 }
 
-int	color_check_pass(t_color *color, char *readfile)
+int	color_check_pass(t_color *color)
 {
 	if (color->green == -1 || color->blue == -1 || color->red == -1)
 	{
@@ -93,7 +93,7 @@ int	saving_ceiling_and_floor(char *readfile, t_color *color)
 		}
 		readfile = ft_iswhitespace(readfile);
 	}
-	if (!color_check_pass(color, readfile) || flag)
+	if (!color_check_pass(color) || flag)
 		return (0);
 	return (1);
 }

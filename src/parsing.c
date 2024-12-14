@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:21:26 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 22:48:28 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:27:48 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_parser	*parsing_func(char *read_file)
 		|| !verify_colors(element->ceiling_color)
 		|| !verify_texture(element->texture))
 	{
-		ft_error("Error from verifying_wall/color/ceiling/texture parsing func\n");
+		ft_error("Error verifying_wall/color/ceiling/texture parsing func\n");
 		free_parser_struct(element);
 		return (NULL);
 	}

@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:29:32 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 16:51:44 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 00:02:40 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int	get_max_row_length(char **map, int column)
 
 static int	pad_row_len(char **map, int column)
 {
-	int		i;
-	int		len;
-	size_t	map_len;
-	char	*padded_row;
+	int			i;
+	size_t		len;
+	size_t		map_len;
+	char		*padded_row;
 
 	len = get_max_row_length(map, column);
 	i = 0;

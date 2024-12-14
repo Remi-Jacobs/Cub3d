@@ -6,232 +6,76 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:07:40 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 18:10:31 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:24:24 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-// static char	*bytes_read(int fd, char *backup, char *buffer)
-// {
-// 	char	*temp;
-// 	ssize_t	bytes;
-
-// 	bytes = read(fd, buffer, BUFFER_SIZE);
-// 	while (bytes > 0)
-// 	{
-// 		buffer[bytes] = '\0';
-// 		if (!backup)
-// 			backup = ft_strdup("");
-// 		temp = backup;
-// 		backup = ft_strjoin(backup, buffer);
-// 		free(temp);
-// 		if (ft_strchr(backup, '\n'))
-// 			break ;
-// 		bytes = read(fd, buffer, BUFFER_SIZE);
-// 	}
-// 	if (bytes == -1)
-// 	{
-// 		free(buffer);
-// 		free(backup);
-// 		return (NULL);
-// 	}
-// 	free(buffer);
-// 	return (backup);
-// }
-
-// static char	*ft_line(char *backup)
-// {
-// 	int		count;
-// 	char	*line;
-
-// 	if (!backup)
-// 		return (NULL);
-// 	count = 0;
-// 	while (backup[count] != '\0')
-// 	{
-// 		if (backup[count] == '\n')
-// 			break ;
-// 		count++;
-// 	}
-// 	line = malloc(sizeof(char) * (count + 2));
-// 	if (!line)
-// 		return (NULL);
-// 	ft_strlcpy(line, backup, count + 2);
-// 	if (line[0] == '\0')
-// 	{
-// 		free(line);
-// 		return (NULL);
-// 	}
-// 	return (line);
-// }
-
-// static char	*ft_update_backup(char *backup)
-// {
-// 	int		count;
-// 	char	*new_back;
-
-// 	count = 0;
-// 	while (backup[count] != '\0')
-// 	{
-// 		if (backup[count] == '\n')
-// 			break ;
-// 		count++;
-// 	}
-// 	if (backup[count] == '\0')
-// 	{
-// 		free (backup);
-// 		return (NULL);
-// 	}
-// 	new_back = malloc(sizeof(char) * (ft_strlen(backup) - count + 1));
-// 	if (!new_back)
-// 		return (NULL);
-// 	ft_strlcpy(new_back, backup + count + 1, ft_strlen(backup) - count + 1);
-// 	free(backup);
-// 	return (new_back);
-// }
-
-// char	*get_next_line(int fd)
-// {
-// 	char		*line;
-// 	char		*buffer;
-// 	static char	*backup;
-
-// 	line = NULL;
-// 	if (fd < 0 || BUFFER_SIZE <= 0)
-// 		return (NULL);
-// 	buffer = malloc(sizeof (char) * (BUFFER_SIZE + 1));
-// 	if (!buffer)
-// 	{
-// 		free (buffer);
-// 		return (NULL);
-// 	}
-// 	backup = bytes_read(fd, backup, buffer);
-// 	if (backup == NULL)
-// 		return (NULL);
-// 	line = ft_line(backup);
-// 	backup = ft_update_backup(backup);
-// 	return (line);
-// }
-
-char	*ft_m_strjoin(char *bucket, char *bailer)
+void	ft_strcat(char *dst, const char *src)
 {
 	size_t	i;
-	size_t	j;
-	char	*str;
+	size_t	dst_len;
 
-	if (!bucket)
+	dst_len = ft_strlen(dst);
+	i = 0;
+	while (src[i] != 0)
 	{
-		bucket = (char *)malloc(1 * sizeof(char));
-		bucket[0] = '\0';
+		dst[dst_len + i] = src[i];
+		i++;
 	}
-	if (!bucket || !bailer)
-		return (NULL);
-	str = malloc(((ft_strlen(bucket) + ft_strlen(bailer)) + 1) * sizeof(char));
-	if (str == NULL)
-		return (NULL);
+	dst[dst_len + i] = 0;
+}
+
+int	find_line(char **ret_line, char buff_store[], int *rd_bytes)
+{
+	char	*linepos;
+	int		i;
+
 	i = -1;
-	j = 0;
-	if (bucket)
-		while (bucket[++i] != '\0')
-			str[i] = bucket[i];
-	while (bailer[j] != '\0')
-		str[i++] = bailer[j++];
-	str[ft_strlen(bucket) + ft_strlen(bailer)] = '\0';
-	free(bucket);
-	return (str);
-}
-
-char	*ft_read_to_bucket(int fd, char *bucket)
-{
-	int		fd_read;
-	char	*bailer;
-
-	bailer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!bailer)
-		return (NULL);
-	fd_read = 1;
-	while (!ft_strrrchr(bucket, '\n') && fd_read != 0)
+	linepos = ft_strchr(buff_store, '\n');
+	if (linepos)
 	{
-		fd_read = read(fd, bailer, BUFFER_SIZE);
-		if (fd_read == -1)
-		{
-			free(bailer);
-			free(bucket);
-			return (NULL);
-		}
-		bailer[fd_read] = '\0';
-		bucket = ft_m_strjoin(bucket, bailer);
+		*ret_line = ft_calloc(sizeof(char), (linepos - buff_store) + 2);
+		ft_memcpy(*ret_line, buff_store, linepos - buff_store + 1);
+		while (linepos[++i + 1] != '\0')
+			buff_store[i] = linepos[i + 1];
+		ft_bzero(&buff_store[i], MAX_LINE - i);
+		return (1);
 	}
-	free(bailer);
-	return (bucket);
-}
-
-char	*ft_get_line(char *bucket)
-{
-	char	*line;
-	int		c;
-
-	c = 0;
-	if (!bucket[c])
-		return (NULL);
-	while (bucket[c] && bucket[c] != '\n')
-		c++;
-	line = malloc((c + 2) * sizeof(char));
-	if (!line)
-		return (NULL);
-	c = 0;
-	while (bucket[c] && bucket[c] != '\n')
+	if (*rd_bytes == 0)
 	{
-		line[c] = bucket[c];
-		c++;
+		*ret_line = ft_calloc(sizeof(char), MAX_LINE + 1);
+		ft_memcpy(*ret_line, buff_store, MAX_LINE);
+		*rd_bytes = -1;
 	}
-	if (bucket[c] == '\n')
-	{
-		line[c] = bucket[c];
-		c++;
-	}
-	line[c] = '\0';
-	return (line);
-}
-
-char	*ft_new_bucket(char *bucket)
-{
-	char	*new_bucket;
-	int		c;
-	int		c2;
-
-	c = 0;
-	while (bucket[c] && bucket[c] != '\n')
-		c++;
-	if (!bucket[c])
-	{
-		free(bucket);
-		return (NULL);
-	}
-	new_bucket = malloc((ft_strlen(bucket) - c) * sizeof(char) + 2);
-	if (!new_bucket)
-		return (NULL);
-	c++;
-	c2 = 0;
-	while (bucket[c])
-		new_bucket[c2++] = bucket[c++];
-	new_bucket[c2] = '\0';
-	free(bucket);
-	return (new_bucket);
+	return (0);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	*bucket;
+	static char	buff_store[MAX_LINE];
+	char		*temp_storage;
+	char		*ret_line;
+	int			rd_bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd > MAX_FD || BUFFER_SIZE <= 0 || BUFFER_SIZE > MAX_LINE)
 		return (NULL);
-	bucket = ft_read_to_bucket(fd, bucket);
-	if (!bucket)
+	temp_storage = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	rd_bytes = read(fd, temp_storage, BUFFER_SIZE);
+	ft_strcat(buff_store, temp_storage);
+	free(temp_storage);
+	if (rd_bytes < 0 || (rd_bytes <= 0 && buff_store[0] == '\0'))
+	{
+		ft_bzero(buff_store, MAX_LINE);
 		return (NULL);
-	line = ft_get_line(bucket);
-	bucket = ft_new_bucket(bucket);
-	return (line);
+	}
+	if (find_line (&ret_line, buff_store, &rd_bytes) == 1)
+		return (ret_line);
+	if (rd_bytes == -1)
+	{
+		ft_bzero(buff_store, MAX_LINE);
+		return (ret_line);
+	}
+	return (get_next_line(fd));
 }

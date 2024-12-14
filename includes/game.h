@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 00:42:14 by ojacobs           #+#    #+#             */
-/*   Updated: 2024/12/13 21:10:06 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:39:10 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,16 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
-
-	//int value to 0
 	int		map_x;
-	int		map_y;
-	
+	int		map_y;	
 	float	new_x;
 	float	new_y;
-	
 	float	player_x;
 	float	player_y;
 	float	angle;
-	
-	//need to init
 	int		speed;
 	float	cos_angle;
 	float	sin_angle;
-
-	
 	bool	key_up;
 	bool	key_down;
 	bool	key_left;

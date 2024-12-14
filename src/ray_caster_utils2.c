@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_caster_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 20:49:23 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 22:29:31 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:35:34 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,13 @@ void	free_image_data(t_img_info *texture)
 			texture->path = NULL;
 		}
 		free(texture);
-    }
+	}
 }
 
 void	free_img_struct(t_texture *tex)
 {
 	if (!tex)
-	{
-		ft_error("empty and no data\n");
 		return ;
-	}
 	if (tex->east)
 	{
 		free_image_data(tex->east);
@@ -62,5 +59,4 @@ void	free_img_struct(t_texture *tex)
 	}
 	free(tex);
 	tex = NULL;
-	
 }

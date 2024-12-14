@@ -6,7 +6,7 @@
 /*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 11:52:22 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 18:09:41 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 01:23:19 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 # define LIBFT_H
 
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 100
+# define MAX_LINE 10100
+# define MAX_FD   1024
 
 # include <unistd.h>
 # include <stdlib.h>

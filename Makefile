@@ -1,6 +1,6 @@
 NAME = cub3d
 CC = cc
-CFLAGS = -I. -I./mlx -I./includes
+CFLAGS = -Wall -Wextra -Werror -I. -I./mlx -I./includes
 LDFLAGS = -lm -lz
 MLXFLAGS = -L./mlx -lmlx -L/usr/lib/X11 -lXext -lX11
 MINILIBX = ./mlx/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
+/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/13 22:27:01 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/14 01:37:46 by ojacobs          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include "../comb_libft/ft_printf.h"
 # include "../mlx/mlx.h"
 # include "./game.h"
-
 
 # define MAP_HEIGHT 50
 # define TILE_SIZE 64
@@ -52,7 +51,6 @@ typedef struct s_texture
 	t_img_info	*south;
 }	t_texture;
 
-
 typedef struct s_color
 {
 	int		red;
@@ -79,20 +77,19 @@ typedef struct s_parser
 	t_texture	*texture;
 	t_color		*ceiling_color;
 	t_color		*floor_color;
+	char		*line_read;
+	char		*trim_file;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	void		*image;
 	int			floor_full;
 	int			ceiling_full;
 	int			texture_full;
-	char		*line_read;
-	char		*trim_file;
 	int			has_started;
 	int			x;
 }	t_parser;
 
-void	free_img_struct(t_texture *tex);
-
+void		free_img_struct(t_texture *tex);
 int			close_game(t_game *game);
 void		free_game_struct(t_game *game);
 int			valid_extension_file_check(char *argv, int ac, char *str);
@@ -114,7 +111,7 @@ int			get_player_pos(t_map *map);
 
 /* parsing_utils0.c  */
 int			ft_open_file(char *read_file);
-int			validating_texture(char *trim_file, t_parser *element);
+int			validating_texture(char *trim_file);
 int			validating_ceiling_floor(char *trim_file, t_parser *element);
 char		*ft_iswhitespace(char *readfile);
 void		ft_free_trimmed_line_read(char *trim_line, char *line_read);
@@ -131,7 +128,7 @@ int			checking_texture(char *readfile, t_parser *element);
 int			saving_texture(char *readfile, char **texture);
 int			num_range(int num, t_color *color);
 int			saving_ceiling_and_floor(char *readfile, t_color *color);
-int			color_check_pass(t_color *color, char *readfile);
+int			color_check_pass(t_color *color);
 
 /* parsing_utils3.c  */
 int			read_and_process_lines(int fd, t_parser *element);
