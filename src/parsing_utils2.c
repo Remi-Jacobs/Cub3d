@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojacobs <ojacobs@student.42.fr>            +#+  +:+       +#+        */
+/*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 00:00:10 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/14 00:02:12 by ojacobs          ###   ########.fr       */
+/*   Updated: 2024/12/14 17:22:10 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,22 @@ int	checking_texture(char *readfile, t_parser *element)
 
 int	saving_texture(char *readfile, char **texture)
 {
+	int		i;
 	char	*new_trim;
-
+	
+	i = 0;
 	readfile += 2;
 	readfile = ft_iswhitespace(readfile);
 	new_trim = ft_trim_newline(readfile);
+	while (new_trim[i] != '\0')
+	{
+		if (new_trim[i] == ' '
+			|| (new_trim[i] >= 9 && new_trim[i] <= 13))
+			break ;
+		i++;
+	}
 	if (*texture == NULL)
-		*texture = ft_strdup(new_trim);
+		*texture = strndup(new_trim, i);
 	free(new_trim);
 	return (1);
 }
@@ -85,6 +94,8 @@ int	saving_ceiling_and_floor(char *readfile, t_color *color)
 			readfile++;
 		if (*readfile == ',')
 			*readfile++ = '\0';
+		if (!ft_isdigit(*num_str))
+			return (0);
 		num = ft_atoi(num_str);
 		if (!num_range(num, color))
 		{

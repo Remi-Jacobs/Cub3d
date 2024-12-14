@@ -6,13 +6,14 @@
 /*   By: danevans <danevans@student.42.f>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:20:42 by danevans          #+#    #+#             */
-/*   Updated: 2024/12/14 15:18:44 by danevans         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:11:22 by danevans         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include <string.h>
 # include <fcntl.h> 
 # include <unistd.h>
 # include <stdio.h>
